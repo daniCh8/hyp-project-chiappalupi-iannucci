@@ -1,0 +1,1044 @@
+---
+swagger: "2.0"
+info:
+  description: "This is a Bookshop server. For this sample, you can use the api key\
+    \ `special-key` to test the authorization filters."
+  version: "1.0.0"
+  title: "hyp-project-chiappalupi-iannucci"
+  contact:
+    email: "daniele.chiappalupi@mail.polimi.it"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+- name: "book"
+  description: "All about the books available in the bookshop"
+- name: "author"
+  description: "All about the authors of the books"
+- name: "user"
+  description: "Operations about user"
+- name: "event"
+  description: "Events of presentation"
+- name: "reservation"
+  description: "Reservations of books by the users"
+schemes:
+- "https"
+- "http"
+paths:
+  /book:
+    post:
+      tags:
+      - "book"
+      summary: "Add a new book to the bookshop"
+      description: ""
+      operationId: "addBook"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Book object that needs to be added to the shop"
+        required: true
+        schema:
+          $ref: "#/definitions/Book"
+      responses:
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "Book"
+    put:
+      tags:
+      - "book"
+      summary: "Update an existing book"
+      description: ""
+      operationId: "updateBook"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Book object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Book"
+      responses:
+        400:
+          description: "Invalid ISBN supplied"
+        404:
+          description: "Book not found"
+        405:
+          description: "Validation exception"
+      x-swagger-router-controller: "Book"
+  /book/findByName:
+    get:
+      tags:
+      - "book"
+      summary: "Finds Book by name"
+      description: "Multiple name values can be provided with comma separated strings"
+      operationId: "finBooksByName"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "Name values that need to be considered for filter"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+        400:
+          description: "Invalid name value"
+      x-swagger-router-controller: "Book"
+  /book/findByTheme:
+    get:
+      tags:
+      - "book"
+      summary: "Finds Books by themes"
+      description: "Muliple books can be provided with comma separated strings."
+      operationId: "findBooksByThemes"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "themes"
+        in: "query"
+        description: "Themes to filter by"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "love"
+          - "death"
+          - "good vs. evil"
+          - "coming of age"
+          - "power and corruption"
+          - "survival"
+          - "courage and heroism"
+          - "prejudice"
+          - "individual vs. society"
+          - "war"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+        400:
+          description: "Invalid theme value"
+      x-swagger-router-controller: "Book"
+  /book/findByAuthor:
+    get:
+      tags:
+      - "book"
+      summary: "Finds Books by author"
+      description: "Muliple authors can be provided with comma separated strings."
+      operationId: "findBooksByAuthors"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "authors"
+        in: "query"
+        description: "Authors ID to filter by"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+        400:
+          description: "Invalid author value"
+      x-swagger-router-controller: "Book"
+  /book/{ISBN}:
+    get:
+      tags:
+      - "book"
+      summary: "Find book by ISBN"
+      description: "Returns a single book"
+      operationId: "getBookByISBN"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "ISBN"
+        in: "path"
+        description: "ISBN of the book to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Book"
+        400:
+          description: "Invalid ISBN supplied"
+        404:
+          description: "Book not found"
+      x-swagger-router-controller: "Book"
+    delete:
+      tags:
+      - "book"
+      summary: "Deletes a book"
+      description: ""
+      operationId: "deleteBook"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "ISBN"
+        in: "path"
+        description: "Book ISBN to delete"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid ISBN supplied"
+        404:
+          description: "Book not found"
+      x-swagger-router-controller: "Book"
+  /book/{ISBN}/uploadImage:
+    post:
+      tags:
+      - "book"
+      summary: "uploads an image"
+      description: ""
+      operationId: "uploadFile"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ISBN"
+        in: "path"
+        description: "ISBN of book to update"
+        required: true
+        type: "string"
+      - name: "additionalMetadata"
+        in: "formData"
+        description: "Additional data to pass to server"
+        required: false
+        type: "string"
+      - name: "file"
+        in: "formData"
+        description: "file to upload"
+        required: false
+        type: "file"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+      x-swagger-router-controller: "Book"
+  /user:
+    post:
+      tags:
+      - "user"
+      summary: "Create user"
+      description: "This can only be done by the logged in user."
+      operationId: "createUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /user/createWithArray:
+    post:
+      tags:
+      - "user"
+      summary: "Creates list of users with given input array"
+      description: ""
+      operationId: "createUsersWithArrayInput"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of user object"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /user/createWithList:
+    post:
+      tags:
+      - "user"
+      summary: "Creates list of users with given input array"
+      description: ""
+      operationId: "createUsersWithListInput"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of user object"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /user/login:
+    get:
+      tags:
+      - "user"
+      summary: "Logs user into the system"
+      description: ""
+      operationId: "loginUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "query"
+        description: "The username for login"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login"
+        required: true
+        type: "string"
+        format: "password"
+      responses:
+        200:
+          description: "successful operation"
+          headers:
+            X-Rate-Limit:
+              type: "integer"
+              format: "int32"
+              description: "calls per hour allowed by the user"
+            X-Expires-After:
+              type: "string"
+              format: "date-time"
+              description: "date in UTC when token expires"
+          schema:
+            type: "string"
+        400:
+          description: "Invalid username/password supplied"
+      x-swagger-router-controller: "User"
+  /user/logout:
+    get:
+      tags:
+      - "user"
+      summary: "Logs out current logged in user session"
+      description: ""
+      operationId: "logoutUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /user/{username}:
+    get:
+      tags:
+      - "user"
+      summary: "Get user by user name"
+      description: ""
+      operationId: "getUserByName"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The name that needs to be fetched. Use user1 for testing. "
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "User"
+    put:
+      tags:
+      - "user"
+      summary: "Updated user"
+      description: "This can only be done by the logged in user."
+      operationId: "updateUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "name that need to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        400:
+          description: "Invalid user supplied"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "User"
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user"
+      description: "This can only be done by the logged in user."
+      operationId: "deleteUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The name that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "User"
+  /reservation:
+    post:
+      tags:
+      - "reservation"
+      summary: "Add a new reservation to the database"
+      description: ""
+      operationId: "addReservation"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Reservation object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Reservation"
+      responses:
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "Reservation"
+    put:
+      tags:
+      - "reservation"
+      summary: "Update an existing reservation"
+      description: ""
+      operationId: "updateReservation"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Reservation object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Reservation"
+      responses:
+        404:
+          description: "Reservation not found"
+        405:
+          description: "Validation exception"
+      x-swagger-router-controller: "Reservation"
+  /reservation/{username}:
+    get:
+      tags:
+      - "reservation"
+      summary: "Find the reservations of an user by its username"
+      description: "Returns a list of reservations"
+      operationId: "getReservationsByUsername"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "Username of the user to find reservation"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Reservation"
+        404:
+          description: "Username not found"
+      x-swagger-router-controller: "Reservation"
+    delete:
+      tags:
+      - "reservation"
+      summary: "Delete all the reservations of a user"
+      description: ""
+      operationId: "deleteUserReservations"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "username"
+        in: "path"
+        description: "Username of the user of the reservations to delete"
+        required: true
+        type: "string"
+      responses:
+        404:
+          description: "No reservations found for the username provided"
+      x-swagger-router-controller: "Reservation"
+  /reservation/findByID:
+    get:
+      tags:
+      - "reservation"
+      summary: "Find a reservation by its ID"
+      description: "Returns a reservation"
+      operationId: "getReservationByID"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "ID"
+        in: "query"
+        description: "ID of the reservation to find"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Reservation"
+        404:
+          description: "ID not found"
+      x-swagger-router-controller: "Reservation"
+  /reservation/{ID}/{ISBN}:
+    post:
+      tags:
+      - "reservation"
+      summary: "Update a reservation"
+      description: ""
+      operationId: "updateReservationBookQuantity"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "ID"
+        in: "path"
+        description: "ID of the reservation to update"
+        required: true
+        type: "string"
+      - name: "ISBN"
+        in: "path"
+        description: "ISBN of the book of the reservation to update"
+        required: true
+        type: "string"
+      - name: "Quantity"
+        in: "query"
+        description: "Updated quantity of the book reserved"
+        required: true
+        type: "integer"
+      responses:
+        404:
+          description: "Reservation not found"
+      x-swagger-router-controller: "Reservation"
+    delete:
+      tags:
+      - "reservation"
+      summary: "Delete a reservation"
+      description: ""
+      operationId: "deleteReservation"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "ID"
+        in: "path"
+        description: "ID of the reservation to delete"
+        required: true
+        type: "string"
+      - name: "ISBN"
+        in: "path"
+        description: "ISBN of the book of the reservation to delete"
+        required: true
+        type: "string"
+      responses:
+        404:
+          description: "Reservation not found"
+      x-swagger-router-controller: "Reservation"
+  /author:
+    post:
+      tags:
+      - "author"
+      summary: "Add a new author to the database"
+      description: ""
+      operationId: "addAuthor"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Author object that needs to be added to the db"
+        required: true
+        schema:
+          $ref: "#/definitions/Author"
+      responses:
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "Author"
+    put:
+      tags:
+      - "author"
+      summary: "Update an existing author"
+      description: ""
+      operationId: "updateAuthor"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Author object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Author"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Author not found"
+        405:
+          description: "Validation exception"
+      x-swagger-router-controller: "Author"
+  /author/{ID}:
+    get:
+      tags:
+      - "author"
+      summary: "Find author by ID"
+      description: "Returns a single author"
+      operationId: "getBookByID"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "ID"
+        in: "path"
+        description: "ID of the author to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Author"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Author not found"
+      x-swagger-router-controller: "Author"
+    delete:
+      tags:
+      - "author"
+      summary: "Deletes an author"
+      description: ""
+      operationId: "deleteAuthor"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "ID"
+        in: "path"
+        description: "Author object to delete"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Author not found"
+      x-swagger-router-controller: "Author"
+  /event:
+    post:
+      tags:
+      - "event"
+      summary: "Add a new event to the bookshop"
+      description: ""
+      operationId: "addEvent"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Event object that needs to be added to the shop"
+        required: true
+        schema:
+          $ref: "#/definitions/Event"
+      responses:
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "Event"
+    put:
+      tags:
+      - "event"
+      summary: "Update an existing event"
+      description: ""
+      operationId: "updateEvent"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Event object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Event"
+      responses:
+        400:
+          description: "Invalid ID or ISBN supplied"
+        404:
+          description: "Event not found"
+        405:
+          description: "Validation exception"
+      x-swagger-router-controller: "Event"
+  /event/findByID:
+    get:
+      tags:
+      - "event"
+      summary: "Find an event by its ID"
+      description: "Returns an event"
+      operationId: "getEventByID"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "ID"
+        in: "query"
+        description: "ID of the book presentated in the event to find"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Event"
+        404:
+          description: "ID not found"
+      x-swagger-router-controller: "Event"
+  /event/findByISBN:
+    get:
+      tags:
+      - "event"
+      summary: "Find an event by the ISBNs of the books presented in it"
+      description: "Returns the events where the books were presented"
+      operationId: "getEventByISBN"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "ISBN"
+        in: "query"
+        description: "ISBN of the book presentated in the event to find"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Event"
+        404:
+          description: "ISBN not found"
+      x-swagger-router-controller: "Event"
+definitions:
+  User:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        example: "daniCh"
+      firstName:
+        type: "string"
+        example: "Daniele"
+      lastName:
+        type: "string"
+        example: "Chiappalupi"
+      email:
+        type: "string"
+        example: "daniele.chiappalupi@mail.polimi.it"
+      password:
+        type: "string"
+        example: "barbagianni"
+      favouriteGeneres:
+        type: "array"
+        example: "[fantasy, science fiction]"
+        uniqueItems: true
+        items:
+          type: "string"
+          enum:
+          - "fantasy"
+          - "science fiction"
+          - "westerns"
+          - "romance"
+          - "thriller"
+          - "mystery"
+          - "detective story"
+          - "dystopya"
+          - "memoir"
+          - "biography"
+          - "play"
+          - "musical"
+          - "satire"
+          - "haiku"
+          - "horror"
+          - "DIY"
+          - "dictionary"
+          - "young adult fiction"
+          - "children's book"
+          - "adult literature"
+    example:
+      firstName: "Daniele"
+      lastName: "Chiappalupi"
+      password: "barbagianni"
+      favouriteGeneres: "[fantasy, science fiction]"
+      email: "daniele.chiappalupi@mail.polimi.it"
+      username: "daniCh"
+  Reservation:
+    type: "object"
+    properties:
+      ISBN:
+        type: "string"
+        example: "9780330508117"
+      ID:
+        type: "string"
+        example: "42"
+        description: "reservations identifier code"
+      shop:
+        type: "string"
+        example: "La Feltrinelli"
+        description: "fisical shop name"
+      user:
+        type: "string"
+        example: "daniCh"
+        description: "user username"
+      quantity:
+        type: "integer"
+        example: 8
+        description: "quantity of books reserved"
+    example:
+      shop: "La Feltrinelli"
+      quantity: 8
+      ISBN: "9780330508117"
+      ID: "42"
+      user: "daniCh"
+  Book:
+    type: "object"
+    properties:
+      ISBN:
+        type: "string"
+        example: "9780330508117"
+      name:
+        type: "string"
+        example: "The Hitchhiker's Guide to the Galaxy"
+      theme:
+        type: "string"
+        example: "love"
+        enum:
+        - "love"
+        - "death"
+        - "good vs. evil"
+        - "coming of age"
+        - "power and corruption"
+        - "survival"
+        - "courage and heroism"
+        - "prejudice"
+        - "individual vs. society"
+        - "war"
+      genre:
+        type: "string"
+        example: "science fiction"
+        enum:
+        - "fantasy"
+        - "science fiction"
+        - "westerns"
+        - "romance"
+        - "thriller"
+        - "mystery"
+        - "detective story"
+        - "dystopya"
+        - "memoir"
+        - "biography"
+        - "play"
+        - "musical"
+        - "satire"
+        - "haiku"
+        - "horror"
+        - "DIY"
+        - "dictionary"
+        - "young adult fiction"
+        - "children's book"
+        - "adult literature"
+      authors:
+        type: "array"
+        description: "array of authors IDs"
+        items:
+          type: "string"
+          example: "01"
+      photoUrls:
+        type: "array"
+        xml:
+          name: "photoUrl"
+          wrapped: true
+        items:
+          type: "string"
+    example:
+      photoUrls:
+      - "photoUrls"
+      - "photoUrls"
+      ISBN: "9780330508117"
+      name: "The Hitchhiker's Guide to the Galaxy"
+      genre: "science fiction"
+      theme: "love"
+      authors:
+      - "01"
+      - "01"
+  Author:
+    type: "object"
+    properties:
+      ID:
+        type: "string"
+        example: "42"
+        description: "authors identifier code"
+      name:
+        type: "string"
+        example: "Douglas Adams"
+      birthday:
+        type: "string"
+        example: "11/03/1952"
+    example:
+      birthday: "11/03/1952"
+      name: "Douglas Adams"
+      ID: "42"
+  Event:
+    type: "object"
+    properties:
+      ID:
+        type: "string"
+        example: "42"
+        description: "event identifier code"
+      ISBN:
+        type: "string"
+        example: "9780330508117"
+      shop:
+        type: "string"
+        example: "La Feltrinelli"
+    example:
+      shop: "La Feltrinelli"
+      ISBN: "9780330508117"
+      ID: "42"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+    example:
+      code: 0
+      type: "type"
+      message: "message"
