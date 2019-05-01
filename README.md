@@ -4,5 +4,5 @@
 
 ## Authors
 
-* **Daniele Chiappalupi** - *868120*
-* **Elena Iannucci** - *871782*
+* **[Daniele Chiappalupi](https://github.com/daniCh8)** - *868120*
+* **[Elena Iannucci](https://github.com/eleiannu)** - *871782*
