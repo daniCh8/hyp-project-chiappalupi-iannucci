@@ -1,7 +1,8 @@
-# hyp-project-chiappalupi-iannucci
+# Hypermedia Applications Project
 
-Politecnico di Milano - Engineering of Computing Systems
-Hypermedia Applications (Web and Multimedia)
+*Politecnico di Milano - Engineering of Computing Systems - 2019*
 
-* * Daniele Chiappalupi - 868120
-* * Elena Iannucci - 871782
+## Authors
+
+* **Daniele Chiappalupi** - *868120*
+* **Elena Iannucci** - *871782*
