@@ -10,6 +10,7 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  host: "hyp-2019-chiappalupi-iannucci.herokuapp.com"
 tags:
 - name: "book"
   description: "All about the books available in the bookshop"
@@ -23,7 +24,6 @@ tags:
   description: "Reservations of books by the users"
 schemes:
 - "https"
-- "http"
 paths:
   /book:
     post:
