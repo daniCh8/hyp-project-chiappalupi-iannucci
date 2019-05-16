@@ -1,5 +1,26 @@
-'use strict';
+"use strict";
 
+let sqlDb;
+
+exports.userDbSetup = function(database) {
+  sqlDb = database;
+  console.log("Checking if user table exists");
+  return database.schema.hasTable("user").then(exists => {
+    if (!exists) {
+      console.log("The table doesn't exists: creating it.");
+      return database.schema.createTable("user", table => {
+        table.text("username");
+        table.text("firstName");
+        table.text("lastName");
+        table.text("email");
+        table.text("password");
+        table.text("favouriteGeneres");
+      });
+    }
+  });
+};
+
+//toDo examples, some methods, tests
 
 /**
  * Create user
@@ -9,9 +30,8 @@
  * no response value expected for this operation
  **/
 exports.createUser = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+  return sqlDb('user')
+         .insert(body);
 }
 
 
@@ -51,9 +71,9 @@ exports.createUsersWithListInput = function(body) {
  * no response value expected for this operation
  **/
 exports.deleteUser = function(username) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+  return sqlDb('user')
+         .where('username', username)
+         .del()
 }
 
 
@@ -64,6 +84,12 @@ exports.deleteUser = function(username) {
  * username String The name that needs to be fetched. Use user1 for testing. 
  * returns User
  **/
+ exports.getUserByName = function(username) {
+  return sqlDb('user')
+          .where('username', username)
+ }
+
+ /*Example
 exports.getUserByName = function(username) {
   return new Promise(function(resolve, reject) {
     var examples = {};

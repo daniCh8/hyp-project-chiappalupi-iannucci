@@ -18,6 +18,8 @@ exports.eventDbSetup = function(database) {
   });
 };
 
+//toDo examples, some methods, tests
+
 
 /**
  * Add a new event to the bookshop

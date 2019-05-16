@@ -19,6 +19,7 @@ exports.reservationDbSetup = function(database) {
   });
 };
 
+//toDo examples, some methods, tests
 
 
 /**
