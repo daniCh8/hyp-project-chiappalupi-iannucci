@@ -1,4 +1,24 @@
-'use strict';
+"use strict";
+
+let sqlDb;
+
+exports.booksDbSetup = function(database) {
+  sqlDb = database;
+  console.log("Checking if book table exists");
+  return database.schema.hasTable("book").then(exists => {
+    if (!exists) {
+      console.log("The table doesn't exists: creating it.");
+      return database.schema.createTable("book", table => {
+        table.increments();
+        table.text("ISBN");
+        table.text("name");
+        table.enum("theme", ["love", "death", "good vs. evil", "coming of age", "power and corruption", "survival", "courage and heroism", "prejudice", "individual vs. society", "war"]);
+        table.enum("genre", ["fantasy", "science fiction", "westerns", "romance", "thriller", "mystery", "detective story", "dystopya", "memoir", "biography", "play", "musical", "satire", "haiku", "horror", "DIY", "dictionary", "young adult fiction", "children's book", "adult literature"]);
+        table.enum("status", ["available", "out of stock"]);
+      });
+    }
+  });
+};
 
 
 /**
@@ -136,10 +156,16 @@ exports.findBooksByThemes = function(themes) {
  * Find book by ISBN
  * Returns a single book
  *
- * iSBN String ISBN of the book to return
+ * ISBN String ISBN of the book to return
  * returns Book
  **/
-exports.getBookByISBN = function(iSBN) {
+ exports.getBookByISBN = function(ISBN) {
+  return sqlDb('book')
+         .where('ISBN', ISBN)
+};
+
+/* Examples?!?
+  exports.getBookByISBN = function(iSBN) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
@@ -156,7 +182,7 @@ exports.getBookByISBN = function(iSBN) {
       resolve();
     }
   });
-}
+}*/
 
 
 /**
