@@ -222,12 +222,12 @@ exports.updateBook = function(body) {
  * uploads an image
  * 
  *
- * iSBN String ISBN of book to update
+ * ISBN String ISBN of book to update
  * additionalMetadata String Additional data to pass to server (optional)
  * file File file to upload (optional)
  * returns ApiResponse
  **/
-exports.uploadFile = function(iSBN,additionalMetadata,file) {
+exports.uploadFile = function(ISBN,additionalMetadata,file) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {

@@ -1,33 +1,41 @@
-'use strict';
+"use strict";
 
+let sqlDb;
 
-/**
- * Add a new reservation to the database
- * 
- *
- * body Reservation Reservation object that needs to be added to the database
- * no response value expected for this operation
- **/
-exports.addReservation = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
+exports.reservationDbSetup = function(database) {
+  sqlDb = database;
+  console.log("Checking if reservation table exists");
+  return database.schema.hasTable("reservation").then(exists => {
+    if (!exists) {
+      console.log("The table doesn't exists: creating it.");
+      return database.schema.createTable("reservation", table => {
+        table.increments("reservationID");
+        table.text("ISBN");
+        table.text("shop");
+        table.text("username");
+        table.integer("quantity");
+      });
+    }
   });
-}
+};
+
 
 
 /**
  * Delete a reservation
  * 
  *
- * iD String ID of the reservation to delete
- * iSBN String ISBN of the book of the reservation to delete
- * api_key String  (optional)
+ * ID String ID of the reservation to delete
+ * ISBN String ISBN of the book of the reservation to delete
  * no response value expected for this operation
  **/
-exports.deleteReservation = function(iD,iSBN,api_key) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+exports.deleteReservation = function(ID,ISBN) {
+    return sqlDb('reservation')
+         .where({
+          reservationID: ID,
+          ISBN: ISBN
+         })
+         .del()
 }
 
 
@@ -36,13 +44,12 @@ exports.deleteReservation = function(iD,iSBN,api_key) {
  * 
  *
  * username String Username of the user of the reservations to delete
- * api_key String  (optional)
  * no response value expected for this operation
  **/
-exports.deleteUserReservations = function(username,api_key) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+exports.deleteUserReservations = function(username) {
+  return sqlDb('reservation')
+         .where('username', username)
+         .del()
 }
 
 
@@ -50,9 +57,15 @@ exports.deleteUserReservations = function(username,api_key) {
  * Find a reservation by its ID
  * Returns a reservation
  *
- * iD String ID of the reservation to find
+ * ID String ID of the reservation to find
  * returns Reservation
  **/
+ exports.getReservationByID = function(ID) {
+  return sqlDb('book')
+         .where('reservationID', ID)
+ }
+
+ /*Example
 exports.getReservationByID = function(iD) {
   return new Promise(function(resolve, reject) {
     var examples = {};
@@ -69,7 +82,7 @@ exports.getReservationByID = function(iD) {
       resolve();
     }
   });
-}
+}*/
 
 
 /**
@@ -79,6 +92,12 @@ exports.getReservationByID = function(iD) {
  * username String Username of the user to find reservation
  * returns List
  **/
+ exports.getReservationsByUsername = function(username) {
+  return sqlDb('reservation')
+         .where('username', username)
+ }
+
+ /*Example
 exports.getReservationsByUsername = function(username) {
   return new Promise(function(resolve, reject) {
     var examples = {};
@@ -101,7 +120,7 @@ exports.getReservationsByUsername = function(username) {
       resolve();
     }
   });
-}
+}*/
 
 
 /**
@@ -122,15 +141,19 @@ exports.updateReservation = function(body) {
  * Update a reservation
  * 
  *
- * iD String ID of the reservation to update
- * iSBN String ISBN of the book of the reservation to update
+ * ID String ID of the reservation to update
+ * ISBN String ISBN of the book of the reservation to update
  * quantity Integer Updated quantity of the book reserved
- * api_key String  (optional)
  * no response value expected for this operation
  **/
-exports.updateReservationBookQuantity = function(iD,iSBN,quantity,api_key) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+exports.updateReservationBookQuantity = function(ID,ISBN,quantity) {
+  return sqlDb('reservation')
+         .where({
+          reservationID: ID,
+          ISBN: ISBN
+         })
+  .update({
+    quantity: 'quantity'
+  })
 }
 
