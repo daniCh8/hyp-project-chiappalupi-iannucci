@@ -2,7 +2,7 @@
 
 let sqlDb;
 
-exports.booksDbSetup = function(database) {
+exports.authorDbSetup = function(database) {
   sqlDb = database;
   console.log("Checking if author table exists");
   return database.schema.hasTable("author").then(exists => {
@@ -56,7 +56,7 @@ exports.deleteAuthor = function(ID) {
 exports.getAuthorByID = function(ID) {
   return sqlDb('author')
          .where('authorID', ID)
-       }
+}
 
 /*Example
 exports.getAuthorByID = function(ID) {

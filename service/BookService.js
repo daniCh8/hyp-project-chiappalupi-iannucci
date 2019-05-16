@@ -2,7 +2,7 @@
 
 let sqlDb;
 
-exports.booksDbSetup = function(database) {
+exports.bookDbSetup = function(database) {
   sqlDb = database;
   console.log("Checking if book table exists");
   return database.schema.hasTable("book").then(exists => {
@@ -100,7 +100,7 @@ exports.findBooksByName = function(name) {
   return sqlDb('book')
          .where((builder) =>
           builder.whereIn('author', authors)
-          )};
+)};
 
 /* Example
 exports.findBooksByAuthors = function(authors) {

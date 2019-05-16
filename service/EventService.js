@@ -1,4 +1,22 @@
-'use strict';
+"use strict";
+
+let sqlDb;
+
+exports.eventDbSetup = function(database) {
+  sqlDb = database;
+  console.log("Checking if event table exists");
+  return database.schema.hasTable("event").then(exists => {
+    if (!exists) {
+      console.log("The table doesn't exists: creating it.");
+      return database.schema.createTable("event", table => {
+        table.increments("eventID");
+        table.text("ISBN");
+        table.text("shop");
+        table.date("date");
+      });
+    }
+  });
+};
 
 
 /**
@@ -9,9 +27,8 @@
  * no response value expected for this operation
  **/
 exports.addEvent = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+  return sqlDb('event')
+         .insert(body);
 }
 
 
@@ -19,10 +36,16 @@ exports.addEvent = function(body) {
  * Find an event by its ID
  * Returns an event
  *
- * iD String ID of the book presentated in the event to find
+ * ID String ID of the book presentated in the event to find
  * returns List
  **/
-exports.getEventByID = function(iD) {
+exports.getEventByID = function(ID) {
+  return sqlDb('event')
+         .where('eventID', ID)
+}
+
+/*Example
+exports.getEventByID = function(ID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = [ {
@@ -40,17 +63,24 @@ exports.getEventByID = function(iD) {
       resolve();
     }
   });
-}
+}*/
 
 
 /**
- * Find an event by the ISBNs of the books presented in it
+ * Finds events by the ISBNs of the books presented in it
  * Returns the events where the books were presented
  *
- * iSBN String ISBN of the book presentated in the event to find
+ * ISBN String ISBN of the book presentated in the event to find
  * returns List
  **/
-exports.getEventByISBN = function(iSBN) {
+exports.getEventByISBN = function(ISBN) {
+  return sqlDb('event')
+         .where((builder) =>
+          builder.whereIn('ISBN', ISBN)
+}
+
+ /*Example
+exports.getEventByISBN = function(ISBN) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = [ {
@@ -68,7 +98,7 @@ exports.getEventByISBN = function(iSBN) {
       resolve();
     }
   });
-}
+}*/
 
 
 /**
