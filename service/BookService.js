@@ -9,7 +9,6 @@ exports.booksDbSetup = function(database) {
     if (!exists) {
       console.log("The table doesn't exists: creating it.");
       return database.schema.createTable("book", table => {
-        table.increments();
         table.text("ISBN");
         table.text("name");
         table.enum("theme", ["love", "death", "good vs. evil", "coming of age", "power and corruption", "survival", "courage and heroism", "prejudice", "individual vs. society", "war"]);
@@ -30,7 +29,8 @@ exports.booksDbSetup = function(database) {
  * no response value expected for this operation
  **/
 exports.addBook = function(body) {
-  return sqlDb('book').insert(body);
+  return sqlDb('book')
+         .insert(body)
 }
 
 

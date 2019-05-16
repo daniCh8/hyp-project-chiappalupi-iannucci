@@ -1,5 +1,23 @@
-'use strict';
+"use strict";
 
+let sqlDb;
+
+exports.booksDbSetup = function(database) {
+  sqlDb = database;
+  console.log("Checking if author table exists");
+  return database.schema.hasTable("author").then(exists => {
+    if (!exists) {
+      console.log("The table doesn't exists: creating it.");
+      return database.schema.createTable("author", table => {
+        table.increments("authorID");
+        table.text("name");
+        table.date("birthday");
+      });
+    }
+  });
+};
+
+//toDo examples, some methods, tests
 
 /**
  * Add a new author to the database
@@ -9,9 +27,8 @@
  * no response value expected for this operation
  **/
 exports.addAuthor = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+  return sqlDb('author')
+         .insert(body);
 }
 
 
@@ -19,14 +36,13 @@ exports.addAuthor = function(body) {
  * Deletes an author
  * 
  *
- * iD String Author object to delete
- * api_key String  (optional)
+ * ID String Author object to delete
  * no response value expected for this operation
  **/
-exports.deleteAuthor = function(iD,api_key) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+exports.deleteAuthor = function(ID) {
+  return sqlDb('author')
+         .where('authorID', ID)
+         .del()
 }
 
 
@@ -34,10 +50,16 @@ exports.deleteAuthor = function(iD,api_key) {
  * Find author by ID
  * Returns a single author
  *
- * iD String ID of the author to return
+ * ID int ID of the author to return
  * returns Author
  **/
-exports.getBookByID = function(iD) {
+exports.getAuthorByID = function(ID) {
+  return sqlDb('author')
+         .where('authorID', ID)
+       }
+
+/*Example
+exports.getAuthorByID = function(ID) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
@@ -51,7 +73,7 @@ exports.getBookByID = function(iD) {
       resolve();
     }
   });
-}
+}*/
 
 
 /**
