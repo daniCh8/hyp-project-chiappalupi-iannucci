@@ -20,6 +20,7 @@ exports.booksDbSetup = function(database) {
   });
 };
 
+//toDo examples, some methods, tests
 
 /**
  * Add a new book to the bookshop
@@ -29,9 +30,7 @@ exports.booksDbSetup = function(database) {
  * no response value expected for this operation
  **/
 exports.addBook = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+  return sqlDb('book').insert(body);
 }
 
 
@@ -39,14 +38,13 @@ exports.addBook = function(body) {
  * Deletes a book
  * 
  *
- * iSBN String Book ISBN to delete
- * api_key String  (optional)
+ * ISBN String Book ISBN to delete
  * no response value expected for this operation
  **/
-exports.deleteBook = function(iSBN,api_key) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+exports.deleteBook = function(ISBN) {
+  return sqlDb('book')
+         .where('ISBN', ISBN)
+         .del()
 }
 
 
@@ -57,7 +55,14 @@ exports.deleteBook = function(iSBN,api_key) {
  * name List Name values that need to be considered for filter
  * returns List
  **/
-exports.finBooksByName = function(name) {
+exports.findBooksByName = function(name) {
+  return sqlDb('book')
+         .where((builder) =>
+          builder.whereIn('name', name)
+          )};
+
+/*Example
+exports.findBooksByName = function(name) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = [ {
@@ -81,7 +86,7 @@ exports.finBooksByName = function(name) {
       resolve();
     }
   });
-}
+}*/
 
 
 /**
@@ -91,6 +96,13 @@ exports.finBooksByName = function(name) {
  * authors List Authors ID to filter by
  * returns List
  **/
+ exports.findBooksByAuthors = function(authors) {
+  return sqlDb('book')
+         .where((builder) =>
+          builder.whereIn('author', authors)
+          )};
+
+/* Example
 exports.findBooksByAuthors = function(authors) {
   return new Promise(function(resolve, reject) {
     var examples = {};
@@ -115,16 +127,23 @@ exports.findBooksByAuthors = function(authors) {
       resolve();
     }
   });
-}
+}*/
 
 
 /**
  * Finds Books by themes
- * Muliple books can be provided with comma separated strings.
+ * Muliple themes can be provided with comma separated strings.
  *
  * themes List Themes to filter by
  * returns List
  **/
+exports.findBooksByThemes = function(themes) {
+  return sqlDb('book')
+         .where((builder) =>
+          builder.whereIn('theme', themes)
+          )};
+
+ /*Example
 exports.findBooksByThemes = function(themes) {
   return new Promise(function(resolve, reject) {
     var examples = {};
@@ -149,7 +168,7 @@ exports.findBooksByThemes = function(themes) {
       resolve();
     }
   });
-}
+}*/
 
 
 /**
@@ -164,8 +183,8 @@ exports.findBooksByThemes = function(themes) {
          .where('ISBN', ISBN)
 };
 
-/* Examples?!?
-  exports.getBookByISBN = function(iSBN) {
+/* Example
+exports.getBookByISBN = function(iSBN) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
