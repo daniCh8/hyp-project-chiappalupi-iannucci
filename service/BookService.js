@@ -12,7 +12,7 @@ exports.bookDbSetup = function(database) {
         table.text("ISBN");
         table.text("name");
         table.enum("theme", ["love", "death", "good vs. evil", "coming of age", "power and corruption", "survival", "courage and heroism", "prejudice", "individual vs. society", "war"]);
-        table.enum("genre", ["fantasy", "science fiction", "westerns", "romance", "thriller", "mystery", "detective story", "dystopya", "memoir", "biography", "play", "musical", "satire", "haiku", "horror", "DIY", "dictionary", "young adult fiction", "children's book", "adult literature"]);
+        table.enum("genre", ["fantasy", "science fiction", "westerns", "romance", "thriller", "mystery", "detective story", "dystopya", "memoir", "biography", "play", "musical", "satire", "haiku", "horror", "DIY", "dictionary", "young adult fiction", "children book", "adult literature"]);
         table.enum("status", ["available", "out of stock"]);
       });
     }
