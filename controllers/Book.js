@@ -15,9 +15,9 @@ module.exports.addBook = function addBook (req, res, next) {
 };
 
 module.exports.deleteBook = function deleteBook (req, res, next) {
-  var iSBN = req.swagger.params['ISBN'].value;
+  var ISBN = req.swagger.params['ISBN'].value;
   var api_key = req.swagger.params['api_key'].value;
-  Book.deleteBook(iSBN,api_key)
+  Book.deleteBook(ISBN,api_key)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -26,9 +26,9 @@ module.exports.deleteBook = function deleteBook (req, res, next) {
     });
 };
 
-module.exports.finBooksByName = function finBooksByName (req, res, next) {
+module.exports.findBooksByName = function findBooksByName (req, res, next) {
   var name = req.swagger.params['name'].value;
-  Book.finBooksByName(name)
+  Book.findBooksByName(name)
     .then(function (response) {
       utils.writeJson(res, response);
     })

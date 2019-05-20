@@ -81,7 +81,7 @@ paths:
       - "book"
       summary: "Finds Book by name"
       description: "Multiple name values can be provided with comma separated strings"
-      operationId: "finBooksByName"
+      operationId: "findBooksByName"
       produces:
       - "application/xml"
       - "application/json"
