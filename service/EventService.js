@@ -78,7 +78,7 @@ exports.getEventByID = function(ID) {
 exports.getEventByISBN = function(ISBN) {
   return sqlDb('event')
          .where((builder) =>
-          builder.whereIn('ISBN', ISBN)
+          builder.whereIn('ISBN', ISBN))
 }
 
  /*Example
