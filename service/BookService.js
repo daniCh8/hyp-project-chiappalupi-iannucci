@@ -25,7 +25,7 @@ exports.writtenByDbSetup = function(database) {
   return database.schema.hasTable("writtenBy").then(exists => {
     if (!exists) {
       console.log("The table doesn't exists: creating it.");
-      return database.schema.createTable("book", table => {
+      return database.schema.createTable("writtenBy", table => {
         table.text("ISBN");
         table.text("authorID");
       });
