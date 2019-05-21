@@ -1,5 +1,6 @@
 const sqlDbFactory = require("knex");
 let { bookDbSetup } = require("./BookService");
+let { writtenByDbSetup } = require("./BookService");
 let { eventDbSetup } = require("./EventService");
 let { userDbSetup } = require("./UserService");
 let { authorDbSetup } = require("./AuthorService");
