@@ -20,6 +20,17 @@ exports.authorDbSetup = function(database) {
 //toDo examples, some methods, tests
 
 /**
+ * Get all the authors in the database
+ * Returns a list of authors
+ *
+ * returns list of Author
+ **/
+exports.getAuthors = function() {
+  return sqlDb
+          .table(author);
+};
+
+/**
  * Add a new author to the database
  * 
  *

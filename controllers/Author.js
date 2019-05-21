@@ -3,6 +3,16 @@
 var utils = require('../utils/writer.js');
 var Author = require('../service/AuthorService');
 
+module.exports.getAuthors = function getAuthors (req, res, next) {
+  Author.getAuthors()
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
 module.exports.addAuthor = function addAuthor (req, res, next) {
   var body = req.swagger.params['body'].value;
   Author.addAuthor(body)

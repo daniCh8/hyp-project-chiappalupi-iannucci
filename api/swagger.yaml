@@ -38,8 +38,8 @@ paths:
       - "application/xml"
       - "application/json"
       responses:
-        404:
-          description: "Invalid input"
+        200:
+          description: "successful operation"
       x-swagger-router-controller: "Book"
     post:
       tags:
@@ -657,6 +657,22 @@ paths:
           description: "Reservation not found"
       x-swagger-router-controller: "Reservation"
   /author:
+    get:
+      tags:
+        - "author"
+      summary: "Returns all the authors in the database"
+      description: ""
+      operationId: "getAuthors"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+      x-swagger-router-controller: "Author"
     post:
       tags:
       - "author"
