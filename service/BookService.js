@@ -50,7 +50,7 @@ exports.addBook = function(body) {
     "genre": body.genre,
     "status": body.status
   };
-  for (author in body.authors) {
+  for (i = 0; i < body.authors; i++) {
     sqlDb('writtenBy')
     .insert({
       "ISBN": body.ISBN,
