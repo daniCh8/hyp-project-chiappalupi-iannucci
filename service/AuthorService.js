@@ -26,8 +26,7 @@ exports.authorDbSetup = function(database) {
  * returns list of Author
  **/
 exports.getAuthors = function() {
-  return sqlDb
-          .table(author);
+  return sqlDb("author");
 };
 
 /**
