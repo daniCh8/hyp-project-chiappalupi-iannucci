@@ -33,6 +33,18 @@ exports.addBook = function(body) {
          .insert(body)
 }
 
+/**
+ * Get all the books in the database
+ * Returns a list of book
+ *
+ * returns list of Book
+ **/
+exports.getBooks = function() {
+  return sqlDb
+         .select()
+         .from('book')
+};
+
 
 /**
  * Deletes a book

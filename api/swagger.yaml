@@ -25,6 +25,19 @@ schemes:
 - "https"
 paths:
   /book:
+    get:
+      tags:
+      - "book"
+      summary: "Get all the books in the database"
+      description: ""
+      operationId: "getBooks"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      x-swagger-router-controller: "Book"
     post:
       tags:
       - "book"
