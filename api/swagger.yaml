@@ -37,6 +37,9 @@ paths:
       produces:
       - "application/xml"
       - "application/json"
+      responses:
+        404:
+          description: "Invalid input"
       x-swagger-router-controller: "Book"
     post:
       tags:
@@ -58,8 +61,12 @@ paths:
         schema:
           $ref: "#/definitions/Book"
       responses:
-        405:
-          description: "Invalid input"
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
       x-swagger-router-controller: "Book"
     put:
       tags:
