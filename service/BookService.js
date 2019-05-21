@@ -50,6 +50,7 @@ exports.addBook = function(body) {
     "genre": body.genre,
     "status": body.status
   };
+  var i;
   for (i = 0; i < body.authors; i++) {
     sqlDb('writtenBy')
     .insert({
