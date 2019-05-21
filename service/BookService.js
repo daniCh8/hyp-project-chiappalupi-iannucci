@@ -19,6 +19,20 @@ exports.bookDbSetup = function(database) {
   });
 };
 
+exports.writtenByDbSetup = function(database) {
+  sqlDb = database;
+  console.log("Checking if book table exists");
+  return database.schema.hasTable("writtenBy").then(exists => {
+    if (!exists) {
+      console.log("The table doesn't exists: creating it.");
+      return database.schema.createTable("book", table => {
+        table.text("ISBN");
+        table.text("authorID");
+      });
+    }
+  });
+};
+
 //toDo examples, some methods, tests
 
 /**
@@ -29,8 +43,21 @@ exports.bookDbSetup = function(database) {
  * no response value expected for this operation
  **/
 exports.addBook = function(body) {
-  return sqlDb('book')
-         .insert(body)
+  var bookObj = {
+    "ISBN": body.ISBN,
+    "name": body.name,
+    "theme": body.theme,
+    "genre": body.genre,
+    "status": body.status
+  };
+  for (author in body.authors) {
+    sqlDb('writtenBy')
+    .insert({
+      "ISBN": body.ISBN,
+      body.authors[author]
+    });
+  };
+  return sqlDb('book').insert(bookObj);
 }
 
 /**
@@ -41,10 +68,11 @@ exports.addBook = function(body) {
  **/
 exports.getBooks = function() {
   return sqlDb
-         .select()
-         .from('book')
+          .select('book.ISBN', 'book.name', 'book.theme', 'book.genre', 'book.status', 'author.name')
+          .from('book')
+          .innerJoin('writtenBy', 'book.ISBN', 'writtenBy.ISBN')
+          .innerJoin('author', 'author.authorID', 'writtenBy.authorID')
 };
-
 
 /**
  * Deletes a book
