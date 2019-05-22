@@ -70,9 +70,8 @@ module.exports.findBooksByThemes = function findBooksByThemes (req, res, next) {
 };
 
 module.exports.getBookByISBN = function getBookByISBN (req, res, next) {
-  var iSBN = req.swagger.params['ISBN'].value;
-  console.log("ciao sono arrivato fino a " + iSBN);
-  Book.getBookByISBN(iSBN)
+  var ISBN = req.swagger.params['ISBN'].value;
+  Book.getBookByISBN(ISBN)
     .then(function (response) {
       utils.writeJson(res, response);
     })

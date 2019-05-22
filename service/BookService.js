@@ -69,7 +69,7 @@ exports.addBook = function(body) {
  **/
 exports.getBooks = function() {
   return sqlDb
-          .select('book.ISBN', 'book.name', 'book.theme', 'book.genre', 'book.status', 'author.name')
+          .select()
           .from('book')
           .innerJoin('writtenBy', 'book.ISBN', 'writtenBy.ISBN')
           .innerJoin('author', 'author.authorID', 'writtenBy.authorID')
