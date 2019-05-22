@@ -56,7 +56,9 @@ exports.addBook = function(body) {
     .insert({
       "ISBN": body.ISBN,
       "authorID": body.authors[author]
-    }).then();
+    }).then(function (response) {
+      utils.writeJson(res, response);
+    });
   };
   return sqlDb('book').insert(bookObj);
 }
