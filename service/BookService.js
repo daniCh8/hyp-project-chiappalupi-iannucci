@@ -56,7 +56,7 @@ exports.addBook = function(body) {
     .insert({
       "ISBN": body.ISBN,
       "authorID": body.authors[author]
-    });
+    }).then();
   };
   return sqlDb('book').insert(bookObj);
 }
@@ -67,20 +67,12 @@ exports.addBook = function(body) {
  *
  * returns list of Book
  **/
-/*exports.getBooks = function() {
+exports.getBooks = function() {
   return sqlDb
           .select()
           .from('book')
           .innerJoin('writtenBy', 'book.ISBN', 'writtenBy.ISBN')
           .innerJoin('author', 'author.authorID', 'writtenBy.authorID')
-};*/
-
-exports.getBooks = function() {
-  return sqlDb
-          .select()
-          .from('book')
-          //.innerJoin('writtenBy', 'book.ISBN', 'writtenBy.ISBN')
-          //.innerJoin('author', 'author.authorID', 'writtenBy.authorID')
 };
 
 /**
