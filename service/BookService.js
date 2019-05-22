@@ -78,7 +78,7 @@ exports.addBook = function(body) {
 exports.getBooks = function() {
   return sqlDb
           .select()
-          .from('writtenBy')
+          .from('book')
           //.innerJoin('writtenBy', 'book.ISBN', 'writtenBy.ISBN')
           //.innerJoin('author', 'author.authorID', 'writtenBy.authorID')
 };
