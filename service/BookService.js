@@ -43,7 +43,7 @@ exports.writtenByDbSetup = function(database) {
  * no response value expected for this operation
  **/
 exports.addBook = function(body) {
-  sqlDb.select('ISBN').from(book).where('ISBN', body.ISBN).then(function (response) {
+  sqlDb.select('ISBN').from('book').where('ISBN', body.ISBN).then(function (response) {
       if(response == body.ISBN)
         return console.log('Can not add object: This ISBN already exists');
     });
