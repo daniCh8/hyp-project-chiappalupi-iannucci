@@ -7,10 +7,9 @@ let { authorDbSetup } = require("./AuthorService");
 let { reservationDbSetup } = require("./ReservationService");
 
 let sqlDb = sqlDbFactory({
-  client: "pg",
-  connection: process.env.DATABASE_URL,
+  client: 'pg',
+  connection: process.env.DATABASE_URL || 'postgres://bqhchwqizhttah:3f305ede33477f67e825e9333d32580d8678ac9f55e67c7efde91104f25a3e93@ec2-79-125-4-72.eu-west-1.compute.amazonaws.com:5432/d6cfugvechp74j?ssl=true',  
   ssl: true,
-  debug: true
 });
 
 function setupDataLayer() {
