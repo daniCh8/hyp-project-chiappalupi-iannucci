@@ -43,23 +43,6 @@ exports.writtenByDbSetup = function(database) {
  * no response value expected for this operation
  **/
 exports.addBook = function(body) {
-  var boolean = false;
-  console.log('1')
-  console.log(boolean)
-  this.getBookByISBN(body.ISBN).then(function (response) {
-  console.log('2')
-  console.log(boolean)
-    if(response[0].ISBN == body.ISBN) {
-      boolean = true;
-      console.log('3')
-      console.log(boolean)
-    }
-  })
-  console.log('4')
-  console.log(boolean)
-  if(boolean) {
-    return console.log('Can not add object: this ISBN already exists!');
-  }
   let authorRows = body.authors.map(author => { 
     return {
       "ISBN": body.ISBN,
@@ -73,9 +56,7 @@ exports.addBook = function(body) {
     "genre": body.genre,
     "status": body.status
   };
-  console.log(bookObj)
   return sqlDb('writtenBy').insert(authorRows).then(function (response) {
-    console.log('test1')
     return sqlDb('book').insert(bookObj)
   })
 }

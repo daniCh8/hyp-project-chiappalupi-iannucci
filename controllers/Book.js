@@ -3,15 +3,32 @@
 var utils = require('../utils/writer.js');
 var Book = require('../service/BookService');
 
+function isEmpty(obj) {
+    for(var prop in obj) {
+        if(obj.hasOwnProperty(prop))
+            return false;
+    }
+
+    return true;
+}
+
 module.exports.addBook = function addBook (req, res, next) {
   var body = req.swagger.params['body'].value;
-  Book.addBook(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  Book.getBookByISBN(body.ISBN).then(function (response) {
+    if(!isEmpty(response) && response[0].ISBN == body.ISBN) {
+      console.log('Can not add object: this ISBN already exists!');
+      utils.writeJson(res, 'Object not added: this ISBN already exists');
+    }
+    else {
+      Book.addBook(body)
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+    }
+  })
 };
 
 module.exports.getBooks = function getBooks (req, res, next) {
