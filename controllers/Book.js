@@ -4,7 +4,6 @@ var utils = require('../utils/writer.js');
 var Book = require('../service/BookService');
 
 module.exports.addBook = function addBook (req, res, next) {
-  console.log('1243567')
   var body = req.swagger.params['body'].value;
   Book.addBook(body)
     .then(function (response) {
