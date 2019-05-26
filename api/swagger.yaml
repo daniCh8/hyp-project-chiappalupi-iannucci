@@ -108,7 +108,7 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "themes"
+      - name: "theme"
         in: "query"
         description: "Themes to filter by"
         required: true

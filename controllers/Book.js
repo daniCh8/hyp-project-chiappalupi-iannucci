@@ -76,8 +76,8 @@ module.exports.findBooksByAuthors = function findBooksByAuthors (req, res, next)
 };
 
 module.exports.findBooksByThemes = function findBooksByThemes (req, res, next) {
-  var themes = req.swagger.params['themes'].value;
-  Book.findBooksByThemes(themes)
+  var theme = req.swagger.params['theme'].value;
+  Book.findBooksByThemes(theme)
     .then(function (response) {
       utils.writeJson(res, response);
     })
