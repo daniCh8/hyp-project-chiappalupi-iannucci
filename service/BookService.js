@@ -93,9 +93,9 @@ exports.getBooks = function() {
  * no response value expected for this operation
  **/
 exports.deleteBook = function(ISBN) {
-  return sqlDb('book')
-         .where('ISBN', ISBN)
-         .del()
+  return sqlDb('book').where('ISBN', ISBN).del().then(function (response) {
+    return sqlDb('writtenBy').where('ISBN', ISBN).del()
+  })
 }
 
 
