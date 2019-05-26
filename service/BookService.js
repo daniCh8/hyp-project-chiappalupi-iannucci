@@ -101,16 +101,27 @@ exports.deleteBook = function(ISBN) {
 
 /**
  * Finds Book by name
- * Multiple name values can be provided with comma separated strings
  *
  * name List Name values that need to be considered for filter
  * returns List
  **/
 exports.findBooksByName = function(name) {
-  return sqlDb('book')
-         .where((builder) =>
-          builder.whereIn('name', name)
-          )};
+  return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function (response) {
+    var authorsJoined = response;
+    return sqlDb('book').where((builder) => builder.whereIn('name', name)).then(function (response) {
+      for (var i = 0; i < response.length; i++) {
+        var authorsArr = new Array()
+        for (var j = 0; j < authorsJoined.length; j++) {
+          if(authorsJoined[j].ISBN == response[i].ISBN) {
+            authorsArr.push(authorsJoined[j].name)
+          }
+        }
+        response[i].authors = authorsArr
+      }
+      return response
+    })
+  })
+};
 
 /*Example
 exports.findBooksByName = function(name) {
@@ -142,16 +153,33 @@ exports.findBooksByName = function(name) {
 
 /**
  * Finds Books by author
- * Muliple authors can be provided with comma separated strings.
  *
  * authors List Authors ID to filter by
  * returns List
  **/
- exports.findBooksByAuthors = function(authors) {
-  return sqlDb('book')
-         .where((builder) =>
-          builder.whereIn('author', authors)
-)};
+ exports.findBooksByAuthors = function(author) {
+  return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').whereIn('a.name', author).then(function (response) {
+    var isbnArr = new Array()
+    for(var k = 0; k < response.length; k++) {
+      isbnArr.push(response[k].ISBN)
+    }
+    return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function (response) {
+      var authorsJoined = response;
+      return sqlDb('book').whereIn('ISBN', isbnArr).then(function (response) {
+        for (var i = 0; i < response.length; i++) {
+          var authorsArr = new Array()
+          for (var j = 0; j < authorsJoined.length; j++) {
+            if(authorsJoined[j].ISBN == response[i].ISBN) {
+              authorsArr.push(authorsJoined[j].name)
+            }
+          }
+          response[i].authors = authorsArr
+        }
+        return response
+      })
+    })
+  });
+}
 
 /* Example
 exports.findBooksByAuthors = function(authors) {
@@ -183,7 +211,6 @@ exports.findBooksByAuthors = function(authors) {
 
 /**
  * Finds Books by themes
- * Muliple themes can be provided with comma separated strings.
  *
  * themes List Themes to filter by
  * returns List

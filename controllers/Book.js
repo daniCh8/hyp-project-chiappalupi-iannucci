@@ -65,8 +65,8 @@ module.exports.findBooksByName = function findBooksByName (req, res, next) {
 };
 
 module.exports.findBooksByAuthors = function findBooksByAuthors (req, res, next) {
-  var authors = req.swagger.params['authors'].value;
-  Book.findBooksByAuthors(authors)
+  var author = req.swagger.params['author'].value;
+  Book.findBooksByAuthors(author)
     .then(function (response) {
       utils.writeJson(res, response);
     })

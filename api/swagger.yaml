@@ -73,7 +73,7 @@ paths:
       tags:
       - "book"
       summary: "Finds Book by name"
-      description: "Multiple name values can be provided with comma separated strings"
+      description: ""
       operationId: "findBooksByName"
       produces:
       - "application/xml"
@@ -102,7 +102,7 @@ paths:
       tags:
       - "book"
       summary: "Finds Books by themes"
-      description: "Muliple books can be provided with comma separated strings."
+      description: ""
       operationId: "findBooksByThemes"
       produces:
       - "application/xml"
@@ -142,13 +142,12 @@ paths:
       tags:
       - "book"
       summary: "Finds Books by author"
-      description: "Muliple authors can be provided with comma separated strings."
       operationId: "findBooksByAuthors"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "authors"
+      - name: "author"
         in: "query"
         description: "Authors ID to filter by"
         required: true
@@ -692,7 +691,7 @@ paths:
         405:
           description: "Invalid input"
       x-swagger-router-controller: "Event"
-    /event/findByID:
+  /event/findByID:
     get:
       tags:
       - "event"
