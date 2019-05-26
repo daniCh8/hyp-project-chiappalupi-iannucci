@@ -22,6 +22,29 @@ exports.eventDbSetup = function(database) {
 
 
 /**
+ * Get all the events in the database
+ * Returns a list of events
+ *
+ * returns list of Event
+ **/
+exports.getEvents = function() {
+  return sqlDb("event");
+};
+
+
+/**
+ * Deletes an event
+ * 
+ *
+ * ID Integer Event ID to delete
+ * no response value expected for this operation
+ **/
+exports.deleteEvent = function(ID) {
+  return sqlDb('event').where('eventID', ID).del()
+}
+
+
+/**
  * Add a new event to the bookshop
  * 
  *
@@ -29,8 +52,7 @@ exports.eventDbSetup = function(database) {
  * no response value expected for this operation
  **/
 exports.addEvent = function(body) {
-  return sqlDb('event')
-         .insert(body);
+  return sqlDb('event').insert(body);
 }
 
 
@@ -42,8 +64,7 @@ exports.addEvent = function(body) {
  * returns List
  **/
 exports.getEventByID = function(ID) {
-  return sqlDb('event')
-         .where('eventID', ID)
+  return sqlDb('event').where('eventID', ID)
 }
 
 /*Example
@@ -76,9 +97,7 @@ exports.getEventByID = function(ID) {
  * returns List
  **/
 exports.getEventByISBN = function(ISBN) {
-  return sqlDb('event')
-         .where((builder) =>
-          builder.whereIn('ISBN', ISBN))
+  return sqlDb('event').whereIn('ISBN', ISBN)
 }
 
  /*Example
