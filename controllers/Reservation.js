@@ -61,17 +61,6 @@ module.exports.getReservationsByUsername = function getReservationsByUsername (r
     });
 };
 
-module.exports.updateReservation = function updateReservation (req, res, next) {
-  var body = req.swagger.params['body'].value;
-  Reservation.updateReservation(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
 module.exports.updateReservationBookQuantity = function updateReservationBookQuantity (req, res, next) {
   var iD = req.swagger.params['ID'].value;
   var iSBN = req.swagger.params['ISBN'].value;

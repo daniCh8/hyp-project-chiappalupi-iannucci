@@ -46,14 +46,3 @@ module.exports.getBookByID = function getBookByID (req, res, next) {
       utils.writeJson(res, response);
     });
 };
-
-module.exports.updateAuthor = function updateAuthor (req, res, next) {
-  var body = req.swagger.params['body'].value;
-  Author.updateAuthor(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};

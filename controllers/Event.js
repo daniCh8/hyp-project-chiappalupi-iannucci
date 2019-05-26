@@ -35,14 +35,3 @@ module.exports.getEventByISBN = function getEventByISBN (req, res, next) {
       utils.writeJson(res, response);
     });
 };
-
-module.exports.updateEvent = function updateEvent (req, res, next) {
-  var body = req.swagger.params['body'].value;
-  Event.updateEvent(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};

@@ -68,33 +68,6 @@ paths:
             items:
               $ref: "#/definitions/Book"
       x-swagger-router-controller: "Book"
-    put:
-      tags:
-      - "book"
-      summary: "Update an existing book"
-      description: ""
-      operationId: "updateBook"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Book object that needs to be updated"
-        required: true
-        schema:
-          $ref: "#/definitions/Book"
-      responses:
-        400:
-          description: "Invalid ISBN supplied"
-        404:
-          description: "Book not found"
-        405:
-          description: "Validation exception"
-      x-swagger-router-controller: "Book"
   /book/findByName:
     get:
       tags:
@@ -424,33 +397,6 @@ paths:
         404:
           description: "User not found"
       x-swagger-router-controller: "User"
-    put:
-      tags:
-      - "user"
-      summary: "Updated user"
-      description: "This can only be done by the logged in user."
-      operationId: "updateUser"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "name that need to be updated"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Updated user object"
-        required: true
-        schema:
-          $ref: "#/definitions/User"
-      responses:
-        400:
-          description: "Invalid user supplied"
-        404:
-          description: "User not found"
-      x-swagger-router-controller: "User"
     delete:
       tags:
       - "user"
@@ -495,31 +441,6 @@ paths:
       responses:
         405:
           description: "Invalid input"
-      x-swagger-router-controller: "Reservation"
-    put:
-      tags:
-      - "reservation"
-      summary: "Update an existing reservation"
-      description: ""
-      operationId: "updateReservation"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Reservation object that needs to be updated"
-        required: true
-        schema:
-          $ref: "#/definitions/Reservation"
-      responses:
-        404:
-          description: "Reservation not found"
-        405:
-          description: "Validation exception"
       x-swagger-router-controller: "Reservation"
   /reservation/{username}:
     get:
@@ -696,33 +617,6 @@ paths:
         405:
           description: "Invalid input"
       x-swagger-router-controller: "Author"
-    put:
-      tags:
-      - "author"
-      summary: "Update an existing author"
-      description: ""
-      operationId: "updateAuthor"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Author object that needs to be updated"
-        required: true
-        schema:
-          $ref: "#/definitions/Author"
-      responses:
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Author not found"
-        405:
-          description: "Validation exception"
-      x-swagger-router-controller: "Author"
   /author/{ID}:
     get:
       tags:
@@ -798,34 +692,7 @@ paths:
         405:
           description: "Invalid input"
       x-swagger-router-controller: "Event"
-    put:
-      tags:
-      - "event"
-      summary: "Update an existing event"
-      description: ""
-      operationId: "updateEvent"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Event object that needs to be updated"
-        required: true
-        schema:
-          $ref: "#/definitions/Event"
-      responses:
-        400:
-          description: "Invalid ID or ISBN supplied"
-        404:
-          description: "Event not found"
-        405:
-          description: "Validation exception"
-      x-swagger-router-controller: "Event"
-  /event/findByID:
+    /event/findByID:
     get:
       tags:
       - "event"

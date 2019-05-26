@@ -256,20 +256,6 @@ exports.getBookByISBN = function(iSBN) {
 
 
 /**
- * Update an existing book
- * 
- *
- * body Book Book object that needs to be updated
- * no response value expected for this operation
- **/
-exports.updateBook = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
-}
-
-
-/**
  * uploads an image
  * 
  *

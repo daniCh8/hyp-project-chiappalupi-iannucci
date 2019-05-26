@@ -97,17 +97,6 @@ module.exports.getBookByISBN = function getBookByISBN (req, res, next) {
     });
 };
 
-module.exports.updateBook = function updateBook (req, res, next) {
-  var body = req.swagger.params['body'].value;
-  Book.updateBook(body)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
 module.exports.uploadFile = function uploadFile (req, res, next) {
   var iSBN = req.swagger.params['ISBN'].value;
   var additionalMetadata = req.swagger.params['additionalMetadata'].value;

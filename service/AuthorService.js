@@ -84,18 +84,3 @@ exports.getAuthorByID = function(ID) {
     }
   });
 }*/
-
-
-/**
- * Update an existing author
- * 
- *
- * body Author Author object that needs to be updated
- * no response value expected for this operation
- **/
-exports.updateAuthor = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
-}
-

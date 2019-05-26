@@ -101,18 +101,3 @@ exports.getEventByISBN = function(ISBN) {
     }
   });
 }*/
-
-
-/**
- * Update an existing event
- * 
- *
- * body Event Event object that needs to be updated
- * no response value expected for this operation
- **/
-exports.updateEvent = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
-}
-

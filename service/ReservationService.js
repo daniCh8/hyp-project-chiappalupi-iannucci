@@ -125,20 +125,6 @@ exports.getReservationsByUsername = function(username) {
 
 
 /**
- * Update an existing reservation
- * 
- *
- * body Reservation Reservation object that needs to be updated
- * no response value expected for this operation
- **/
-exports.updateReservation = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
-}
-
-
-/**
  * Update a reservation
  * 
  *
