@@ -27,7 +27,7 @@ exports.writtenByDbSetup = function(database) {
       console.log("The table doesn't exists: creating it.");
       return database.schema.createTable("writtenBy", table => {
         table.text("ISBN");
-        table.text("authorID");
+        table.integer("authorID");
       });
     }
   });
@@ -68,11 +68,21 @@ exports.addBook = function(body) {
  * returns list of Book
  **/
 exports.getBooks = function() {
-  return sqlDb
-          .select()
-          .from('book')
-          .innerJoin('writtenBy', 'book.ISBN', 'writtenBy.ISBN')
-          .innerJoin('author', 'author.authorID', 'writtenBy.authorID')
+  return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function (response) {
+    var authorsJoined = response;
+    return sqlDb('book').then(function (response) {
+      for (var i = 0; i < response.length; i++) {
+        var authorsArr = new Array()
+        for (var j = 0; j < authorsJoined.length; j++) {
+          if(authorsJoined[j].ISBN == response[i].ISBN) {
+            authorsArr.push(authorsJoined[j].name)
+          }
+        }
+        response[i].authors = authorsArr
+      }
+      return response
+    })
+  })
 };
 
 /**
