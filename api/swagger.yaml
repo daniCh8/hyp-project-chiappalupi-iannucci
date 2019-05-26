@@ -622,7 +622,7 @@ paths:
       - "author"
       summary: "Find author by ID"
       description: "Returns a single author"
-      operationId: "getBookByID"
+      operationId: "getAuthorByID"
       produces:
       - "application/xml"
       - "application/json"
@@ -666,6 +666,35 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Author not found"
+      x-swagger-router-controller: "Author"
+  /author/findByName:
+    get:
+      tags:
+      - "book"
+      summary: "Finds Authors by names"
+      description: ""
+      operationId: "findAuthorsByName"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "Author names to filter by"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Author"
+        400:
+          description: "Invalid name value"
       x-swagger-router-controller: "Author"
   /event:
     post:

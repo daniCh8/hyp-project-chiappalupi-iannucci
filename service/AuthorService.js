@@ -37,8 +37,7 @@ exports.getAuthors = function() {
  * no response value expected for this operation
  **/
 exports.addAuthor = function(body) {
-  return sqlDb('author')
-         .insert(body);
+  return sqlDb('author').insert(body);
 }
 
 
@@ -50,9 +49,7 @@ exports.addAuthor = function(body) {
  * no response value expected for this operation
  **/
 exports.deleteAuthor = function(ID) {
-  return sqlDb('author')
-         .where('authorID', ID)
-         .del()
+  return sqlDb('author').where('authorID', ID).del()
 }
 
 
@@ -64,23 +61,15 @@ exports.deleteAuthor = function(ID) {
  * returns Author
  **/
 exports.getAuthorByID = function(ID) {
-  return sqlDb('author')
-         .where('authorID', ID)
+  return sqlDb('author').where('authorID', ID)
 }
 
-/*Example
-exports.getAuthorByID = function(ID) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "birthday" : "11/03/1952",
-  "name" : "Douglas Adams",
-  "ID" : "42"
+/**
+ * Finds Books by themes
+ *
+ * themes List Themes to filter by
+ * returns List
+ **/
+exports.findAuthorsByName = function(names) {
+  return sqlDb('author').whereIn('name', names)
 };
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}*/
