@@ -269,8 +269,21 @@ exports.findBooksByThemes = function(themes) {
  * returns Book
  **/
  exports.getBookByISBN = function(ISBN) {
-  return sqlDb('book')
-         .where('ISBN', ISBN)
+  return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function (response) {
+    var authorsJoined = response;
+    return sqlDb('book').where('ISBN', ISBN).then(function (response) {
+      for (var i = 0; i < response.length; i++) {
+        var authorsArr = new Array()
+        for (var j = 0; j < authorsJoined.length; j++) {
+          if(authorsJoined[j].ISBN == response[i].ISBN) {
+            authorsArr.push(authorsJoined[j].name)
+          }
+        }
+        response[i].authors = authorsArr
+      }
+      return response
+    })
+  })
 };
 
 /* Example
