@@ -14,7 +14,7 @@ let sqlDb = sqlDbFactory({
 
 function setupDataLayer() {
   console.log("Setting up data layer");
-  return bookDbSetup(sqlDb) && writtenByDbSetup(sqlDb) && eventDbSetup(sqlDb) && userDbSetup(sqlDb) && authorDbSetup(sqlDb) && reservationDbSetup(sqlDb);
+  return bookDbSetup(sqlDb) && writtenByDbSetup(sqlDb) && reservationDbSetup(sqlDb) && eventDbSetup(sqlDb) && userDbSetup(sqlDb) && authorDbSetup(sqlDb);
 }
 
 module.exports = { database: sqlDb, setupDataLayer };

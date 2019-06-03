@@ -37,9 +37,33 @@ paths:
       produces:
       - "application/xml"
       - "application/json"
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: |
+            {
+              "statusCode" : 200
+            }
+        responses:
+          "default":
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods : "'*'"
+              method.response.header.Access-Control-Allow-Origin : "'*'"
+            responseTemplates:
+              application/json: |
+                {}
       responses:
         200:
-          description: "successful operation"
+          description: Successful Operation
+          headers:
+            Access-Control-Allow-Headers:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Origin:
+              type: "string"
       x-swagger-router-controller: "Book"
     post:
       tags:
@@ -865,18 +889,18 @@ definitions:
   Reservation:
     type: "object"
     properties:
+      ID:
+        type: "integer"
+        example: "42"
+        description: "reservations identifier code"
       ISBN:
         type: "string"
         example: "9780330508117"
-      ID:
-        type: "string"
-        example: "42"
-        description: "reservations identifier code"
       shop:
         type: "string"
         example: "La Feltrinelli"
         description: "fisical shop name"
-      user:
+      username:
         type: "string"
         example: "daniCh"
         description: "user username"
