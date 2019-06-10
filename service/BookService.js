@@ -7,7 +7,7 @@ exports.bookDbSetup = function(database) {
   console.log("Checking if book table exists");
   return database.schema.hasTable("book").then(exists => {
     if (!exists) {
-      console.log("The table doesn't exists: creating it.");
+      console.log("The table BOOK doesn't exists: creating it.");
       return database.schema.createTable("book", table => {
         table.text("ISBN");
         table.text("name");

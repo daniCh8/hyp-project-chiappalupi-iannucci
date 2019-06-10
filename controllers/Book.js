@@ -32,8 +32,7 @@ module.exports.addBook = function addBook (req, res, next) {
 };
 
 module.exports.getBooks = function getBooks (req, res, next) {
-  Book.getBooks()
-    .then(function (response) {
+    Book.getBooks().then(function (response) {
       utils.writeJson(res, response);
     })
     .catch(function (response) {

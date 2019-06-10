@@ -7,7 +7,7 @@ exports.eventDbSetup = function(database) {
   console.log("Checking if event table exists");
   return database.schema.hasTable("event").then(exists => {
     if (!exists) {
-      console.log("The table doesn't exists: creating it.");
+      console.log("The table EVENT doesn't exists: creating it.");
       return database.schema.createTable("event", table => {
         table.increments("eventID");
         table.text("ISBN");

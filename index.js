@@ -10,6 +10,11 @@ var app = require('connect')();
 var swaggerTools = require('swagger-tools');
 var jsyaml = require('js-yaml');
 var serverPort = process.env.PORT || 8080;
+let cookieSession = require("cookie-session");
+let cookieParser = require("cookie-parser");
+
+app.use(cookieParser());
+app.use(cookieSession({ name: "session", keys: ["abc", "def"] }));
 
 // swaggerRouter configuration
 var options = {

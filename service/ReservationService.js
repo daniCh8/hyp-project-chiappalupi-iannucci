@@ -7,7 +7,7 @@ exports.reservationDbSetup = function(database) {
   console.log("Checking if reservation table exists");
   return database.schema.hasTable("reservation").then(exists => {
     if (!exists) {
-      console.log("The table doesn't exists: creating it.");
+      console.log("The table RESERVATION doesn't exists: creating it.");
       return database.schema.createTable("reservation", table => {
         table.increments("reservationID");
         table.text("ISBN");

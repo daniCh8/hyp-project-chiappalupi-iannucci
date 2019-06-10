@@ -7,7 +7,7 @@ exports.authorDbSetup = function(database) {
   console.log("Checking if author table exists");
   return database.schema.hasTable("author").then(exists => {
     if (!exists) {
-      console.log("The table doesn't exists: creating it.");
+      console.log("The table AUTHOR doesn't exists: creating it.");
       return database.schema.createTable("author", table => {
         table.increments("authorID");
         table.text("name");

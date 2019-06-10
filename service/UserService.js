@@ -7,14 +7,13 @@ exports.userDbSetup = function(database) {
   console.log("Checking if user table exists");
   return database.schema.hasTable("user").then(exists => {
     if (!exists) {
-      console.log("The table doesn't exists: creating it.");
+      console.log("The table USER doesn't exists: creating it.");
       return database.schema.createTable("user", table => {
         table.text("username");
         table.text("firstName");
         table.text("lastName");
         table.text("email");
         table.text("password");
-        table.text("favouriteGeneres");
       });
     }
   });
@@ -23,44 +22,35 @@ exports.userDbSetup = function(database) {
 //toDo examples, some methods, tests
 
 /**
- * Create user
- * This can only be done by the logged in user.
+ * Login
+ * Login with a form
  *
- * body User Created user object
+ * username String 
+ * password String 
  * no response value expected for this operation
  **/
-exports.createUser = function(body) {
-  return sqlDb('user')
-         .insert(body);
+exports.userLogin = function(username,password) {
+  return sqlDb('user').where('username', username).then(function(response) {
+              var exists = false;
+              if(response.length == 0) return false;
+              if(response[0].username != username) return false;
+              if(response[0].password != password) return false;
+              return true;
+          })
 }
 
 
 /**
- * Creates list of users with given input array
- * 
+ * Register
+ * Register into the store
  *
- * body List List of user object
+ * body User 
  * no response value expected for this operation
  **/
-exports.createUsersWithArrayInput = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+exports.userRegister = function(body) {
+  return sqlDb('user').insert(body);
 }
 
-
-/**
- * Creates list of users with given input array
- * 
- *
- * body List List of user object
- * no response value expected for this operation
- **/
-exports.createUsersWithListInput = function(body) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
-}
 
 
 /**
@@ -71,9 +61,7 @@ exports.createUsersWithListInput = function(body) {
  * no response value expected for this operation
  **/
 exports.deleteUser = function(username) {
-  return sqlDb('user')
-         .where('username', username)
-         .del()
+  return sqlDb('user').where('username', username).del()
 }
 
 
@@ -85,50 +73,8 @@ exports.deleteUser = function(username) {
  * returns User
  **/
  exports.getUserByName = function(username) {
-  return sqlDb('user')
-          .where('username', username)
+  return sqlDb('user').where('username', username)
  }
-
- /*Example
-exports.getUserByName = function(username) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "firstName" : "Daniele",
-  "lastName" : "Chiappalupi",
-  "password" : "barbagianni",
-  "favouriteGeneres" : "[fantasy, science fiction]",
-  "email" : "daniele.chiappalupi@mail.polimi.it",
-  "username" : "daniCh"
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}
-
-
-/**
- * Logs user into the system
- * 
- *
- * username String The username for login
- * password String The password for login
- * returns String
- **/
-exports.loginUser = function(username,password) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = "";
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}
 
 
 /**
