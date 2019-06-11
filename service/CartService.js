@@ -11,6 +11,7 @@ exports.cartDbSetup = function(database) {
             return database.schema.createTable("cart", table => {
                 table.text("username");
                 table.integer("reservationID");
+                table.integer("sessionID");
             });
         }
     });

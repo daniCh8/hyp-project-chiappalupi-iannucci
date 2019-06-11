@@ -3,20 +3,20 @@
 let sqlDb;
 
 exports.userDbSetup = function(database) {
-  sqlDb = database;
-  console.log("Checking if user table exists");
-  return database.schema.hasTable("user").then(exists => {
-    if (!exists) {
-      console.log("The table USER doesn't exists: creating it.");
-      return database.schema.createTable("user", table => {
-        table.text("username");
-        table.text("firstName");
-        table.text("lastName");
-        table.text("email");
-        table.text("password");
-      });
-    }
-  });
+    sqlDb = database;
+    console.log("Checking if user table exists");
+    return database.schema.hasTable("user").then(exists => {
+        if (!exists) {
+            console.log("The table USER doesn't exists: creating it.");
+            return database.schema.createTable("user", table => {
+                table.text("username");
+                table.text("firstName");
+                table.text("lastName");
+                table.text("email");
+                table.text("password");
+            });
+        }
+    });
 };
 
 //toDo examples, some methods, tests
@@ -29,14 +29,14 @@ exports.userDbSetup = function(database) {
  * password String 
  * no response value expected for this operation
  **/
-exports.userLogin = function(username,password) {
-  return sqlDb('user').where('username', username).then(function(response) {
-              var exists = false;
-              if(response.length == 0) return false;
-              if(response[0].username != username) return false;
-              if(response[0].password != password) return false;
-              return true;
-          })
+exports.userLogin = function(username, password) {
+    return sqlDb('user').where('username', username).then(function(response) {
+        var exists = false;
+        if (response.length == 0) return false;
+        if (response[0].username != username) return false;
+        if (response[0].password != password) return false;
+        return true;
+    })
 }
 
 
@@ -48,7 +48,7 @@ exports.userLogin = function(username,password) {
  * no response value expected for this operation
  **/
 exports.userRegister = function(body) {
-  return sqlDb('user').insert(body);
+    return sqlDb('user').insert(body);
 }
 
 
@@ -61,7 +61,7 @@ exports.userRegister = function(body) {
  * no response value expected for this operation
  **/
 exports.deleteUser = function(username) {
-  return sqlDb('user').where('username', username).del()
+    return sqlDb('user').where('username', username).del()
 }
 
 
@@ -72,9 +72,9 @@ exports.deleteUser = function(username) {
  * username String The name that needs to be fetched. Use user1 for testing. 
  * returns User
  **/
- exports.getUserByName = function(username) {
-  return sqlDb('user').where('username', username)
- }
+exports.getUserByName = function(username) {
+    return sqlDb('user').where('username', username)
+}
 
 
 /**
@@ -84,7 +84,7 @@ exports.deleteUser = function(username) {
  * no response value expected for this operation
  **/
 exports.logoutUser = function() {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+    return new Promise(function(resolve, reject) {
+        resolve();
+    });
 }

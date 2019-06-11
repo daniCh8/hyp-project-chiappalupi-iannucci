@@ -7,6 +7,9 @@ module.exports.addReservation = function addReservation (req, res, next) {
   var body = req.swagger.params['body'].value;
   Reservation.addReservation(body)
     .then(function (response) {
+      if(!req.loggedin) response = {
+        "not authorized": true
+      }
       utils.writeJson(res, response);
     })
     .catch(function (response) {
@@ -19,6 +22,9 @@ module.exports.deleteReservation = function deleteReservation (req, res, next) {
   var ISBN = req.swagger.params['ISBN'].value;
   Reservation.deleteReservation(username, ISBN)
     .then(function (response) {
+      if(!req.loggedin) response = {
+        "not authorized": true
+      }
       utils.writeJson(res, response);
     })
     .catch(function (response) {
@@ -30,6 +36,9 @@ module.exports.deleteUserReservations = function deleteUserReservations (req, re
   var username = req.swagger.params['username'].value;
   Reservation.deleteUserReservations(username)
     .then(function (response) {
+      if(!req.loggedin) response = {
+        "not authorized": true
+      }
       utils.writeJson(res, response);
     })
     .catch(function (response) {
@@ -41,6 +50,9 @@ module.exports.getReservationsByUsername = function getReservationsByUsername (r
   var username = req.swagger.params['username'].value;
   Reservation.getReservationsByUsername(username)
     .then(function (response) {
+      if(!req.loggedin) response = {
+        "not authorized": true
+      }
       utils.writeJson(res, response);
     })
     .catch(function (response) {
@@ -54,6 +66,9 @@ module.exports.updateReservationBookQuantity = function updateReservationBookQua
   var quantity = req.swagger.params['quantity'].value;
   Reservation.updateReservationBookQuantity(username, ISBN, quantity)
     .then(function (response) {
+      if(!req.loggedin) response = {
+        "not authorized": true
+      }
       utils.writeJson(res, response);
     })
     .catch(function (response) {

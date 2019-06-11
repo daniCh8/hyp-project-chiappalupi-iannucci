@@ -733,6 +733,10 @@ definitions:
   Cart:
     type: "object"
     properties:
+      username:
+        type: "string"
+      sessionID:
+        type: "string"
       reservations:
         type: "array"
         items:

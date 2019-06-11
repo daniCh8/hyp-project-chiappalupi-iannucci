@@ -33,7 +33,8 @@ exports.addReservation = function(body) {
         return sqlDb('reservation').max('reservationID').where('username', body.username).then(function(max) {
           var cartObj = {
               "username": body.username,
-              "reservationID": max[0].max
+              "reservationID": max[0].max,
+              "sessionID": sessionID
           } 
           return sqlDb('cart').insert(cartObj).then(function() {return returnResponse})
           })

@@ -4,17 +4,21 @@ var utils = require('../utils/writer.js');
 var User = require('../service/UserService');
 
 module.exports.userLogin = function userLogin(req, res, next) {
-	var username = req.swagger.params['username'].value;
-	var password = req.swagger.params['password'].value;
+    var username = req.swagger.params['username'].value;
+    var password = req.swagger.params['password'].value;
     User.userLogin(username, password)
         .then(function(response) {
-            if (response == true) 
-            	req.session.loggedin = true
+            if (response == true)
+                req.session.loggedin = true
             return response;
         }).then(function(response) {
-        	var string = 'logged in!';
-        	if(response != true) string = 'wrong username or password.'
-             utils.writeJson(res, string);
+            var json = {
+                "logged in": true
+            }
+            if (response != true) json = {
+                "wrong username or password": true
+            }
+            utils.writeJson(res, json);
         })
         .catch(function(response) {
             utils.writeJson(res, response);
@@ -36,6 +40,9 @@ module.exports.deleteUser = function deleteUser(req, res, next) {
     var username = req.swagger.params['username'].value;
     User.deleteUser(username)
         .then(function(response) {
+            if (!req.loggedin) response = {
+                "not authorized": true
+            }
             utils.writeJson(res, response);
         })
         .catch(function(response) {
@@ -47,6 +54,9 @@ module.exports.getUserByName = function getUserByName(req, res, next) {
     var username = req.swagger.params['username'].value;
     User.getUserByName(username)
         .then(function(response) {
+            if (!req.loggedin) response = {
+                "not authorized": true
+            }
             utils.writeJson(res, response);
         })
         .catch(function(response) {
