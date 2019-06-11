@@ -8,7 +8,6 @@ function isEmpty(obj) {
         if(obj.hasOwnProperty(prop))
             return false;
     }
-
     return true;
 }
 
@@ -42,8 +41,7 @@ module.exports.getBooks = function getBooks (req, res, next) {
 
 module.exports.deleteBook = function deleteBook (req, res, next) {
   var ISBN = req.swagger.params['ISBN'].value;
-  var api_key = req.swagger.params['api_key'].value;
-  Book.deleteBook(ISBN,api_key)
+  Book.deleteBook(ISBN)
     .then(function (response) {
       utils.writeJson(res, response);
     })

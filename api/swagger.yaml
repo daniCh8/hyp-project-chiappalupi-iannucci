@@ -201,10 +201,6 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
       - name: "ISBN"
         in: "path"
         description: "Book ISBN to delete"
@@ -246,8 +242,6 @@ paths:
       responses:
         200:
           description: "successful operation"
-          schema:
-            $ref: "#/definitions/ApiResponse"
       x-swagger-router-controller: "Book"
   /user/login:
     post:
@@ -420,10 +414,6 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
       - name: "username"
         in: "path"
         description: "Username of the user of the reservations to delete"
@@ -433,31 +423,7 @@ paths:
         404:
           description: "No reservations found for the username provided"
       x-swagger-router-controller: "Reservation"
-  /reservation/findByID:
-    get:
-      tags:
-      - "reservation"
-      summary: "Find a reservation by its ID"
-      description: "Returns a reservation"
-      operationId: "getReservationByID"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "ID"
-        in: "query"
-        description: "ID of the reservation to find"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Reservation"
-        404:
-          description: "ID not found"
-      x-swagger-router-controller: "Reservation"
-  /reservation/{ID}/{ISBN}:
+  /reservation/{username}/{ISBN}:
     post:
       tags:
       - "reservation"
@@ -468,13 +434,9 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "ID"
+      - name: "username"
         in: "path"
-        description: "ID of the reservation to update"
+        description: "username of the reservation to update"
         required: true
         type: "string"
       - name: "ISBN"
@@ -482,7 +444,7 @@ paths:
         description: "ISBN of the book of the reservation to update"
         required: true
         type: "string"
-      - name: "Quantity"
+      - name: "quantity"
         in: "query"
         description: "Updated quantity of the book reserved"
         required: true
@@ -501,13 +463,9 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "ID"
+      - name: "username"
         in: "path"
-        description: "ID of the reservation to delete"
+        description: "username of the user of the reservation to delete"
         required: true
         type: "string"
       - name: "ISBN"
@@ -595,10 +553,6 @@ paths:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
       - name: "ID"
         in: "path"
         description: "Author object to delete"
@@ -910,17 +864,3 @@ definitions:
       shop: "La Feltrinelli"
       ISBN: "9780330508117"
       ID: "42"
-  ApiResponse:
-    type: "object"
-    properties:
-      code:
-        type: "integer"
-        format: "int32"
-      type:
-        type: "string"
-      message:
-        type: "string"
-    example:
-      code: 0
-      type: "type"
-      message: "message"

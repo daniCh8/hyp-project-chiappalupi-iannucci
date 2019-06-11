@@ -15,10 +15,9 @@ module.exports.addReservation = function addReservation (req, res, next) {
 };
 
 module.exports.deleteReservation = function deleteReservation (req, res, next) {
-  var iD = req.swagger.params['ID'].value;
-  var iSBN = req.swagger.params['ISBN'].value;
-  var api_key = req.swagger.params['api_key'].value;
-  Reservation.deleteReservation(iD,iSBN,api_key)
+  var username = req.swagger.params['username'].value;
+  var ISBN = req.swagger.params['ISBN'].value;
+  Reservation.deleteReservation(username, ISBN)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -29,19 +28,7 @@ module.exports.deleteReservation = function deleteReservation (req, res, next) {
 
 module.exports.deleteUserReservations = function deleteUserReservations (req, res, next) {
   var username = req.swagger.params['username'].value;
-  var api_key = req.swagger.params['api_key'].value;
-  Reservation.deleteUserReservations(username,api_key)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};
-
-module.exports.getReservationByID = function getReservationByID (req, res, next) {
-  var iD = req.swagger.params['ID'].value;
-  Reservation.getReservationByID(iD)
+  Reservation.deleteUserReservations(username)
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -62,11 +49,10 @@ module.exports.getReservationsByUsername = function getReservationsByUsername (r
 };
 
 module.exports.updateReservationBookQuantity = function updateReservationBookQuantity (req, res, next) {
-  var iD = req.swagger.params['ID'].value;
-  var iSBN = req.swagger.params['ISBN'].value;
-  var quantity = req.swagger.params['Quantity'].value;
-  var api_key = req.swagger.params['api_key'].value;
-  Reservation.updateReservationBookQuantity(iD,iSBN,quantity,api_key)
+  var username = req.swagger.params['username'].value;
+  var ISBN = req.swagger.params['ISBN'].value;
+  var quantity = req.swagger.params['quantity'].value;
+  Reservation.updateReservationBookQuantity(username, ISBN, quantity)
     .then(function (response) {
       utils.writeJson(res, response);
     })

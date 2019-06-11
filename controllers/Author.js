@@ -26,8 +26,7 @@ module.exports.addAuthor = function addAuthor (req, res, next) {
 
 module.exports.deleteAuthor = function deleteAuthor (req, res, next) {
   var ID = req.swagger.params['ID'].value;
-  var api_key = req.swagger.params['api_key'].value;
-  Author.deleteAuthor(ID,api_key)
+  Author.deleteAuthor(ID)
     .then(function (response) {
       utils.writeJson(res, response);
     })
