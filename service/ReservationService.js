@@ -29,8 +29,15 @@ exports.reservationDbSetup = function(database) {
  * no response value expected for this operation
  **/
 exports.addReservation = function(body) {
-    return sqlDb('reservation')
-        .insert(body)
+    return sqlDb('reservation').insert(body).then(function(returnResponse) {
+        return sqlDb('reservation').max('reservationID').where('username', body.username).then(function(max) {
+          var cartObj = {
+              "username": body.username,
+              "reservationID": max[0].max
+          } 
+          return sqlDb('cart').insert(cartObj).then(function() {return returnResponse})
+          })
+        })
 }
 
 
@@ -42,13 +49,21 @@ exports.addReservation = function(body) {
  * ISBN String ISBN of the book of the reservation to delete
  * no response value expected for this operation
  **/
-exports.deleteReservation = function(ID, ISBN) {
-    return sqlDb('reservation')
-        .where({
-            username: username,
-            ISBN: ISBN
+exports.deleteReservation = function(username, ISBN) {
+    return sqlDb('reservation').max('reservationID').where({
+        username: username,
+        ISBN: ISBN
+    }).then(function(maxID) {
+        return sqlDb('cart').where('username', username).andWhere('reservationID', maxID[0].max).then(function(response) {
+            if (response.length == 0) return 'This reservation doesn not exists!'
+            return sqlDb('cart').where('username', username).andWhere('reservationID', maxID[0].max).del().then(function(response) {
+                return sqlDb('reservation').max('reservationID').where({
+                    username: username,
+                    ISBN: ISBN
+                }).del()
+            })
         })
-        .del()
+    })
 }
 
 
@@ -60,9 +75,9 @@ exports.deleteReservation = function(ID, ISBN) {
  * no response value expected for this operation
  **/
 exports.deleteUserReservations = function(username) {
-    return sqlDb('reservation')
-        .where('username', username)
-        .del()
+    return sqlDb('reservation').where('username', username).del().then(function(response) {
+        return sqlDb('cart').where('username', username).del()
+    })
 }
 
 
@@ -74,9 +89,7 @@ exports.deleteUserReservations = function(username) {
  * returns List
  **/
 exports.getReservationsByUsername = function(username) {
-    return sqlDb('reservation').max('reservationID').where('username', username).then(function(response) {
-        return sqlDb('reservation').where('username', username).andWhere('reservationID', response[0].reservationID)
-    })
+    return sqlDb('reservation').where('username', username)
 }
 
 

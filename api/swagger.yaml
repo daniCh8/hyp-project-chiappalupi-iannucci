@@ -706,7 +706,39 @@ paths:
         404:
           description: "ISBN not found"
       x-swagger-router-controller: "Event"
+  /cart/{username}:
+    get:
+      tags:
+      - "cart"
+      summary: "View the content of the cart"
+      description: "Returns a list of Reservations"
+      operationId: "getCart"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "username of the user to find the reservation of"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "succesful operartion"
+          schema:
+            $ref: "#/definitions/Cart"
+        404:
+          description: "unauthorized"
+      x-swagger-router-controller: "Cart"
 definitions:
+  Cart:
+    type: "object"
+    properties:
+      reservations:
+        type: "array"
+        items:
+          $ref: "#/definitions/Reservation"
+    title: "Cart"
+    description: "Order for books"
   User:
     type: "object"
     properties:
@@ -736,7 +768,7 @@ definitions:
     properties:
       ID:
         type: "integer"
-        example: "42"
+        example: 42
         description: "reservations identifier code"
       ISBN:
         type: "string"
