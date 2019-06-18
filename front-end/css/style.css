@@ -226,7 +226,7 @@ input::-webkit-search-cancel-button {
 
 
 input[type=search] {
-    background: rgb(255,255,255) url(search-icon.png) no-repeat 9px center;
+    background: rgb(255,255,255) url("/imgs/search-icon.png") no-repeat 9px center;
     border: solid 1px #ccc;
     padding: 9px 10px 9px 32px;
     width: 55px;
