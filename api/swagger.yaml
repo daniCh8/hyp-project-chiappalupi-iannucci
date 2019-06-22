@@ -68,6 +68,74 @@ paths:
             items:
               $ref: "#/definitions/Book"
       x-swagger-router-controller: "Book"
+  /book/findBooksBy:
+    get:
+      tags:
+      - "book"
+      summary: "Finds Books from the params provided"
+      description: ""
+      operationId: "findBooksBy"
+      produces: 
+      - "application/json"
+      parameters:
+      - name: "genres"
+        in: "query"
+        description: "Genre to filter by"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "fantasy"
+          - "science fiction"
+          - "westerns"
+          - "romance"
+          - "thriller"
+          - "mystery"
+          - "detective story"
+          - "dystopya"
+          - "memoir"
+          - "biography"
+          - "play"
+          - "musical"
+          - "satire"
+          - "haiku"
+          - "horror"
+          - "DIY"
+          - "dictionary"
+          - "young adult fiction"
+          - "children's book"
+          - "adult literature"
+        collectionFormat: "multi"
+      - name: "themes"
+        in: "query"
+        description: "Theme to filter by"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "love"
+          - "death"
+          - "good vs. evil"
+          - "coming of age"
+          - "power and corruption"
+          - "survival"
+          - "courage and heroism"
+          - "prejudice"
+          - "individual vs. society"
+          - "war"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+        400:
+          description: "Invalid values"
+      x-swagger-router-controller: "Book"
   /book/findByName:
     get:
       tags:

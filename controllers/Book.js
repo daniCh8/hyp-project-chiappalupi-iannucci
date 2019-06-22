@@ -3,14 +3,6 @@
 var utils = require('../utils/writer.js');
 var Book = require('../service/BookService');
 
-function isEmpty(obj) {
-    for(var prop in obj) {
-        if(obj.hasOwnProperty(prop))
-            return false;
-    }
-    return true;
-}
-
 module.exports.addBook = function addBook (req, res, next) {
   var body = req.swagger.params['body'].value;
   Book.getBookByISBN(body.ISBN).then(function (response) {
@@ -32,6 +24,17 @@ module.exports.addBook = function addBook (req, res, next) {
 
 module.exports.getBooks = function getBooks (req, res, next) {
     Book.getBooks().then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+module.exports.findBooksBy = function findBooksBy (req, res, next) {
+    var genres = req.swagger.params['genres'].value;
+    var themes = req.swagger.params['themes'].value;
+    Book.findBooksBy(genres, themes).then(function (response) {
       utils.writeJson(res, response);
     })
     .catch(function (response) {
