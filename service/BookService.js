@@ -103,19 +103,68 @@ exports.deleteBook = function(ISBN) {
 /**
  * Finds Books from the params provided
 
- * Authors name to filter by
  * Genres to filter by
  * Themes to filter by
  * returns List
  **/
 exports.findBooksBy = function(genres, themes) {
-    if(genres !== undefined && themes !== undefined) {
-      return sqlDb('book').whereIn('genre', genres)/*.WhereIn('theme', themes)*/.andWhere(function() { this.whereIn('theme', themes) })
-    }
-    if(themes !== undefined) {
-      return sqlDb('book').whereIn('theme', themes)
-    }
-    return sqlDb('book').whereIn('genre', genres)
+    return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function(response) {
+        var authorsJoined = response;
+        if (genres !== undefined && themes !== undefined) {
+            return sqlDb('book').whereIn('genre', genres).andWhere(function() { this.whereIn('theme', themes) }).then(function(response) {
+                for (var i = 0; i < response.length; i++) {
+                    var authorsArr = new Array()
+                    for (var j = 0; j < authorsJoined.length; j++) {
+                        if (authorsJoined[j].ISBN == response[i].ISBN) {
+                            authorsArr.push(authorsJoined[j].name)
+                        }
+                    }
+                    response[i].authors = authorsArr
+                }
+                return response
+            })
+        }
+        if (themes !== undefined) {
+            return sqlDb('book').whereIn('theme', themes).then(function(response) {
+                for (var i = 0; i < response.length; i++) {
+                    var authorsArr = new Array()
+                    for (var j = 0; j < authorsJoined.length; j++) {
+                        if (authorsJoined[j].ISBN == response[i].ISBN) {
+                            authorsArr.push(authorsJoined[j].name)
+                        }
+                    }
+                    response[i].authors = authorsArr
+                }
+                return response
+            })
+        }
+        if (genres !== undefined) {
+            return sqlDb('book').whereIn('genre', genres).then(function(response) {
+                for (var i = 0; i < response.length; i++) {
+                    var authorsArr = new Array()
+                    for (var j = 0; j < authorsJoined.length; j++) {
+                        if (authorsJoined[j].ISBN == response[i].ISBN) {
+                            authorsArr.push(authorsJoined[j].name)
+                        }
+                    }
+                    response[i].authors = authorsArr
+                }
+                return response
+            })
+        }
+        return sqlDb('book').then(function(response) {
+            for (var i = 0; i < response.length; i++) {
+                var authorsArr = new Array()
+                for (var j = 0; j < authorsJoined.length; j++) {
+                    if (authorsJoined[j].ISBN == response[i].ISBN) {
+                        authorsArr.push(authorsJoined[j].name)
+                    }
+                }
+                response[i].authors = authorsArr
+            }
+            return response
+        })
+    })
 }
 
 
