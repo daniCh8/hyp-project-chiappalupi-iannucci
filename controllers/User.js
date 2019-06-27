@@ -13,10 +13,11 @@ module.exports.userLogin = function userLogin(req, res, next) {
             return response;
         }).then(function(response) {
             var json = {
-                "logged in": true
+                "success": true
             }
             if (response != true) json = {
-                "wrong username or password": true
+                "success": false,
+                "errorMessage": "wrong username or password"
             }
             utils.writeJson(res, json);
         })
@@ -41,7 +42,8 @@ module.exports.deleteUser = function deleteUser(req, res, next) {
     User.deleteUser(username)
         .then(function(response) {
             if (!req.loggedin) response = {
-                "not authorized": true
+                "success": false,
+                "errorMessage": "not authorized"
             }
             utils.writeJson(res, response);
         })

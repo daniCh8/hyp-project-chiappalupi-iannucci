@@ -28,7 +28,6 @@ module.exports.addBook = function addBook(req, res, next) {
             console.log('Can not add object: this ISBN already exists!');
             utils.writeJson(res, 'Object not added: this ISBN already exists');
         } else {
-
             Book.addBook(body)
                 .then(function(response) {
                     utils.writeJson(res, response);
