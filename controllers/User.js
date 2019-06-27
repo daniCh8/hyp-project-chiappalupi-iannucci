@@ -3,6 +3,15 @@
 var utils = require('../utils/writer.js');
 var User = require('../service/UserService');
 
+function isEmpty(obj) {
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 module.exports.userLogin = function userLogin(req, res, next) {
     var username = req.swagger.params['username'].value;
     var password = req.swagger.params['password'].value;
@@ -28,13 +37,26 @@ module.exports.userLogin = function userLogin(req, res, next) {
 
 module.exports.userRegister = function userRegister(req, res, next) {
     var body = req.swagger.params["body"].value;
-    User.userRegister(body)
-        .then(function(response) {
-            utils.writeJson(res, response);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, response);
-        });
+    User.checkUsernameAvailability(body.username).then(function(response) {
+        if (!isEmpty(response)) {
+            var json = {
+                "success": false,
+                "errorMessage": "This username already exists."
+            }
+            utils.writeJson(res, json);
+        } else {
+            var json = {
+                "success": true
+            }
+            User.userRegister(body)
+                .then(function(response) {
+                    utils.writeJson(res, json);
+                })
+                .catch(function(response) {
+                    utils.writeJson(res, response);
+                });
+        }
+    })
 };
 
 module.exports.deleteUser = function deleteUser(req, res, next) {

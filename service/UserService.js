@@ -22,6 +22,14 @@ exports.userDbSetup = function(database) {
 //toDo examples, some methods, tests
 
 /**
+ * Checks if the username exists
+ **/
+exports.checkUsernameAvailability = function(username) {
+    return sqlDb('user').where('username', username)
+}
+
+
+/**
  * Login
  * Login with a form
  *
