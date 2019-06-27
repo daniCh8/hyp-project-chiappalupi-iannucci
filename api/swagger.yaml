@@ -68,6 +68,25 @@ paths:
             items:
               $ref: "#/definitions/Book"
       x-swagger-router-controller: "Book"
+  /book/getFavouriteBooks:
+    get:
+      tags:
+      - "book"
+      summary: "Finds our favourite books"
+      description: ""
+      operationId: "getFavouriteBooks"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+        400:
+          description: "Invalid values"
+      x-swagger-router-controller: "Book"
   /book/findBooksBy:
     get:
       tags:
@@ -866,6 +885,9 @@ definitions:
   Book:
     type: "object"
     properties:
+      favourite: 
+        type: "boolean"
+        example: "true"
       ISBN:
         type: "string"
         example: "9780330508117"

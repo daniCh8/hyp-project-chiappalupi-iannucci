@@ -12,6 +12,15 @@ function isEmpty(obj) {
     return true;
 }
 
+module.exports.getFavouriteBooks = function getFavouriteBooks(req, res, next) {
+    Book.getFavouriteBooks().then(function(response) {
+            utils.writeJson(res, response);
+        })
+        .catch(function(response) {
+            utils.writeJson(res, response);
+        });
+};
+
 module.exports.addBook = function addBook(req, res, next) {
     var body = req.swagger.params['body'].value;
     Book.getBookByISBN(body.ISBN).then(function(response) {

@@ -10,6 +10,7 @@ exports.bookDbSetup = function(database) {
             console.log("The table BOOK doesn't exists: creating it.");
             return database.schema.createTable("book", table => {
                 table.text("ISBN");
+                table.boolean("favourite");
                 table.text("name");
                 table.enum("theme", ["love", "death", "good vs. evil", "coming of age", "power and corruption", "survival", "courage and heroism", "prejudice", "individual vs. society", "war"]);
                 table.enum("genre", ["fantasy", "science fiction", "westerns", "romance", "thriller", "mystery", "detective story", "dystopya", "memoir", "biography", "play", "musical", "satire", "haiku", "horror", "DIY", "dictionary", "young adult fiction", "children book", "adult literature"]);
@@ -56,7 +57,8 @@ exports.addBook = function(body) {
         "theme": body.theme,
         "genre": body.genre,
         "status": body.status,
-        "pictureURL": body.pictureURL
+        "pictureURL": body.pictureURL,
+        "favourite": body.favourite
     };
     return sqlDb('writtenBy').insert(authorRows).then(function(response) {
         return sqlDb('book').insert(bookObj)
@@ -73,6 +75,29 @@ exports.getBooks = function() {
     return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function(response) {
         var authorsJoined = response;
         return sqlDb('book').then(function(response) {
+            for (var i = 0; i < response.length; i++) {
+                var authorsArr = new Array()
+                for (var j = 0; j < authorsJoined.length; j++) {
+                    if (authorsJoined[j].ISBN == response[i].ISBN) {
+                        authorsArr.push(authorsJoined[j].name)
+                    }
+                }
+                response[i].authors = authorsArr
+            }
+            return response
+        })
+    })
+};
+
+/**
+ * Finds our favourite books
+ *
+ * returns list of Book
+ **/
+exports.getFavouriteBooks = function() {
+    return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function(response) {
+        var authorsJoined = response;
+        return sqlDb('book').where('favourite', true).then(function(response) {
             for (var i = 0; i < response.length; i++) {
                 var authorsArr = new Array()
                 for (var j = 0; j < authorsJoined.length; j++) {
