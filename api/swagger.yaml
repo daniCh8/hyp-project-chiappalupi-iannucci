@@ -97,6 +97,16 @@ paths:
       produces: 
       - "application/json"
       parameters:
+      - name: "name"
+        in: "query"
+        description: "Name to filter by"
+        required: false
+        type: "string"
+      - name: "author"
+        in: "query"
+        description: "Author to filter by"
+        required: false
+        type: "string"
       - name: "genres"
         in: "query"
         description: "Genre to filter by"
@@ -231,7 +241,6 @@ paths:
       summary: "Finds Books by author"
       operationId: "findBooksByAuthors"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "author"

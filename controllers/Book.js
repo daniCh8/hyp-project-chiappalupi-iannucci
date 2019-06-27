@@ -54,8 +54,31 @@ module.exports.getBooks = function getBooks(req, res, next) {
 module.exports.findBooksBy = function findBooksBy(req, res, next) {
     var genres = req.swagger.params['genres'].value;
     var themes = req.swagger.params['themes'].value;
-    Book.findBooksBy(genres, themes).then(function(response) {
-            utils.writeJson(res, response);
+    var author = [req.swagger.params['author'].value]
+    var name   = [req.swagger.params['name'].value]
+    Book.findBooksBy(genres, themes).then(function(firstResponse) {
+            var returnJson = firstResponse;
+            Book.findBooksByAuthors(author).then(function(secondResponse) {
+                if (req.swagger.params['author'].value !== undefined) {
+                    var box = returnJson.splice(0, returnJson.length)
+                    for (var i = 0; i < box.length; i++) {
+                        for (var j = 0; j < secondResponse.length; j++) {
+                            if (box[i].ISBN == secondResponse[j].ISBN) { returnJson.push(box[i]) }
+                        }
+                    }
+                }
+                Book.findBooksByName(name).then(function(thirdResponse) {
+                    if (req.swagger.params['name'].value !== undefined) {
+                        var box = returnJson.splice(0, returnJson.length)
+                        for (var i = 0; i < box.length; i++) {
+                            for (var j = 0; j < thirdResponse.length; j++) {
+                                if (box[i].ISBN == thirdResponse[j].ISBN) { returnJson.push(box[i]) }
+                            }
+                        }
+                    }
+                    utils.writeJson(res, returnJson);
+                })
+            })
         })
         .catch(function(response) {
             utils.writeJson(res, response);

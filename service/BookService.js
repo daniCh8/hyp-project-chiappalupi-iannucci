@@ -200,9 +200,11 @@ exports.findBooksBy = function(genres, themes) {
  * returns List
  **/
 exports.findBooksByName = function(name) {
-    return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function(response) {
+    if (name[0] == undefined) {
+        return sqlDb('book').where('ISBN', "-1")
+    } else return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function(response) {
         var authorsJoined = response;
-        return sqlDb('book').where((builder) => builder.whereIn('name', name)).then(function(response) {
+        return sqlDb('book').whereIn('name', name).then(function(response) {
             for (var i = 0; i < response.length; i++) {
                 var authorsArr = new Array()
                 for (var j = 0; j < authorsJoined.length; j++) {
@@ -217,34 +219,6 @@ exports.findBooksByName = function(name) {
     })
 };
 
-/*Example
-exports.findBooksByName = function(name) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "photoUrls" : [ "photoUrls", "photoUrls" ],
-  "ISBN" : "9780330508117",
-  "name" : "The Hitchhiker's Guide to the Galaxy",
-  "genre" : "science fiction",
-  "theme" : "love",
-  "authors" : [ "01", "01" ]
-}, {
-  "photoUrls" : [ "photoUrls", "photoUrls" ],
-  "ISBN" : "9780330508117",
-  "name" : "The Hitchhiker's Guide to the Galaxy",
-  "genre" : "science fiction",
-  "theme" : "love",
-  "authors" : [ "01", "01" ]
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}*/
-
-
 /**
  * Finds Books by author
  *
@@ -252,7 +226,9 @@ exports.findBooksByName = function(name) {
  * returns List
  **/
 exports.findBooksByAuthors = function(author) {
-    return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').whereIn('a.name', author).then(function(response) {
+    if (author[0] == undefined) {
+        return sqlDb('book').where('ISBN', "-1")
+    } else return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').whereIn('a.name', author).then(function(response) {
         var isbnArr = new Array()
         for (var k = 0; k < response.length; k++) {
             isbnArr.push(response[k].ISBN)
