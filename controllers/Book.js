@@ -25,10 +25,12 @@ module.exports.addBook = function addBook(req, res, next) {
     var body = req.swagger.params['body'].value;
     Book.getBookByISBN(body.ISBN).then(function(response) {
         if (!isEmpty(response) && response[0].ISBN == body.ISBN) {
-            console.log('Can not add object: this ISBN already exists!');
-            utils.writeJson(res, 'Object not added: this ISBN already exists');
+            var json = {
+                "success": false,
+                "errorMessage": "ISBN already exists"
+            }
+            utils.writeJson(res, json);
         } else {
-
             Book.addBook(body)
                 .then(function(response) {
                     utils.writeJson(res, response);
