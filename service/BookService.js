@@ -196,7 +196,7 @@ exports.findBooksBy = function(genres, themes) {
 /**
  * Finds Book by name
  *
- * name List Name values that need to be considered for filter
+ * name List Name value that needs to be considered for filter
  * returns List
  **/
 exports.findBooksByName = function(name) {
@@ -204,7 +204,7 @@ exports.findBooksByName = function(name) {
         return sqlDb('book').where('ISBN', "-1")
     } else return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function(response) {
         var authorsJoined = response;
-        return sqlDb('book').whereIn('name', name).then(function(response) {
+        return sqlDb('book').whereRaw('LOWER(name) LIKE ?', '%'+name[0].toLowerCase()+'%').then(function(response) {
             for (var i = 0; i < response.length; i++) {
                 var authorsArr = new Array()
                 for (var j = 0; j < authorsJoined.length; j++) {
@@ -228,7 +228,7 @@ exports.findBooksByName = function(name) {
 exports.findBooksByAuthors = function(author) {
     if (author[0] == undefined) {
         return sqlDb('book').where('ISBN', "-1")
-    } else return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').whereIn('a.name', author).then(function(response) {
+    } else return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').whereRaw('LOWER(name) LIKE ?', '%'+author[0].toLowerCase()+'%').then(function(response) {
         var isbnArr = new Array()
         for (var k = 0; k < response.length; k++) {
             isbnArr.push(response[k].ISBN)
