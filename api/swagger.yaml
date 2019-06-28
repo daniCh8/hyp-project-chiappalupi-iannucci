@@ -84,8 +84,23 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Book"
-        400:
-          description: "Invalid values"
+      x-swagger-router-controller: "Book"
+  /book/getBestsellers:
+    get:
+      tags:
+      - "book"
+      summary: "Finds the books that have sold the most"
+      description: ""
+      operationId: "getBestsellers"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
       x-swagger-router-controller: "Book"
   /book/findBooksBy:
     get:

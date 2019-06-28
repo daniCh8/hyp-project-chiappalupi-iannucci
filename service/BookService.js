@@ -113,6 +113,40 @@ exports.getFavouriteBooks = function() {
 };
 
 /**
+ * Finds the books that have sold the most
+ *
+ * returns list of Book
+ **/
+exports.getBestsellers = function() {
+    return sqlDb.select('ISBN').from('orderHistory').sum('quantity').groupBy('ISBN').limit(9).orderBy('sum', 'desc').then(function(response) {
+        var bestsellersISBN = response
+        return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function(response) {
+            var authorsJoined = response;
+            return sqlDb('book').then(function(response) {
+                for (var i = 0; i < response.length; i++) {
+                    var authorsArr = new Array()
+                    for (var j = 0; j < authorsJoined.length; j++) {
+                        if (authorsJoined[j].ISBN == response[i].ISBN) {
+                            authorsArr.push(authorsJoined[j].name)
+                        }
+                    }
+                    response[i].authors = authorsArr
+                }
+                var bestsellers = new Array()
+                for (var i = 0; i < bestsellersISBN.length; i++) {
+                    for (var j = 0; j < response.length; j++) {
+                        if (bestsellersISBN[i].ISBN == response[j].ISBN) {
+                            bestsellers.push(response[j])
+                        }
+                    }
+                }
+                return bestsellers
+            })
+        })
+    })
+};
+
+/**
  * Deletes a book
  * 
  *
@@ -204,7 +238,7 @@ exports.findBooksByName = function(name) {
         return sqlDb('book').where('ISBN', "-1")
     } else return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').then(function(response) {
         var authorsJoined = response;
-        return sqlDb('book').whereRaw('LOWER(name) LIKE ?', '%'+name[0].toLowerCase()+'%').then(function(response) {
+        return sqlDb('book').whereRaw('LOWER(name) LIKE ?', '%' + name[0].toLowerCase() + '%').then(function(response) {
             for (var i = 0; i < response.length; i++) {
                 var authorsArr = new Array()
                 for (var j = 0; j < authorsJoined.length; j++) {
@@ -228,7 +262,7 @@ exports.findBooksByName = function(name) {
 exports.findBooksByAuthors = function(author) {
     if (author[0] == undefined) {
         return sqlDb('book').where('ISBN', "-1")
-    } else return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').whereRaw('LOWER(name) LIKE ?', '%'+author[0].toLowerCase()+'%').then(function(response) {
+    } else return sqlDb.from('author AS a').join('writtenBy AS wb', 'wb.authorID', 'a.authorID').whereRaw('LOWER(name) LIKE ?', '%' + author[0].toLowerCase() + '%').then(function(response) {
         var isbnArr = new Array()
         for (var k = 0; k < response.length; k++) {
             isbnArr.push(response[k].ISBN)
@@ -250,34 +284,6 @@ exports.findBooksByAuthors = function(author) {
         })
     });
 }
-
-/* Example
-exports.findBooksByAuthors = function(authors) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "photoUrls" : [ "photoUrls", "photoUrls" ],
-  "ISBN" : "9780330508117",
-  "name" : "The Hitchhiker's Guide to the Galaxy",
-  "genre" : "science fiction",
-  "theme" : "love",
-  "authors" : [ "01", "01" ]
-}, {
-  "photoUrls" : [ "photoUrls", "photoUrls" ],
-  "ISBN" : "9780330508117",
-  "name" : "The Hitchhiker's Guide to the Galaxy",
-  "genre" : "science fiction",
-  "theme" : "love",
-  "authors" : [ "01", "01" ]
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}*/
-
 
 /**
  * Finds Books by themes
@@ -302,33 +308,6 @@ exports.findBooksByThemes = function(theme) {
         })
     })
 };
-
-/*Example
-exports.findBooksByThemes = function(themes) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "photoUrls" : [ "photoUrls", "photoUrls" ],
-  "ISBN" : "9780330508117",
-  "name" : "The Hitchhiker's Guide to the Galaxy",
-  "genre" : "science fiction",
-  "theme" : "love",
-  "authors" : [ "01", "01" ]
-}, {
-  "photoUrls" : [ "photoUrls", "photoUrls" ],
-  "ISBN" : "9780330508117",
-  "name" : "The Hitchhiker's Guide to the Galaxy",
-  "genre" : "science fiction",
-  "theme" : "love",
-  "authors" : [ "01", "01" ]
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}*/
 
 
 /**
@@ -355,49 +334,3 @@ exports.getBookByISBN = function(ISBN) {
         })
     })
 };
-
-/* Example
-exports.getBookByISBN = function(iSBN) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "photoUrls" : [ "photoUrls", "photoUrls" ],
-  "ISBN" : "9780330508117",
-  "name" : "The Hitchhiker's Guide to the Galaxy",
-  "genre" : "science fiction",
-  "theme" : "love",
-  "authors" : [ "01", "01" ]
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}*/
-
-
-/**
- * uploads an image
- * 
- *
- * ISBN String ISBN of book to update
- * additionalMetadata String Additional data to pass to server (optional)
- * file File file to upload (optional)
- * returns ApiResponse
- **/
-exports.uploadFile = function(ISBN, additionalMetadata, file) {
-    return new Promise(function(resolve, reject) {
-        var examples = {};
-        examples['application/json'] = {
-            "code": 0,
-            "type": "type",
-            "message": "message"
-        };
-        if (Object.keys(examples).length > 0) {
-            resolve(examples[Object.keys(examples)[0]]);
-        } else {
-            resolve();
-        }
-    });
-}
