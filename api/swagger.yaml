@@ -835,12 +835,6 @@ paths:
       operationId: "getCart"
       produces:
       - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "username of the user to find the reservation of"
-        required: true
-        type: "string"
       responses:
         200:
           description: "succesful operartion"
