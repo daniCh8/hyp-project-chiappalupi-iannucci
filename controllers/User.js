@@ -2,6 +2,7 @@
 
 var utils = require('../utils/writer.js');
 var User = require('../service/UserService');
+let uuidv1 = require('uuid/v1');
 
 function isEmpty(obj) {
     for (var prop in obj) {
@@ -15,10 +16,19 @@ function isEmpty(obj) {
 module.exports.userLogin = function userLogin(req, res, next) {
     var username = req.swagger.params['username'].value;
     var password = req.swagger.params['password'].value;
+    console.log("ciao1")
     User.userLogin(username, password)
         .then(function(response) {
-            if (response == true)
+            console.log("ciao4")
+            console.log(response)
+            if (response == true) {
+                console.log("ciao5")
                 req.session.loggedin = true
+                console.log("ciao6")
+                req.session.id = uuidv1()
+                console.log("ciao7")
+                console.log(req.session.id)
+            }
             return response;
         }).then(function(response) {
             var json = {

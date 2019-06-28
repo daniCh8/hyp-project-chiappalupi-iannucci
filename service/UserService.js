@@ -38,11 +38,13 @@ exports.checkUsernameAvailability = function(username) {
  * no response value expected for this operation
  **/
 exports.userLogin = function(username, password) {
+    console.log("ciao2")
     return sqlDb('user').where('username', username).then(function(response) {
         var exists = false;
         if (response.length == 0) return false;
         if (response[0].username != username) return false;
         if (response[0].password != password) return false;
+        console.log("ciao3")
         return true;
     })
 }
