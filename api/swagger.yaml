@@ -826,7 +826,7 @@ paths:
         404:
           description: "ISBN not found"
       x-swagger-router-controller: "Event"
-  /cart/{username}:
+  /cart:
     get:
       tags:
       - "cart"
@@ -845,7 +845,30 @@ paths:
         200:
           description: "succesful operartion"
           schema:
-            $ref: "#/definitions/Cart"
+            $ref: "#/definitions/Reservation"
+        404:
+          description: "unauthorized"
+      x-swagger-router-controller: "Cart"
+    post:
+      tags:
+      - "cart"
+      summary: "Add a new reservation to the cart"
+      description: ""
+      operationId: "addOrder"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Reservation object that needs to be added to the cart"
+        required: true
+        schema:
+          $ref: "#/definitions/Reservation"
+      responses:
+        200:
+          description: "successful operation"
         404:
           description: "unauthorized"
       x-swagger-router-controller: "Cart"
@@ -890,10 +913,6 @@ definitions:
   Reservation:
     type: "object"
     properties:
-      ID:
-        type: "integer"
-        example: 42
-        description: "reservations identifier code"
       ISBN:
         type: "string"
         example: "9780330508117"
@@ -913,7 +932,6 @@ definitions:
       shop: "La Feltrinelli"
       quantity: 8
       ISBN: "9780330508117"
-      ID: "42"
       user: "daniCh"
   Book:
     type: "object"

@@ -9,9 +9,10 @@ exports.cartDbSetup = function(database) {
         if (!exists) {
             console.log("The table CART doesn't exists: creating it.");
             return database.schema.createTable("cart", table => {
+                table.text("ISBN");
+                table.text("shop");
                 table.text("username");
-                table.integer("reservationID");
-                table.integer("sessionID");
+                table.integer("quantity");
             });
         }
     });
@@ -20,11 +21,27 @@ exports.cartDbSetup = function(database) {
 
 /**
  * View the content of the cart
- * Returns a list of reservations
+ * Returns a list of books
  *
- * username String Username of the user to find the cart
+ * req it's the request to get the parameters from
  * returns List
  **/
-exports.getCart = function(username) {
-    return sqlDb('cart').where('username', username)
+exports.getCart = function(req) {
+    return sqlDb('session').where('id', req.session.id).then(function(response) {
+        var username = response.username
+        return sqlDb('cart').where('username', username)
+    })
+}
+
+/**
+ * Add a new reservation to the cart
+ *
+ * body it's the reservation object to add
+ * id it's the id of the request
+ **/
+exports.addOrder = function(req) {
+    return sqlDb('session').where('id', req.session.id).then(function(response) {
+        var username = response.username
+        return sqlDb('cart').where('username', username)
+    })
 }
