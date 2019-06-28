@@ -14,6 +14,14 @@ function isEmpty(obj) {
 }
 
 module.exports.userLogin = function userLogin(req, res, next) {
+    if (req.session.loggedin) {
+        var json = {
+            "success": false,
+            "errorMessage": "You are already logged in"
+        }
+        utils.writeJson(res, json)
+        return
+    }
     var username = req.swagger.params['username'].value;
     var password = req.swagger.params['password'].value;
     User.userLogin(req, username, password)
@@ -43,7 +51,7 @@ module.exports.userRegister = function userRegister(req, res, next) {
         if (!isEmpty(response)) {
             var json = {
                 "success": false,
-                "errorMessage": "This username already exists."
+                "errorMessage": "This username already exists"
             }
             utils.writeJson(res, json);
         } else {
@@ -81,7 +89,8 @@ module.exports.getUserByName = function getUserByName(req, res, next) {
     User.getUserByName(username)
         .then(function(response) {
             if (!req.loggedin) response = {
-                "not authorized": true
+                "success": false,
+                "errorMessage": "You are not logged in."
             }
             utils.writeJson(res, response);
         })
@@ -91,18 +100,26 @@ module.exports.getUserByName = function getUserByName(req, res, next) {
 };
 
 module.exports.logoutUser = function logoutUser(req, res, next) {
-    var json;
+    var json
+    var previousID = req.session.id
     if (req.session.loggedin == true) {
         req.session.loggedin = false;
         req.session.id = uuidv1()
         json = {
-            "success": true
-        }
+                "success": true
+            }
     } else {
         json = {
             "success": false,
             "errorMessage": "You are not logged in."
         }
+        utils.writeJson(res, json);
+        return
     }
-    utils.writeJson(res, json);
+    User.userLogout(previousID).then(function(response) {
+            utils.writeJson(res, json);
+        })
+        .catch(function(response) {
+            utils.writeJson(res, json);
+        });
 };

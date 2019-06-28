@@ -28,20 +28,64 @@ exports.cartDbSetup = function(database) {
  **/
 exports.getCart = function(req) {
     return sqlDb('session').where('id', req.session.id).then(function(response) {
-        var username = response.username
+        var username = response[0].username
         return sqlDb('cart').where('username', username)
     })
 }
 
 /**
- * Add a new reservation to the cart
+ * Add a new order to the cart
  *
- * body it's the reservation object to add
+ * body it's the order object to add
  * id it's the id of the request
  **/
-exports.addOrder = function(req) {
-    return sqlDb('session').where('id', req.session.id).then(function(response) {
-        var username = response.username
-        return sqlDb('cart').where('username', username)
+exports.addOrder = function(body, id) {
+    return sqlDb('session').where('id', id).then(function(response) {
+        var username = response[0].username
+            var cartObj = {
+                "ISBN": body.ISBN,
+                "shop": body.shop,
+                "username": username,
+                "quantity": body.quantity
+            }
+            return sqlDb('cart').insert(cartObj)
+    })
+}
+
+/**
+ * Checks if a book is in the cart
+ *
+ * ISBN it's the ISBN of the book to check
+ * id it's the id of the request
+ **/
+exports.checkISBNInCart = function(ISBN, id) {
+    return sqlDb('session').where('id', id).then(function(response) {
+        var username = response[0].username
+        return sqlDb('cart').where('username', username).andWhere('ISBN', ISBN)
+    })
+}
+
+/**
+ * Delete an order from the cart
+ *
+ * ISBN it's the ISBN of the book to check
+ * id it's the id of the request
+ **/
+exports.deleteOrder = function(ISBN, id) {
+    return sqlDb('session').where('id', id).then(function(response) {
+        var username = response[0].username
+        return sqlDb('cart').where('username', username).andWhere('ISBN', ISBN).del()
+    })
+}
+
+/**
+ * Clears the cart of the user
+ *
+ * id it's the id of the request
+ **/
+exports.deleteOrder = function(id) {
+    return sqlDb('session').where('id', id).then(function(response) {
+        var username = response[0].username
+        return sqlDb('cart').where('username', username).del()
     })
 }

@@ -54,7 +54,6 @@ exports.checkUsernameAvailability = function(username) {
  **/
 exports.userLogin = function(req, username, password) {
     return sqlDb('user').where('username', username).then(function(response) {
-        var exists = false;
         if (response.length == 0) return false;
         if (response[0].username != username) return false;
         if (response[0].password != password) return false;
@@ -63,13 +62,15 @@ exports.userLogin = function(req, username, password) {
             "id": uuidv1()
         }
         req.session.id = sessionObj.id
-        return sqlDb('session').where('username', username).then(function(response) {
-            if (response.length == 0) {
-                return sqlDb('session').insert(sessionObj).then(function(response) {
+        return sqlDb('cart').where('username', username).del().then(function() {
+            return sqlDb('session').where('username', username).then(function(response) {
+                if (response.length == 0) {
+                    return sqlDb('session').insert(sessionObj).then(function(response) {
+                        return true
+                    })
+                } else return sqlDb('session').where('username', username).update('id', sessionObj.id).then(function(response) {
                     return true
                 })
-            } else return sqlDb('session').where('username', username).update('id', sessionObj.id).then(function(response) {
-                return true
             })
         })
     })
@@ -110,4 +111,14 @@ exports.deleteUser = function(username) {
  **/
 exports.getUserByName = function(username) {
     return sqlDb('user').where('username', username)
+}
+
+/**
+ * Deletes the current cart of the user who is using the logout
+ */
+exports.userLogout = function(id) {
+    return sqlDb('session').where('id', id).then(function(response) {
+        username = response[0].username
+        return sqlDb('cart').where('username', username).del()
+    })
 }

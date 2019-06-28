@@ -19,8 +19,8 @@ tags:
   description: "Operations about user"
 - name: "event"
   description: "Events of presentation"
-- name: "reservation"
-  description: "Reservations of books by the users"
+- name: "order"
+  description: "Orders of books by the users"
 schemes:
 - "https"
 paths:
@@ -449,13 +449,13 @@ paths:
         404:
           description: "User not found"
       x-swagger-router-controller: "User"
-  /reservation:
+  /order:
     post:
       tags:
-      - "reservation"
-      summary: "Add a new reservation to the database"
+      - "order"
+      summary: "Add a new order to the database"
       description: ""
-      operationId: "addReservation"
+      operationId: "addOrder"
       consumes:
       - "application/json"
       - "application/xml"
@@ -465,28 +465,28 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Reservation object that needs to be added to the database"
+        description: "Order object that needs to be added to the database"
         required: true
         schema:
-          $ref: "#/definitions/Reservation"
+          $ref: "#/definitions/Order"
       responses:
         405:
           description: "Invalid input"
-      x-swagger-router-controller: "Reservation"
-  /reservation/{username}:
+      x-swagger-router-controller: "Order"
+  /order/{username}:
     get:
       tags:
-      - "reservation"
-      summary: "Find the reservations of an user by its username"
-      description: "Returns a list of reservations"
-      operationId: "getReservationsByUsername"
+      - "order"
+      summary: "Find the orders of an user by its username"
+      description: "Returns a list of orders"
+      operationId: "getOrdersByUsername"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
       - name: "username"
         in: "path"
-        description: "Username of the user to find reservation"
+        description: "Username of the user to find order"
         required: true
         type: "string"
       responses:
@@ -495,48 +495,48 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Reservation"
+              $ref: "#/definitions/Order"
         404:
           description: "Username not found"
-      x-swagger-router-controller: "Reservation"
+      x-swagger-router-controller: "Order"
     delete:
       tags:
-      - "reservation"
-      summary: "Delete all the reservations of a user"
+      - "order"
+      summary: "Delete all the orders of a user"
       description: ""
-      operationId: "deleteUserReservations"
+      operationId: "deleteUserOrders"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
       - name: "username"
         in: "path"
-        description: "Username of the user of the reservations to delete"
+        description: "Username of the user of the orders to delete"
         required: true
         type: "string"
       responses:
         404:
-          description: "No reservations found for the username provided"
-      x-swagger-router-controller: "Reservation"
-  /reservation/{username}/{ISBN}:
+          description: "No orders found for the username provided"
+      x-swagger-router-controller: "Order"
+  /order/{username}/{ISBN}:
     post:
       tags:
-      - "reservation"
-      summary: "Update a reservation"
+      - "order"
+      summary: "Update a order"
       description: ""
-      operationId: "updateReservationBookQuantity"
+      operationId: "updateOrderBookQuantity"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
       - name: "username"
         in: "path"
-        description: "username of the reservation to update"
+        description: "username of the order to update"
         required: true
         type: "string"
       - name: "ISBN"
         in: "path"
-        description: "ISBN of the book of the reservation to update"
+        description: "ISBN of the book of the order to update"
         required: true
         type: "string"
       - name: "quantity"
@@ -546,32 +546,32 @@ paths:
         type: "integer"
       responses:
         404:
-          description: "Reservation not found"
-      x-swagger-router-controller: "Reservation"
+          description: "Order not found"
+      x-swagger-router-controller: "Order"
     delete:
       tags:
-      - "reservation"
-      summary: "Delete a reservation"
+      - "order"
+      summary: "Delete a order"
       description: ""
-      operationId: "deleteReservation"
+      operationId: "deleteOrder"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
       - name: "username"
         in: "path"
-        description: "username of the user of the reservation to delete"
+        description: "username of the user of the order to delete"
         required: true
         type: "string"
       - name: "ISBN"
         in: "path"
-        description: "ISBN of the book of the reservation to delete"
+        description: "ISBN of the book of the order to delete"
         required: true
         type: "string"
       responses:
         404:
-          description: "Reservation not found"
-      x-swagger-router-controller: "Reservation"
+          description: "Order not found"
+      x-swagger-router-controller: "Order"
   /author:
     get:
       tags:
@@ -831,7 +831,7 @@ paths:
       tags:
       - "cart"
       summary: "View the content of the cart"
-      description: "Returns a list of Reservations"
+      description: "Returns a list of Orders"
       operationId: "getCart"
       produces:
       - "application/json"
@@ -839,14 +839,14 @@ paths:
         200:
           description: "succesful operartion"
           schema:
-            $ref: "#/definitions/Reservation"
+            $ref: "#/definitions/Order"
         404:
           description: "unauthorized"
       x-swagger-router-controller: "Cart"
     post:
       tags:
       - "cart"
-      summary: "Add a new reservation to the cart"
+      summary: "Add a new order to the cart"
       description: ""
       operationId: "addOrder"
       consumes:
@@ -856,15 +856,46 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Reservation object that needs to be added to the cart"
+        description: "Order object that needs to be added to the cart"
         required: true
         schema:
-          $ref: "#/definitions/Reservation"
+          $ref: "#/definitions/Order"
       responses:
         200:
           description: "successful operation"
         404:
           description: "unauthorized"
+      x-swagger-router-controller: "Cart"
+    delete:
+      tags:
+      - "cart"
+      summary: "Clears the cart"
+      description: ""
+      operationId: "clearCart"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Success"
+      x-swagger-router-controller: "Cart"
+  /cart/{ISBN}:
+    delete:
+      tags:
+      - "cart"
+      summary: "Deletes an order"
+      description: ""
+      operationId: "deleteOrder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ISBN"
+        in: "path"
+        description: "ISBN of the book to remove from the cart"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid ISBN supplied"
       x-swagger-router-controller: "Cart"
 definitions:
   Cart:
@@ -874,10 +905,10 @@ definitions:
         type: "string"
       sessionID:
         type: "string"
-      reservations:
+      orders:
         type: "array"
         items:
-          $ref: "#/definitions/Reservation"
+          $ref: "#/definitions/Order"
     title: "Cart"
     description: "Order for books"
   User:
@@ -904,7 +935,7 @@ definitions:
       password: "barbagianni"
       email: "daniele.chiappalupi@mail.polimi.it"
       username: "daniCh"
-  Reservation:
+  Order:
     type: "object"
     properties:
       ISBN:
@@ -922,6 +953,10 @@ definitions:
         type: "integer"
         example: 8
         description: "quantity of books reserved"
+      date:
+        type: "string"
+        example: "28/06/2019"
+        description: "date of the order"
     example:
       shop: "La Feltrinelli"
       quantity: 8
