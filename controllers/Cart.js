@@ -42,13 +42,14 @@ module.exports.addOrder = function addOrder(req, res, next) {
                 utils.writeJson(res, json);
                 return;
             }
-        Cart.addOrder(body, id).then(function(response) {
-                utils.writeJson(res, json);
-            })
-            .catch(function(response) {
-                utils.writeJson(res, json);
-            });
-    }) }
+            Cart.addOrder(body, id).then(function(response) {
+                    utils.writeJson(res, json);
+                })
+                .catch(function(response) {
+                    utils.writeJson(res, json);
+                });
+        })
+    }
 };
 
 module.exports.deleteOrder = function deleteOrder(req, res, next) {
@@ -104,7 +105,7 @@ module.exports.clearCart = function clearCart(req, res, next) {
     }
 };
 
-module.exports.updateBookQuantity = function deleteOrder(req, res, next) {
+module.exports.updateBookQuantity = function updateBookQuantity(req, res, next) {
     if (!req.session.loggedin) {
         var json = {
             "success": false,
@@ -128,6 +129,37 @@ module.exports.updateBookQuantity = function deleteOrder(req, res, next) {
                 return;
             }
             Cart.updateQuantity(ISBN, newQuantity, id).then(function(response) {
+                    utils.writeJson(res, json);
+                })
+                .catch(function(response) {
+                    utils.writeJson(res, json);
+                });
+        })
+    }
+};
+
+module.exports.checkout = function checkout(req, res, next) {
+    if (!req.session.loggedin) {
+        var json = {
+            "success": false,
+            "errorMessage": "You are not logged in."
+        }
+        utils.writeJson(res, json)
+    } else {
+        var json = {
+            "success": true
+        }
+        var id = req.session.id
+        Cart.checkCart(id).then(function(check) {
+            if (check.length == 0) {
+                json = {
+                    "success": false,
+                    "errorMessage": "There isn't any book in your cart."
+                }
+                utils.writeJson(res, json);
+                return;
+            }
+            Cart.checkout(id).then(function(response) {
                     utils.writeJson(res, json);
                 })
                 .catch(function(response) {

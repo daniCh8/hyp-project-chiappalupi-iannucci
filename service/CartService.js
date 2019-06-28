@@ -18,6 +18,24 @@ exports.cartDbSetup = function(database) {
     });
 };
 
+exports.orderHistoryDbSetup = function(database) {
+    sqlDb = database;
+    console.log("Checking if orderHistory table exists");
+    return database.schema.hasTable("orderHistory").then(exists => {
+        if (!exists) {
+            console.log("The table ORDERHISTORY doesn't exists: creating it.");
+            return database.schema.createTable("orderHistory", table => {
+                table.increments("id");
+                table.text("username");
+                table.text("ISBN");
+                table.text("shop");
+                table.date("date");
+                table.integer("quantity");
+            });
+        }
+    });
+};
+
 
 /**
  * View the content of the cart
@@ -42,13 +60,13 @@ exports.getCart = function(req) {
 exports.addOrder = function(body, id) {
     return sqlDb('session').where('id', id).then(function(response) {
         var username = response[0].username
-            var cartObj = {
-                "ISBN": body.ISBN,
-                "shop": body.shop,
-                "username": username,
-                "quantity": body.quantity
-            }
-            return sqlDb('cart').insert(cartObj)
+        var cartObj = {
+            "ISBN": body.ISBN,
+            "shop": body.shop,
+            "username": username,
+            "quantity": body.quantity
+        }
+        return sqlDb('cart').insert(cartObj)
     })
 }
 
@@ -101,5 +119,52 @@ exports.updateQuantity = function(ISBN, quantity, id) {
     return sqlDb('session').where('id', id).then(function(response) {
         var username = response[0].username
         return sqlDb('cart').where('username', username).andWhere('ISBN', ISBN).update('quantity', quantity)
+    })
+}
+
+/**
+ * Checks if the cart is empty
+ *
+ * id it's the id of the request
+ **/
+exports.checkCart = function(id) {
+    return sqlDb('session').where('id', id).then(function(response) {
+        var username = response[0].username
+        return sqlDb('cart').where('username', username)
+    })
+}
+
+/**
+ * Helper method to insert an order in the history
+ */
+exports.addNewOrderToHistory = function(obj) {
+    return sqlDb('orderHistory').insert(obj)
+}
+
+/**
+ * Checkouts the books and adds them to the historical orders
+ *
+ * id it's the id of the request
+ **/
+exports.checkout = function(id) {
+    return sqlDb('session').where('id', id).then(function(response) {
+        var username = response[0].username
+        return sqlDb('cart').where('username', username).then(function(response) {
+            var today = new Date()
+            var orders = new Array()
+            for (var i = 0; i < response.length; i++) {
+                var orderObj = {
+                    "username": username,
+                    "ISBN": response[i].ISBN,
+                    "shop": response[i].shop,
+                    "quantity": response[i].quantity,
+                    "date": today
+                }
+                orders.push(orderObj)
+            }
+            return sqlDb('orderHistory').insert(orders).then(function() {
+                return sqlDb('cart').where('username', username).del()
+            })
+        })
     })
 }

@@ -449,129 +449,6 @@ paths:
         404:
           description: "User not found"
       x-swagger-router-controller: "User"
-  /order:
-    post:
-      tags:
-      - "order"
-      summary: "Add a new order to the database"
-      description: ""
-      operationId: "addOrder"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Order object that needs to be added to the database"
-        required: true
-        schema:
-          $ref: "#/definitions/Order"
-      responses:
-        405:
-          description: "Invalid input"
-      x-swagger-router-controller: "Order"
-  /order/{username}:
-    get:
-      tags:
-      - "order"
-      summary: "Find the orders of an user by its username"
-      description: "Returns a list of orders"
-      operationId: "getOrdersByUsername"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "Username of the user to find order"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Order"
-        404:
-          description: "Username not found"
-      x-swagger-router-controller: "Order"
-    delete:
-      tags:
-      - "order"
-      summary: "Delete all the orders of a user"
-      description: ""
-      operationId: "deleteUserOrders"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "Username of the user of the orders to delete"
-        required: true
-        type: "string"
-      responses:
-        404:
-          description: "No orders found for the username provided"
-      x-swagger-router-controller: "Order"
-  /order/{username}/{ISBN}:
-    post:
-      tags:
-      - "order"
-      summary: "Update a order"
-      description: ""
-      operationId: "updateOrderBookQuantity"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "username of the order to update"
-        required: true
-        type: "string"
-      - name: "ISBN"
-        in: "path"
-        description: "ISBN of the book of the order to update"
-        required: true
-        type: "string"
-      - name: "quantity"
-        in: "query"
-        description: "Updated quantity of the book reserved"
-        required: true
-        type: "integer"
-      responses:
-        404:
-          description: "Order not found"
-      x-swagger-router-controller: "Order"
-    delete:
-      tags:
-      - "order"
-      summary: "Delete a order"
-      description: ""
-      operationId: "deleteOrder"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "username of the user of the order to delete"
-        required: true
-        type: "string"
-      - name: "ISBN"
-        in: "path"
-        description: "ISBN of the book of the order to delete"
-        required: true
-        type: "string"
-      responses:
-        404:
-          description: "Order not found"
-      x-swagger-router-controller: "Order"
   /author:
     get:
       tags:
@@ -921,6 +798,19 @@ paths:
         400:
           description: "Invalid ISBN supplied"
       x-swagger-router-controller: "Cart"
+  /cart/checkout:
+    post:
+      tags:
+      - "cart"
+      summary: "Checks out the orders in the cart"
+      description: ""
+      operationId: "checkout"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Success"
+      x-swagger-router-controller: "Cart"
 definitions:
   Cart:
     type: "object"
@@ -977,15 +867,11 @@ definitions:
         type: "integer"
         example: 8
         description: "quantity of books reserved"
-      date:
-        type: "string"
-        example: "28/06/2019"
-        description: "date of the order"
     example:
       shop: "La Feltrinelli"
       quantity: 8
       ISBN: "9780330508117"
-      user: "daniCh"
+      username: "daniCh"
   Book:
     type: "object"
     properties:
