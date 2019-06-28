@@ -897,6 +897,30 @@ paths:
         400:
           description: "Invalid ISBN supplied"
       x-swagger-router-controller: "Cart"
+  /cart/updateBookQuantity:
+    post:
+      tags:
+      - "cart"
+      summary: "updates the quantity of a book in the cart"
+      description: ""
+      operationId: "updateBookQuantity"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ISBN"
+        in: "query"
+        description: "ISBN of the book to update the quantity in the cart"
+        required: true
+        type: "string"
+      - name: "quantity"
+        in: "query"
+        description: "new quantity of the book"
+        required: true
+        type: "integer"
+      responses:
+        400:
+          description: "Invalid ISBN supplied"
+      x-swagger-router-controller: "Cart"
 definitions:
   Cart:
     type: "object"

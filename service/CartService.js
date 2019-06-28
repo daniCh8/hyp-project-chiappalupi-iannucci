@@ -83,9 +83,23 @@ exports.deleteOrder = function(ISBN, id) {
  *
  * id it's the id of the request
  **/
-exports.deleteOrder = function(id) {
+exports.clearCart = function(id) {
     return sqlDb('session').where('id', id).then(function(response) {
         var username = response[0].username
         return sqlDb('cart').where('username', username).del()
+    })
+}
+
+/**
+ * Updates the quantity of a book in the cart
+ *
+ * id it's the id of the request
+ * ISBN it's the ISBN of the book to update
+ * quantity it's the new quantity of the book
+ **/
+exports.updateQuantity = function(ISBN, quantity, id) {
+    return sqlDb('session').where('id', id).then(function(response) {
+        var username = response[0].username
+        return sqlDb('cart').where('username', username).andWhere('ISBN', ISBN).update('quantity', quantity)
     })
 }
