@@ -776,6 +776,31 @@ paths:
         404:
           description: "Event not found"
       x-swagger-router-controller: "Event"
+  /event/findByShop:
+    get:
+      tags:
+      - "event"
+      summary: "Finds events by the name of the shop where the book is presented"
+      description: "Returns the events in the shop selected"
+      operationId: "getEventByShop"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "shop"
+        in: "query"
+        description: "name of the shop to filter by"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Event"
+        404:
+          description: "ISBN not found"
+      x-swagger-router-controller: "Event"    
   /event/findByISBN:
     get:
       tags:

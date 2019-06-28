@@ -46,6 +46,17 @@ module.exports.getEventByID = function getEventByID (req, res, next) {
     });
 };
 
+module.exports.getEventByShop = function getEventByISBN (req, res, next) {
+  var shop = req.swagger.params['shop'].value;
+  Event.getEventByShop(shop)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
 module.exports.getEventByISBN = function getEventByISBN (req, res, next) {
   var ISBN = req.swagger.params['ISBN'].value;
   Event.getEventByISBN(ISBN)

@@ -12,6 +12,9 @@ exports.eventDbSetup = function(database) {
         table.increments("eventID");
         table.text("ISBN");
         table.text("shop");
+        table.text("address");
+        table.text("city");
+        table.text("pictureURL")
         table.date("date");
       });
     }
@@ -67,27 +70,6 @@ exports.getEventByID = function(ID) {
   return sqlDb('event').where('eventID', ID)
 }
 
-/*Example
-exports.getEventByID = function(ID) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "shop" : "La Feltrinelli",
-  "ISBN" : "9780330508117",
-  "ID" : "42"
-}, {
-  "shop" : "La Feltrinelli",
-  "ISBN" : "9780330508117",
-  "ID" : "42"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}*/
-
 
 /**
  * Finds events by the ISBNs of the books presented in it
@@ -100,23 +82,13 @@ exports.getEventByISBN = function(ISBN) {
   return sqlDb('event').whereIn('ISBN', ISBN)
 }
 
- /*Example
-exports.getEventByISBN = function(ISBN) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = [ {
-  "shop" : "La Feltrinelli",
-  "ISBN" : "9780330508117",
-  "ID" : "42"
-}, {
-  "shop" : "La Feltrinelli",
-  "ISBN" : "9780330508117",
-  "ID" : "42"
-} ];
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
-}*/
+/**
+ * Finds events by the name of the shop where the book is presented
+ * Returns the events in the shop selected
+ *
+ * shop String name of the shop to filter by
+ * returns List
+ **/
+exports.getEventByShop = function(shop) {
+  return sqlDb('event').where('shop', shop)
+}
