@@ -1,6 +1,7 @@
 "use strict";
 
 let sqlDb;
+let uuidv1 = require('uuid/v1');
 
 exports.userDbSetup = function(database) {
     sqlDb = database;
@@ -14,6 +15,20 @@ exports.userDbSetup = function(database) {
                 table.text("lastName");
                 table.text("email");
                 table.text("password");
+            });
+        }
+    });
+};
+
+exports.sessionDbSetup = function(database) {
+    sqlDb = database;
+    console.log("Checking if session table exists");
+    return database.schema.hasTable("session").then(exists => {
+        if (!exists) {
+            console.log("The table SESSION doesn't exists: creating it.");
+            return database.schema.createTable("session", table => {
+                table.text("username");
+                table.uuid("id");
             });
         }
     });
@@ -37,15 +52,26 @@ exports.checkUsernameAvailability = function(username) {
  * password String 
  * no response value expected for this operation
  **/
-exports.userLogin = function(username, password) {
-    console.log("ciao2")
+exports.userLogin = function(req, username, password) {
     return sqlDb('user').where('username', username).then(function(response) {
         var exists = false;
         if (response.length == 0) return false;
         if (response[0].username != username) return false;
         if (response[0].password != password) return false;
-        console.log("ciao3")
-        return true;
+        var sessionObj = {
+            "username": username,
+            "id": uuidv1()
+        }
+        req.session.id = sessionObj.id
+        return sqlDb('session').where('username', username).then(function(response) {
+            if (response.length == 0) {
+                return sqlDb('session').insert(sessionObj).then(function(response) {
+                    return true
+                })
+            } else return sqlDb('session').where('username', username).update('id', sessionObj.id).then(function(response) {
+                return true
+            })
+        })
     })
 }
 
@@ -84,17 +110,4 @@ exports.deleteUser = function(username) {
  **/
 exports.getUserByName = function(username) {
     return sqlDb('user').where('username', username)
-}
-
-
-/**
- * Logs out current logged in user session
- * 
- *
- * no response value expected for this operation
- **/
-exports.logoutUser = function() {
-    return new Promise(function(resolve, reject) {
-        resolve();
-    });
 }

@@ -16,18 +16,10 @@ function isEmpty(obj) {
 module.exports.userLogin = function userLogin(req, res, next) {
     var username = req.swagger.params['username'].value;
     var password = req.swagger.params['password'].value;
-    console.log("ciao1")
-    User.userLogin(username, password)
+    User.userLogin(req, username, password)
         .then(function(response) {
-            console.log("ciao4")
-            console.log(response)
             if (response == true) {
-                console.log("ciao5")
                 req.session.loggedin = true
-                console.log("ciao6")
-                req.session.id = uuidv1()
-                console.log("ciao7")
-                console.log(req.session.id)
             }
             return response;
         }).then(function(response) {
@@ -99,12 +91,18 @@ module.exports.getUserByName = function getUserByName(req, res, next) {
 };
 
 module.exports.logoutUser = function logoutUser(req, res, next) {
-    if (req.session.loggedin == true) req.session.loggedin = false;
-    User.logoutUser()
-        .then(function(response) {
-            utils.writeJson(res, response);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, response);
-        });
+    var json;
+    if (req.session.loggedin == true) {
+        req.session.loggedin = false;
+        req.session.id = uuidv1()
+        json = {
+            "success": true
+        }
+    } else {
+        json = {
+            "success": false,
+            "errorMessage": "You are not logged in."
+        }
+    }
+    utils.writeJson(res, json);
 };

@@ -389,14 +389,13 @@ paths:
           description: "unauthorized"
       x-swagger-router-controller: "User"
   /user/logout:
-    get:
+    post:
       tags:
       - "user"
       summary: "Logs out current logged in user session"
       description: ""
       operationId: "logoutUser"
       produces:
-      - "application/xml"
       - "application/json"
       parameters: []
       responses:
