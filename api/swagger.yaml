@@ -978,6 +978,10 @@ definitions:
       birthday:
         type: "string"
         example: "11/03/1952"
+      bio:
+        type: "string"
+      pictureUrl:
+        type: "string"
     example:
       birthday: "11/03/1952"
       name: "Douglas Adams"

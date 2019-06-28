@@ -12,6 +12,8 @@ exports.authorDbSetup = function(database) {
         table.increments("authorID");
         table.text("name");
         table.date("birthday");
+        table.text("bio");
+        table.text("pictureURL");
       });
     }
   });
@@ -26,7 +28,7 @@ exports.authorDbSetup = function(database) {
  * returns list of Author
  **/
 exports.getAuthors = function() {
-  return sqlDb("author");
+  return sqlDb("author").orderBy('authorID');
 };
 
 /**
