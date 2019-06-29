@@ -69,36 +69,6 @@ module.exports.userRegister = function userRegister(req, res, next) {
     })
 };
 
-module.exports.deleteUser = function deleteUser(req, res, next) {
-    var username = req.swagger.params['username'].value;
-    User.deleteUser(username)
-        .then(function(response) {
-            if (!req.loggedin) response = {
-                "success": false,
-                "errorMessage": "not authorized"
-            }
-            utils.writeJson(res, response);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, response);
-        });
-};
-
-module.exports.getUserByName = function getUserByName(req, res, next) {
-    var username = req.swagger.params['username'].value;
-    User.getUserByName(username)
-        .then(function(response) {
-            if (!req.loggedin) response = {
-                "success": false,
-                "errorMessage": "You are not logged in."
-            }
-            utils.writeJson(res, response);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, response);
-        });
-};
-
 module.exports.logoutUser = function logoutUser(req, res, next) {
     var json
     var previousID = req.session.id
