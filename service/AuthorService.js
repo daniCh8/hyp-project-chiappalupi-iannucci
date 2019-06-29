@@ -73,5 +73,5 @@ exports.getAuthorByID = function(ID) {
  * returns List
  **/
 exports.findAuthorsByName = function(names) {
-  return sqlDb('author').whereIn('name', names)
+  return sqlDb('author').whereRaw('LOWER(name) LIKE ?', '%' + names[0].toLowerCase() + '%')
 };
