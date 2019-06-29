@@ -188,13 +188,12 @@ paths:
       description: ""
       operationId: "findBooksByName"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "name"
         in: "query"
         description: "Name values that need to be considered for filter"
-        required: false
+        required: true
         type: "array"
         items:
           type: "string"
@@ -515,13 +514,12 @@ paths:
       description: ""
       operationId: "findAuthorsByName"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "name"
         in: "query"
         description: "Author names to filter by"
-        required: true
+        required: false
         type: "array"
         items:
           type: "string"

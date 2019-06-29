@@ -74,7 +74,7 @@ exports.getAuthorByID = function(ID) {
  **/
 exports.findAuthorsByName = function(names) {
   if(names == undefined) {
-    return sqlDb('author')
+    return sqlDb('author').orderBy('authorID')
   }
   return sqlDb('author').whereRaw('LOWER(name) LIKE ?', '%' + names[0].toLowerCase() + '%')
 };
