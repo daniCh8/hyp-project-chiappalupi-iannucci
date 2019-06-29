@@ -422,13 +422,10 @@ paths:
       tags:
         - "author"
       summary: "Returns all the authors in the database"
-      description: ""
       operationId: "getAuthors"
       consumes:
       - "application/json"
-      - "application/xml"
       produces:
-      - "application/xml"
       - "application/json"
       responses:
         200:
@@ -442,9 +439,7 @@ paths:
       operationId: "addAuthor"
       consumes:
       - "application/json"
-      - "application/xml"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - in: "body"
@@ -454,6 +449,8 @@ paths:
         schema:
           $ref: "#/definitions/Author"
       responses:
+        200:
+          description: "successful operation"
         405:
           description: "Invalid input"
       x-swagger-router-controller: "Author"
@@ -896,13 +893,11 @@ definitions:
         items:
           type: "string"
           example: "01"
-      photoUrls:
-        type: "array"
-        xml:
-          name: "photoUrl"
-          wrapped: true
-        items:
-          type: "string"
+      pictureURL:
+        type: "string"
+      plot:
+        type: "string"
+        example: "Arthur Dent is trying to prevent his house from being bulldozed when his friend Ford Prefect whisks him into outer space."
     example:
       photoUrls:
       - "photoUrls"
@@ -917,10 +912,6 @@ definitions:
   Author:
     type: "object"
     properties:
-      ID:
-        type: "string"
-        example: "42"
-        description: "authors identifier code"
       name:
         type: "string"
         example: "Douglas Adams"
@@ -929,12 +920,15 @@ definitions:
         example: "11/03/1952"
       bio:
         type: "string"
-      pictureUrl:
+        example: "Douglas Noel Adams (11 March 1952 – 11 May 2001) was an English author, scriptwriter, essayist, humorist, satirist and dramatist."
+      pictureURL:
         type: "string"
+        example: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Douglas_adams_portrait_cropped.jpg/220px-Douglas_adams_portrait_cropped.jpg"
     example:
-      birthday: "11/03/1952"
       name: "Douglas Adams"
-      ID: "42"
+      birthday: "11/03/1952"
+      bio: "Douglas Noel Adams (11 March 1952 – 11 May 2001) was an English author, scriptwriter, essayist, humorist, satirist and dramatist."
+      pictureURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Douglas_adams_portrait_cropped.jpg/220px-Douglas_adams_portrait_cropped.jpg"
   Event:
     type: "object"
     properties:
