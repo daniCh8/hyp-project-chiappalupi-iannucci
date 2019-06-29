@@ -194,7 +194,7 @@ paths:
       - name: "name"
         in: "query"
         description: "Name values that need to be considered for filter"
-        required: true
+        required: false
         type: "array"
         items:
           type: "string"
