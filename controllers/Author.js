@@ -37,9 +37,10 @@ module.exports.deleteAuthor = function deleteAuthor (req, res, next) {
 
 module.exports.getAuthorByID = function getAuthorByID (req, res, next) {
   var ID = req.swagger.params['ID'].value;
+  //console.log("ma qui ci arrivo?")
   Author.getAuthorByID(ID)
     .then(function (response) {
-      console.log("oh zio siamo qui")
+      /*console.log("oh zio siamo qui")
       var responseCode = 200
       console.log("oh zio responseCode1")
       console.log(responseCode)
@@ -47,8 +48,8 @@ module.exports.getAuthorByID = function getAuthorByID (req, res, next) {
       console.log(response)
       console.log("oh zio response.length")
       console.log(response.length)
-      if(response.length == 0) responseCode = 404
-      utils.writeJson(res, response, responseCode);
+      if(response.length == 0) responseCode = 404*/
+      utils.writeJson(res, response/*, responseCode*/);
     })
     .catch(function (response) {
       utils.writeJson(res, response);
