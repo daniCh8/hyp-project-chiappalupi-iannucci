@@ -461,7 +461,7 @@ paths:
         description: "Author object that needs to be added to the db"
         required: true
         schema:
-          $ref: "#/definitions/AuthorWithID"
+          $ref: "#/definitions/AuthorWithoutID"
       responses:
         200:
           description: "successful operation"
@@ -473,7 +473,7 @@ paths:
       tags:
       - "author"
       summary: "Find author by ID"
-      description: "Returns a single author"
+      description: "Returns a single author. Please note that the possible responses also include the basic error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "getAuthorByID"
       produces:
       - "application/json"
@@ -489,16 +489,10 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/AuthorWithID"
-          examples:
-            application/json: {
-              "authorID": 1,
-              "name": "Stefano Benni",
-              "birthday": "1947-08-12T00:00:00.000Z",
-              "bio": "Stefano Benni is an Italian satirical writer, poet and journalist. His books have been translated into around 20 foreign languages and scored notable commercial success. 2.5 million copies of his books have been sold in Italy.",
-              "pictureURL": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Stefano_Benni_par_Claude_Truong-Ngoc_sept_2013.jpg/220px-Stefano_Benni_par_Claude_Truong-Ngoc_sept_2013.jpg"
-              }
         404:
           description: "Author not found: invalid ID supplied. Got whenever an ID that corresponds to no author (e.g. -1) is supplied."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Author"
     delete:
       tags:
@@ -796,6 +790,15 @@ paths:
           description: "Success"
       x-swagger-router-controller: "Cart"
 definitions:
+  SuccessMessage:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+    example:
+      success: true
+    required:
+      - success
   ErrorMessage_NoObject:
     type: "object"
     properties:
@@ -945,19 +948,20 @@ definitions:
     properties:
       authorID:
         type: "integer"
-        example: "1"
       name:
         type: "string"
-        example: "Douglas Adams"
       birthday:
         type: "string"
-        example: "11/03/1952"
       bio:
         type: "string"
-        example: "Douglas Noel Adams (11 March 1952 – 11 May 2001) was an English author, scriptwriter, essayist, humorist, satirist and dramatist."
       pictureURL:
         type: "string"
-        example: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Douglas_adams_portrait_cropped.jpg/220px-Douglas_adams_portrait_cropped.jpg"
+    example:
+      authorID: 1
+      name: "Stefano Benni"
+      birthday: "1947-08-11T22:00:00.000Z"
+      bio: "Stefano Benni is an Italian satirical writer, poet and journalist. His books have been translated into around 20 foreign languages and scored notable commercial success. 2.5 million copies of his books have been sold in Italy."
+      pictureURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Stefano_Benni_par_Claude_Truong-Ngoc_sept_2013.jpg/220px-Stefano_Benni_par_Claude_Truong-Ngoc_sept_2013.jpg"
     required:
       - authorID
       - name
@@ -969,16 +973,17 @@ definitions:
     properties:
       name:
         type: "string"
-        example: "Douglas Adams"
       birthday:
         type: "string"
-        example: "11/03/1952"
       bio:
         type: "string"
-        example: "Douglas Noel Adams (11 March 1952 – 11 May 2001) was an English author, scriptwriter, essayist, humorist, satirist and dramatist."
       pictureURL:
         type: "string"
-        example: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Douglas_adams_portrait_cropped.jpg/220px-Douglas_adams_portrait_cropped.jpg"
+    example:
+        name: "Douglas Adams"
+        birthday: "11/03/1952"
+        Bio: "Douglas Noel Adams (11 March 1952 – 11 May 2001) was an English author, scriptwriter, essayist, humorist, satirist and dramatist."
+        pictureURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Douglas_adams_portrait_cropped.jpg/220px-Douglas_adams_portrait_cropped.jpg"    
     required:
       - name
       - birthday
