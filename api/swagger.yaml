@@ -432,6 +432,11 @@ paths:
               $ref: "#/definitions/Author"
         404:
           description: "No authors found in the database"
+          examples:
+            application/json: {
+              "success": false,
+              "errorMessage": "No authors found in the database"
+              }
       x-swagger-router-controller: "Author"
     post:
       tags:

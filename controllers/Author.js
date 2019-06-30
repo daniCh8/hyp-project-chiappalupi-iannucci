@@ -7,7 +7,13 @@ module.exports.getAuthors = function getAuthors (req, res, next) {
   Author.getAuthors()
     .then(function (response) {
       var responseCode = 200
-      if(response.length == 0) responseCode = 404
+      if(response.length == 0) {
+        responseCode = 404
+        response = {
+          "success": false,
+          "errorMessage": "No authors found in the database"
+        }
+      }
       utils.writeJson(res, response, responseCode);
     })
     .catch(function (response) {
