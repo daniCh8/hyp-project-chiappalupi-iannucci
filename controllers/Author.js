@@ -45,15 +45,6 @@ module.exports.deleteAuthor = function deleteAuthor (req, res, next) {
 
 module.exports.getAuthorByID = function getAuthorByID (req, res, next) {
   var ID = req.swagger.params['ID'].value;
-  if(!Number.isInteger(ID)) {
-    var responseCode = 400
-    var response = {
-      "success": false,
-      "errorMessage": "The type of the parameter supplied is wrong. Should be integer."
-    }
-    utils.writeJson(res, response, responseCode)
-    return;
-  }
   Author.getAuthorByID(ID)
     .then(function (response) {
       var responseCode = 200
@@ -63,6 +54,10 @@ module.exports.getAuthorByID = function getAuthorByID (req, res, next) {
           "success": false,
           "errorMessage": "No authors with this ID found in the database."
         }
+      }
+      else {
+        var box = response[0]
+        response = box
       }
       utils.writeJson(res, response, responseCode);
     })
