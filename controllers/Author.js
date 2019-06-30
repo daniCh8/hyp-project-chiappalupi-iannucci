@@ -23,13 +23,34 @@ module.exports.getAuthors = function getAuthors(req, res, next) {
 
 module.exports.addAuthor = function addAuthor(req, res, next) {
     var body = req.swagger.params['body'].value;
-    Author.addAuthor(body)
-        .then(function(response) {
-            utils.writeJson(res, response);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, response);
-        });
+    var names = new array();
+    array.push(body[name])
+    Author.findAuthorsByName(names).then(function(response) {
+        var controller = false
+        for (var i = 0; i < response.length; i++) {
+            if (body.birthday == response[i].birthday) {
+                controller = true
+            }
+        }
+        if (controller == true) {
+            var json = {
+                "success": false,
+                "errorMessage": "Found another author with same properties (name, birthday)"
+            }
+            utils.writeJson(res, json, 409)
+            return
+        }
+        Author.addAuthor(body)
+            .then(function(response) {
+                response = {
+                    "success": true
+                }
+                utils.writeJson(res, response, 200);
+            })
+            .catch(function(response) {
+                utils.writeJson(res, response);
+            });
+    })
 };
 
 module.exports.deleteAuthor = function deleteAuthor(req, res, next) {
@@ -47,7 +68,7 @@ module.exports.deleteAuthor = function deleteAuthor(req, res, next) {
             Author.deleteAuthor(ID)
                 .then(function(response) {
                     var json = {
-                      "success": true
+                        "success": true
                     }
                     utils.writeJson(res, json, responseCode);
                 })

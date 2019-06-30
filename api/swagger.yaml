@@ -448,8 +448,8 @@ paths:
     post:
       tags:
       - "author"
-      summary: "Add a new author to the database"
-      description: ""
+      summary: "Add a new author to the database."
+      description: "Adds a single author. Please note that the possible responses also include the basic error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "addAuthor"
       consumes:
       - "application/json"
@@ -458,15 +458,19 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Author object that needs to be added to the db"
+        description: "Author object that needs to be added to the db."
         required: true
         schema:
           $ref: "#/definitions/AuthorWithoutID"
       responses:
         200:
-          description: "successful operation"
-        405:
-          description: "Invalid input"
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        409:
+          description: "Author can't be added: another author with the same name and date has been found."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Duplicate"
       x-swagger-router-controller: "Author"
   /author/{ID}:
     get:
@@ -803,6 +807,19 @@ definitions:
       success: true
     required:
       - success
+  ErrorMessage_Duplicate:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      errorMessage:
+        type: "string"
+    example:
+      success: false
+      errorMessage: "Found another object with same properties."
+    required:
+      - success
+      - errorMessage
   ErrorMessage_NoObject:
     type: "object"
     properties:
