@@ -497,23 +497,27 @@ paths:
     delete:
       tags:
       - "author"
-      summary: "Deletes an author"
-      description: ""
+      summary: "Deletes an author."
+      description: "Please note that the possible responses also include the basic error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "deleteAuthor"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "ID"
         in: "path"
-        description: "Author object to delete"
+        description: "ID of the author to delete."
         required: true
-        type: "string"
+        type: "integer"
+        x-example: 2
       responses:
-        400:
-          description: "Invalid ID supplied"
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
         404:
-          description: "Author not found"
+          description: "Author not found: invalid ID supplied. Got whenever an ID that corresponds to no author (e.g. -1) is supplied."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Author"
   /author/findByName:
     get:
