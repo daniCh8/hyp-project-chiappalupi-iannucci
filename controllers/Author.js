@@ -6,7 +6,9 @@ var Author = require('../service/AuthorService');
 module.exports.getAuthors = function getAuthors (req, res, next) {
   Author.getAuthors()
     .then(function (response) {
-      utils.writeJson(res, response);
+      var responseCode = 200
+      if(response.length == 0) responseCode = 404
+      utils.writeJson(res, response, responseCode);
     })
     .catch(function (response) {
       utils.writeJson(res, response);

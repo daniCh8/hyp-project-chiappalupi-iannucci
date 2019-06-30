@@ -426,6 +426,12 @@ paths:
       responses:
         200:
           description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Author"
+        404:
+          description: "No authors found in the database"
       x-swagger-router-controller: "Author"
     post:
       tags:
@@ -447,10 +453,6 @@ paths:
       responses:
         200:
           description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Author"
         405:
           description: "Invalid input"
       x-swagger-router-controller: "Author"
