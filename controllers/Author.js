@@ -46,7 +46,10 @@ module.exports.deleteAuthor = function deleteAuthor(req, res, next) {
         } else {
             Author.deleteAuthor(ID)
                 .then(function(response) {
-                    utils.writeJson(res, response, responseCode);
+                    var json = {
+                      "success": true
+                    }
+                    utils.writeJson(res, json, responseCode);
                 })
                 .catch(function(response) {
                     utils.writeJson(res, response);
