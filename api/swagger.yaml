@@ -526,7 +526,7 @@ paths:
       tags:
       - "author"
       summary: "Finds Authors by their names."
-      description: "Returns an array of authors. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest.\
+      description: "Returns an array of authors. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest.\ 
       If no name is provided, all the authors are returned. Multiple authors can be provided. The research is not case sensitive."
       operationId: "findAuthorsByName"
       produces:
@@ -539,7 +539,7 @@ paths:
         type: "array"
         items:
           type: "string"
-          x-example:  "stefano benni"
+        x-example:  "stefano benni"
         collectionFormat: "multi"
       responses:
         200:
