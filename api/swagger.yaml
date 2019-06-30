@@ -551,7 +551,7 @@ paths:
         404:
           description: "Author not found: invalid ID supplied. Got whenever a name that corresponds to no author is provided."
           schema: 
-            $ref: "#definitions/ErrorMessage_NoObject"
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Author"
   /event:
     get:
