@@ -30,8 +30,8 @@ module.exports.addAuthor = function addAuthor(req, res, next) {
         for (var i = 0; i < response.length; i++) {
             var d1 = new Date(body.birthday);
             var d2 = new Date(response[i].birthday);
-            d1.setHours(0,0,0,0)
-            d2.setHours(0,0,0,0)
+            d1.setHours(0, 0, 0, 0)
+            d2.setHours(0, 0, 0, 0)
             var same = d1.getTime() === d2.getTime();
             if (same) {
                 controller = true
@@ -110,6 +110,14 @@ module.exports.findAuthorsByName = function findAuthorsByName(req, res, next) {
     var names = req.swagger.params['name'].value;
     Author.findAuthorsByName(names)
         .then(function(response) {
+            var responseCode = 200
+            if (response.length == 0) {
+                responseCode = 404
+                response = {
+                    "success": false,
+                    "errorMessage": "No authors with this name found in the database."
+                }
+            }
             utils.writeJson(res, response);
         })
         .catch(function(response) {

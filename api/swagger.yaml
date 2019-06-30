@@ -447,7 +447,7 @@ paths:
       tags:
       - "author"
       summary: "Add a new author to the database."
-      description: "Adds a single author. Please note that the possible responses also include the basic error ones defined by Swagger, such as 400 Bad Reqest."
+      description: "Adds a single author. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "addAuthor"
       consumes:
       - "application/json"
@@ -475,7 +475,7 @@ paths:
       tags:
       - "author"
       summary: "Find author by ID"
-      description: "Returns a single author. Please note that the possible responses also include the basic error ones defined by Swagger, such as 400 Bad Reqest."
+      description: "Returns a single author. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "getAuthorByID"
       produces:
       - "application/json"
@@ -500,7 +500,7 @@ paths:
       tags:
       - "author"
       summary: "Deletes an author."
-      description: "Please note that the possible responses also include the basic error ones defined by Swagger, such as 400 Bad Reqest."
+      description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "deleteAuthor"
       produces:
       - "application/json"
@@ -524,20 +524,22 @@ paths:
   /author/findByName:
     get:
       tags:
-      - "book"
-      summary: "Finds Authors by names"
-      description: ""
+      - "author"
+      summary: "Finds Authors by their names."
+      description: "Returns an array of authors. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest.\
+      If no name is provided, all the authors are returned. Multiple authors can be provided. The research is not case sensitive."
       operationId: "findAuthorsByName"
       produces:
       - "application/json"
       parameters:
       - name: "name"
         in: "query"
-        description: "Author names to filter by"
+        description: "Author names to filter by."
         required: false
         type: "array"
         items:
           type: "string"
+          x-example:  "stefano benni"
         collectionFormat: "multi"
       responses:
         200:
@@ -546,8 +548,10 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/AuthorWithID"
-        400:
-          description: "Invalid name value"
+        404:
+          description: "Author not found: invalid ID supplied. Got whenever a name that corresponds to no author is provided."
+          schema: 
+            $ref: "#definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Author"
   /event:
     get:
