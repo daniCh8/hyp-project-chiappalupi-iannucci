@@ -443,12 +443,7 @@ paths:
         404:
           description: "No authors found in the database"
           schema:
-            $ref: "#/definitions/ErrorMessage"
-          examples:
-            application/json: {
-              success: false,
-              errorMessage: "No authors found in the database"
-              }
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Author"
     post:
       tags:
@@ -801,15 +796,16 @@ paths:
           description: "Success"
       x-swagger-router-controller: "Cart"
 definitions:
-  ErrorMessage:
+  ErrorMessage_NoObject:
     type: "object"
     properties:
       success:
         type: "boolean"
-        example: "true"
       errorMessage:
         type: "string"
-        example: "You are not logged in."
+    example:
+      success: false
+      errorMessage: "No objects of this kind found in the database."
     required:
       - success
       - errorMessage
