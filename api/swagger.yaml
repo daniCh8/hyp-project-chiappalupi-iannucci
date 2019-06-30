@@ -11,17 +11,15 @@ info:
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 tags:
 - name: "book"
-  description: "All about the books available in the bookshop"
+  description: "all about the books available in the bookshop."
 - name: "author"
-  description: "All about the authors of the books"
+  description: "all about the authors of the books."
 - name: "user"
-  description: "Operations about user"
+  description: "operations on the users."
 - name: "event"
-  description: "Events of presentation"
-- name: "order"
-  description: "Orders of books by the users"
+  description: "events of presentation of the books."
 - name: "cart"
-  description: "Cart of the user"
+  description: "cart of the users."
 schemes:
 - "https"
 paths:
@@ -1002,7 +1000,7 @@ definitions:
         type: "string"
     example:
         name: "Douglas Adams"
-        birthday: "11/03/1952"
+        birthday: "1952-03-11"
         Bio: "Douglas Noel Adams (11 March 1952 – 11 May 2001) was an English author, scriptwriter, essayist, humorist, satirist and dramatist."
         pictureURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Douglas_adams_portrait_cropped.jpg/220px-Douglas_adams_portrait_cropped.jpg"    
     required:

@@ -23,12 +23,17 @@ module.exports.getAuthors = function getAuthors(req, res, next) {
 
 module.exports.addAuthor = function addAuthor(req, res, next) {
     var body = req.swagger.params['body'].value;
-    var names = new array();
-    array.push(body[name])
+    var names = new Array();
+    names.push(body.name)
     Author.findAuthorsByName(names).then(function(response) {
         var controller = false
         for (var i = 0; i < response.length; i++) {
-            if (body.birthday == response[i].birthday) {
+            var d1 = new Date(body.birthday);
+            var d2 = new Date(response[i].birthday);
+            d1.setHours(0,0,0,0)
+            d2.setHours(0,0,0,0)
+            var same = d1.getTime() === d2.getTime();
+            if (same) {
                 controller = true
             }
         }
