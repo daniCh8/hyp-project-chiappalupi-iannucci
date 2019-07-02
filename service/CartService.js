@@ -47,7 +47,7 @@ exports.orderHistoryDbSetup = function(database) {
 exports.getCart = function(req) {
     return sqlDb('session').where('id', req.session.id).then(function(response) {
         var username = response[0].username
-        return sqlDb('cart').where('username', username)
+        return sqlDb('cart').where('username', username).orderBy('ISBN')
     })
 }
 

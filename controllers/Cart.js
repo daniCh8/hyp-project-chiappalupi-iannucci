@@ -35,11 +35,13 @@ module.exports.addOrder = function addOrder(req, res, next) {
         var id = req.session.id
         Cart.checkISBNInCart(body.ISBN, id).then(function(check) {
             if (check.length > 0) {
-                json = {
-                    "success": false,
-                    "errorMessage": "There is alread a book whith this ISBN in your cart."
-                }
-                utils.writeJson(res, json);
+                var newQuantity = body.quantity + check[0].quantity
+                Cart.updateQuantity(body.ISBN, newQuantity, id).then(function(response) {
+                    utils.writeJson(res, json);
+                })
+                .catch(function(response) {
+                    utils.writeJson(res, json);
+                });
                 return;
             }
             Cart.addOrder(body, id).then(function(response) {
