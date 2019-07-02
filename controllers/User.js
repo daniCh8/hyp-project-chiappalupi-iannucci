@@ -86,10 +86,5 @@ module.exports.logoutUser = function logoutUser(req, res, next) {
         utils.writeJson(res, json);
         return
     }
-    User.userLogout(previousID).then(function(response) {
-            utils.writeJson(res, json);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, json);
-        });
+    utils.writeJson(res, json);
 };
