@@ -79,7 +79,7 @@ exports.getEventByID = function(ID) {
  * returns List
  **/
 exports.getEventByISBN = function(ISBN) {
-  return sqlDb('event').whereIn('ISBN', ISBN)
+  return sqlDb('event').where('ISBN', ISBN)
 }
 
 /**
