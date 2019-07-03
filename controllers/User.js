@@ -14,7 +14,7 @@ function isEmpty(obj) {
 }
 
 module.exports.getUser = function getUser(req, res, next) {
-    console.log("\nREQ.SESSION.ID:")
+    console.log("\nREQ.SESSION.ID - BEFORE:")
     console.log(req.session.id);
     console.log("\n");
     if (!req.session.loggedin) {
@@ -36,7 +36,7 @@ module.exports.getUser = function getUser(req, res, next) {
 };
 
 module.exports.userLogin = function userLogin(req, res, next) {
-    console.log("\nREQ.SESSION.ID:")
+    console.log("\nREQ.SESSION.ID - BEFORE:")
     console.log(req.session.id);
     console.log("\n");
     if (req.session.loggedin) {
@@ -51,6 +51,9 @@ module.exports.userLogin = function userLogin(req, res, next) {
     var password = req.swagger.params['password'].value;
     User.userLogin(req, username, password)
         .then(function(response) {
+            console.log("\nREQ.SESSION.ID - AFTER:")
+            console.log(req.session.id);
+            console.log("\n");
             if (response == true) {
                 req.session.loggedin = true
             }
@@ -95,7 +98,7 @@ module.exports.userRegister = function userRegister(req, res, next) {
 };
 
 module.exports.logoutUser = function logoutUser(req, res, next) {
-    console.log("\nREQ.SESSION.ID:")
+    console.log("\nREQ.SESSION.ID - BEFORE:")
     console.log(req.session.id);
     console.log("\n");
     var json
