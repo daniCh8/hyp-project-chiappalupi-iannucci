@@ -13,6 +13,25 @@ function isEmpty(obj) {
     return true;
 }
 
+module.exports.getUser = function getUser(req, res, next) {
+    if (!req.session.loggedin) {
+        var json = {
+            "success": false,
+            "errorMessage": "You are not logged in"
+        }
+        utils.writeJson(res, json, 401)
+        return
+    }
+    var id = req.session.id
+    User.getUser(id).then(function(response) {
+            delete response[0].password
+            utils.writeJson(res, response, 200);
+        })
+        .catch(function(response) {
+            utils.writeJson(res, response);
+        });
+};
+
 module.exports.userLogin = function userLogin(req, res, next) {
     if (req.session.loggedin) {
         var json = {
@@ -76,8 +95,8 @@ module.exports.logoutUser = function logoutUser(req, res, next) {
         req.session.loggedin = false;
         req.session.id = uuidv1()
         json = {
-                "success": true
-            }
+            "success": true
+        }
     } else {
         json = {
             "success": false,

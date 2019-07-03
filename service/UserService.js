@@ -86,6 +86,19 @@ exports.userRegister = function(body) {
     return sqlDb('user').insert(body);
 }
 
+/**
+ * Get user
+ * Returns the user logged in
+ *
+ * body id it's the id of the user
+ **/
+exports.getUser = function(id) {
+    return sqlDb('session').where('id', id).then(function(response) {
+        var username = response[0].username
+        return sqlDb('user').where('username', username)
+    })
+}
+
 
 
 /**

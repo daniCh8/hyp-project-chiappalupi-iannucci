@@ -350,6 +350,21 @@ paths:
         200:
           description: "successful operation"
       x-swagger-router-controller: "Book"
+  /user:
+    get:
+      tags:
+      - "user"
+      summary: "User GET"
+      description: ""
+      operationId: "getUser"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "succesfull login"
+        401:
+          description: "unauthorized"
+    x-swagger-router-controller: "User"
   /user/login:
     post:
       tags:
@@ -373,7 +388,7 @@ paths:
       responses:
         200:
           description: "succesfull login"
-        404:
+        401:
           description: "unauthorized"
       x-swagger-router-controller: "User"
   /user/register:
