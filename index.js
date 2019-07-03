@@ -17,13 +17,19 @@ let uuidv1 = require('uuid/v1');
 app.use(cookieParser());
 app.use(cookieSession({
     name: "session",
-    keys: ["abc", "def"]
+    keys: ["abc", "def"],
+    resave: true,
+    saveUninitialized: true,
+    maxAge: 24 * 60 * 60 * 1000
 }));
 
 app.use(function(req, res, next) {
 
     console.log("Passo di qui? 1")
     console.log(req.session.id)
+
+    console.log("req.session.isNew")
+    console.log(req.session.isNew)
 
     if (req.session.id === undefined) {
         console.log("Entro di qui? 1")
