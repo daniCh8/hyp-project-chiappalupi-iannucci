@@ -14,6 +14,9 @@ function isEmpty(obj) {
 }
 
 module.exports.getUser = function getUser(req, res, next) {
+    console.log("\nREQ.SESSION.ID:")
+    console.log(req.session.id);
+    console.log("\n");
     if (!req.session.loggedin) {
         var json = {
             "success": false,
@@ -33,6 +36,9 @@ module.exports.getUser = function getUser(req, res, next) {
 };
 
 module.exports.userLogin = function userLogin(req, res, next) {
+    console.log("\nREQ.SESSION.ID:")
+    console.log(req.session.id);
+    console.log("\n");
     if (req.session.loggedin) {
         var json = {
             "success": false,
@@ -89,6 +95,9 @@ module.exports.userRegister = function userRegister(req, res, next) {
 };
 
 module.exports.logoutUser = function logoutUser(req, res, next) {
+    console.log("\nREQ.SESSION.ID:")
+    console.log(req.session.id);
+    console.log("\n");
     var json
     var previousID = req.session.id
     if (req.session.loggedin == true) {
