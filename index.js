@@ -37,6 +37,8 @@ app.use(function(req, res, next) {
         console.log(req.session.id)
     }
 
+    req.session.save()
+
     console.log("Esco di qui? 1")
     console.log(req.session.id)
 
