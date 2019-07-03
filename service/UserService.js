@@ -1,7 +1,6 @@
 "use strict";
 
 let sqlDb;
-let uuidv1 = require('uuid/v1');
 
 exports.userDbSetup = function(database) {
     sqlDb = database;
@@ -59,9 +58,8 @@ exports.userLogin = function(req, username, password) {
         if (response[0].password != password) return false;
         var sessionObj = {
             "username": username,
-            "id": uuidv1()
+            "id": req.session.id
         }
-        req.session.id = sessionObj.id
         return sqlDb('session').where('username', username).then(function(response) {
             if (response.length == 0) {
                 return sqlDb('session').insert(sessionObj).then(function(response) {

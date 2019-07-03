@@ -12,12 +12,30 @@ var jsyaml = require('js-yaml');
 var serverPort = process.env.PORT || 8080;
 let cookieParser = require("cookie-parser");
 let cookieSession = require("cookie-session");
+let uuidv1 = require('uuid/v1');
 
 app.use(cookieParser());
 app.use(cookieSession({
-    name: "session", 
+    name: "session",
     keys: ["abc", "def"]
 }));
+
+app.use(function(req, res, next) {
+
+    console.log("Passo di qui? 1")
+    console.log(req.session.id)
+
+    if (req.session.id === undefined) {
+        console.log("Entro di qui? 1")
+        req.session.id = uuidv1();
+        console.log(req.session.id)
+    }
+
+    console.log("Esco di qui? 1")
+    console.log(req.session.id)
+
+    next();
+})
 
 // swaggerRouter configuration
 var options = {
