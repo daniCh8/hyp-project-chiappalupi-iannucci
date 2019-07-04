@@ -136,7 +136,7 @@ function register(){
 
 function fetchAccount() {
     jQuery.ajax({
-        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user",
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user",
         type: 'GET',
         dataType: 'json',
         credentials: 'same-origin',
