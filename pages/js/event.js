@@ -230,7 +230,7 @@ function drawAuthor(data) {
         $figure.addClass("figureauthors");
         $figure.addClass("authorContainerVar");
         var $a = $("<a/>");
-        var s = 'author.html?author=' + data[i].name;
+        var s = 'author.html?name=' + data[i].name;
         $a.attr("href", s)
         //$a.click(author, drawAuthorModal);
         var $img = $("<img/>");
