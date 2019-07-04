@@ -137,7 +137,7 @@ function fetchAccount() {
 
 function drawAccount(data) {
     var s = '';
-    s = s + '<div class="login-html">\n' +
+    s = s + '<div class="login-html fadeInDown">\n' +
         '            <p class="title-fav-best-white" > Hi ' + data[0].firstName + ', <br>Here you may find some information about your account.</p>\n' +
         '            <p class="paragraph-fav-best-white"> <strong>Name:  </strong>' + data[0].firstName + ' ' + data[0].lastName + '</p>\n' +
         '            <p class="paragraph-fav-best-white">    <strong>Username:  </strong>' + data[0].username + '</p>\n' +
@@ -150,7 +150,7 @@ function drawAccount(data) {
 
 function drawLoginForm() {
     var s = '';
-    s = s + '<div class="login-html">\n' +
+    s = s + '<div class="login-html fadeInDown">\n' +
         '        <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>\n' +
         '        <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>\n' +
         '        <div class="login-form">\n' +
