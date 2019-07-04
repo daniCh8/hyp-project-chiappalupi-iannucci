@@ -976,8 +976,6 @@ definitions:
         type: "string"
       email:
         type: "string"
-      password:
-        type: "string"
     example:
       firstName: "admin_name"
       lastName: "admin_surname"
@@ -987,7 +985,6 @@ definitions:
       - firstName
       - lastName
       - email
-      - password
       - username
   OrderObject:
     type: "object"

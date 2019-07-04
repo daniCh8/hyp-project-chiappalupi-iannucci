@@ -75,7 +75,7 @@ module.exports.userLogin = function userLogin(req, res, next) {
             utils.writeJson(res, json, responseCode);
         })
         .catch(function(response) {
-            utils.writeJson(res, response);
+            utils.writeJson(res, json, responseCode);
         });
 };
 
