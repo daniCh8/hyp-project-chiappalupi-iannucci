@@ -27,8 +27,8 @@ module.exports.getUser = function getUser(req, res, next) {
     }
     var id = req.session.id
     User.getUser(id).then(function(response) {
-        var responseCode = 200;
-            if(response.length == 0) {
+            var responseCode = 200;
+            if (response.length == 0 || response == undefined) {
                 response = {
                     "success": false,
                     "errorMessage": "You are not logged in"
@@ -36,7 +36,7 @@ module.exports.getUser = function getUser(req, res, next) {
                 responseCode = 401
                 req.session.loggedin = false
             }
-            delete response[0].password
+            else delete response[0].password
             utils.writeJson(res, response, responseCode);
         })
         .catch(function(response) {
