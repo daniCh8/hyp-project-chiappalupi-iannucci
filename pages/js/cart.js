@@ -23,10 +23,8 @@ $(document).ready(() => {
 
     isUserLoggedIn(function(loggato) {
         if (loggato) {
-            //alert("L'utente è loggato!");
             fetchItems();
         } else {
-            //alert("L'utente NON è loggato!");
             window.location.replace("myaccount.html");
         }
     });
@@ -41,15 +39,12 @@ function isUserLoggedIn(callBack) {
         dataType: 'json',
         credentials: 'same-origin',
         Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
-        success: (result) => {
+        success: () => {
             console.log('ajax success');
             callBack(true);
         },
-        error: (result) => {
+        error: () => {
             callBack(false);
-            console.log('ajax error')
-            console.log(result.errorMessage)
-            notifyerror(result.errorMessage);
         }
     });
 }
