@@ -145,7 +145,7 @@ function drawQuantity(data){
     var s = '';
     for(var i = 0; i<data.length; i++){
         s = s + '<div class = "container col-12">' +
-            '<div class="container col-6" id="'+ data[i].ISBN +'" ' +
+            '<div class="container col-6" id="'+ data[i].ISBN +'"></div> ' +
             '<div class="container col-6" <p class="paragraph-fav-best">Quantity:'+data[i].quantity +'</p>'+
         '</div>'+
             '</div>';
