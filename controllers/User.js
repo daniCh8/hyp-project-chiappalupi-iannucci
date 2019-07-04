@@ -14,9 +14,6 @@ function isEmpty(obj) {
 }
 
 module.exports.getUser = function getUser(req, res, next) {
-    console.log("\nREQ.SESSION.ID - BEFORE:")
-    console.log(req.session.id);
-    console.log("\n");
     if (!req.session.loggedin) {
         var json = {
             "success": false,
@@ -46,7 +43,7 @@ module.exports.getUser = function getUser(req, res, next) {
 };
 
 module.exports.userLogin = function userLogin(req, res, next) {
-    if(req.swagger.params["username"] == undefined || req.swagger.params["password"] == undefined) {
+    if (req.swagger.params["username"] == undefined || req.swagger.params["password"] == undefined) {
         var json = {
             "success": false,
             "errorMessage": "Please, compile all the parameters of the form."
@@ -56,7 +53,7 @@ module.exports.userLogin = function userLogin(req, res, next) {
     }
     var username = req.swagger.params['username'].value;
     var password = req.swagger.params['password'].value;
-    if(username == "" || password == "") {
+    if (username == "" || password == "") {
         var json = {
             "success": false,
             "errorMessage": "Please, compile all the parameters of the form."
@@ -67,9 +64,6 @@ module.exports.userLogin = function userLogin(req, res, next) {
     User.userLogin(req, username, password)
         .then(function(response) {
             var responseCode = 200
-            console.log("\nREQ.SESSION.ID - AFTER:")
-            console.log(req.session.id);
-            console.log("\n");
             if (response == true) {
                 req.session.loggedin = true
             }
@@ -91,7 +85,7 @@ module.exports.userLogin = function userLogin(req, res, next) {
 };
 
 module.exports.userRegister = function userRegister(req, res, next) {
-    if(req.swagger.params["username"] == undefined || req.swagger.params["firstName"] == undefined || req.swagger.params["lastName"] == undefined || req.swagger.params["email"] == undefined || req.swagger.params["password"] == undefined) {
+    if (req.swagger.params["username"] == undefined || req.swagger.params["firstName"] == undefined || req.swagger.params["lastName"] == undefined || req.swagger.params["email"] == undefined || req.swagger.params["password"] == undefined) {
         var json = {
             "success": false,
             "errorMessage": "Please, compile all the parameters of the form."
@@ -111,7 +105,7 @@ module.exports.userRegister = function userRegister(req, res, next) {
         "email": email,
         "password": password
     }
-    if(username == "" || firstName == "" || lastName == "" || email == "" || password == "") {
+    if (username == "" || firstName == "" || lastName == "" || email == "" || password == "") {
         var json = {
             "success": false,
             "errorMessage": "Please, compile all the parameters of the form."
@@ -127,16 +121,18 @@ module.exports.userRegister = function userRegister(req, res, next) {
             }
             utils.writeJson(res, json, 409);
         } else {
-            var json = {
-                "success": true
-            }
             User.userRegister(body)
                 .then(function(response) {
-                    utils.writeJson(res, json, 200);
+                    User.userLogin(req, username, password).then(function(response) {
+                        var json = {
+                            "success": true
+                        }
+                        req.session.loggedin = true;
+                        utils.writeJson(res, json, 200);
+                    }).catch(function(response) {
+                        utils.writeJson(res, response);
+                    });
                 })
-                .catch(function(response) {
-                    utils.writeJson(res, response);
-                });
         }
     })
 };

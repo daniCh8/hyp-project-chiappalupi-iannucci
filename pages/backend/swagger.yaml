@@ -350,6 +350,10 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/SuccessMessage"
+        400:
+          description: "Some parameters were left blank."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Blank"
         404:
           description: "No users found with the username and password provided."
           schema:
@@ -367,17 +371,41 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
+      - name: "username"
+        in: "formData"
         required: true
-        schema:
-          $ref: "#/definitions/User"
+        type: "string"
+        x-example: "admin"
+      - name: "password"
+        in: "formData"
+        required: true
+        type: "string"
+        x-example: "1234"
+      - name: "email"
+        in: "formData"
+        required: true
+        type: "string"
+        x-example: "admin@admin.it"
+      - name: "firstName"
+        in: "formData"
+        required: true
+        type: "string"
+        x-example: "admin_name"
+      - name: "lastName"
+        in: "formData"
+        required: true
+        type: "string"
+        x-example: "admin_surname"
       responses:
         200:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/SuccessMessage"
         400:
+          description: "Some parameters were left blank."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Blank"
+        409:
           description: "Username already exists."
           schema:
             $ref: "#/definitions/ErrorMessage_UsernameTaken"
@@ -564,7 +592,7 @@ paths:
               "address": "Galleria Vittorio Emanuele II",
               "city": "Milan",
               "pictureURL": "https://i.ibb.co/9qMgVmW/mastermind.jpg",
-              "date": "2019-09-13T13:00:00.000Z"
+              "date": "2019-07-21T17:32:28Z"
             }
         404:
           description: "No event found in your cart."
@@ -875,6 +903,19 @@ definitions:
       success: true
     required:
       - success
+  ErrorMessage_Blank:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      errorMessage:
+        type: "string"
+    example:
+      success: false
+      errorMessage: "Please, compile all the parameters of the form."
+    required:
+      - success
+      - errorMessage
   ErrorMessage_Duplicate:
     type: "object"
     properties:
