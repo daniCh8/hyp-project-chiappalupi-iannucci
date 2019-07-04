@@ -525,29 +525,40 @@ paths:
       tags:
       - "event"
       summary: "Get all the events in the database"
-      description: ""
       operationId: "getEvents"
-      consumes:
-      - "application/json"
-      - "application/xml"
       produces:
-      - "application/xml"
       - "application/json"
       responses:
         200:
-          description: "Successful operation"
+          description: "succesful operartion"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EventWithID"
+          examples:
+            application/json:  {
+              "eventID": 2,
+              "ISBN": "6",
+              "shop": "La Feltrinelli",
+              "address": "Galleria Vittorio Emanuele II",
+              "city": "Milan",
+              "pictureURL": "https://i.ibb.co/9qMgVmW/mastermind.jpg",
+              "date": "2019-09-13T13:00:00.000Z"
+            }
+        404:
+          description: "No event found in your cart."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Event"
     post:
       tags:
       - "event"
-      summary: "Add a new event to the bookshop"
-      description: ""
+      summary: "Add a new event to the database"
+      description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest"
       operationId: "addEvent"
       consumes:
       - "application/json"
-      - "application/xml"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - in: "body"
@@ -555,20 +566,21 @@ paths:
         description: "Event object that needs to be added to the shop"
         required: true
         schema:
-          $ref: "#/definitions/Event"
+          $ref: "#/definitions/EventWithoutID"
       responses:
-        405:
-          description: "Invalid input"
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
       x-swagger-router-controller: "Event"
   /event/{ID}:
     get:
       tags:
       - "event"
       summary: "Find an event by its ID"
-      description: "Returns an event"
+      description: "Returns a sigle sized array of events. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "getEventByID"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "ID"
@@ -576,87 +588,99 @@ paths:
         description: "ID of the event to find"
         required: true
         type: "integer"
+        x-example: 4
       responses:
         200:
           description: "Successful operation"
           schema:
-            $ref: "#/definitions/Event"
-        400:
-          description: "Invalid ID supplied"
+            type: "array"
+            items:
+              $ref: "#/definitions/EventWithID"
         404:
           description: "Event not found"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Event"
     delete:
       tags:
       - "event"
       summary: "Deletes an event"
-      description: ""
+      description: "Delets the selected event. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "deleteEvent"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "ID"
         in: "path"
-        description: "Event ID to delete"
+        description: "ID of the event to delete"
         required: true
         type: "string"
+        x-example: 4
       responses:
-        400:
-          description: "Invalid ID supplied"
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
         404:
-          description: "Event not found"
+          description: "No event with this ID found."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Event"
   /event/findByShop:
     get:
       tags:
       - "event"
-      summary: "Finds events by the name of the shop where the book is presented"
-      description: "Returns the events in the shop selected"
+      summary: "Finds events by the name of the shop where they are"
+      description: "Returns an array of events. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "getEventByShop"
       produces:
       - "application/json"
       parameters:
       - name: "shop"
         in: "query"
-        description: "name of the shop to filter by"
+        description: "Name of the shop to filter by. It is not case sensitive."
         required: true
         type: "string"
+        x-example: "la fEltrinelli"
       responses:
         200:
           description: "Successful operation"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Event"
+              $ref: "#/definitions/EventWithID"
         404:
-          description: "ISBN not found"
+          description: "Event not found"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Event"    
   /event/findByISBN:
     get:
       tags:
       - "event"
       summary: "Find an event by the ISBNs of the books presented in it"
-      description: "Returns the events where the books were presented"
+      description: "Returns an array of events. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "getEventByISBN"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "ISBN"
         in: "query"
-        description: "ISBN of the book presentated in the event to find"
+        description: "ISBN of the book presented in the events to find"
         required: true
         type: "string"
+        x-example: "6"
       responses:
         200:
           description: "Successful operation"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Event"
+              $ref: "#/definitions/EventWithID"
         404:
-          description: "ISBN not found"
+          description: "Event not found"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Event"
   /cart:
     get:
@@ -1127,29 +1151,76 @@ definitions:
       pictureURL:
         type: "string"
     example:
-        name: "Ugo Foscolo"
-        birthday: "1778-02-06"
-        bio: "Ugo Foscolo, born Niccolò Foscolo, was an Italian writer, revolutionary and poet. He is remembered especially for his 1807 long poem Dei Sepolcri."
-        pictureURL: "https://biografieonline.it/img/bio/u/Ugo_Foscolo.jpg"    
+      name: "Ugo Foscolo"
+      birthday: "1778-02-06"
+      bio: "Ugo Foscolo, born Niccolò Foscolo, was an Italian writer, revolutionary and poet. He is remembered especially for his 1807 long poem Dei Sepolcri."
+      pictureURL: "https://biografieonline.it/img/bio/u/Ugo_Foscolo.jpg"    
     required:
       - name
       - birthday
       - bio
       - pictureURL
-  Event:
+  EventWithID:
     type: "object"
     properties:
-      ID:
-        type: "string"
-        example: "42"
-        description: "event identifier code"
+      eventID:
+        type: "integer"
       ISBN:
         type: "string"
-        example: "9780330508117"
       shop:
         type: "string"
-        example: "La Feltrinelli"
+      address:
+        type: "string"
+      city:
+        type: "string"
+      pictureURL:
+        type: "string"
+      date:
+        type: string
+        format: date
     example:
+      eventID: 2,
+      ISBN: "6"
       shop: "La Feltrinelli"
-      ISBN: "9780330508117"
-      ID: "42"
+      address: "Galleria Vittorio Emanuele II"
+      city: "Milan"
+      pictureURL: "https://i.ibb.co/9qMgVmW/mastermind.jpg"
+      date: "2019-09-13T13:00:00.000Z"
+    required:
+      - eventID
+      - ISBN
+      - shop
+      - address
+      - city
+      - pictureURL
+      - date
+  EventWithoutID:
+    type: "object"
+    properties:
+      ISBN:
+        type: "string"
+      shop:
+        type: "string"
+      address:
+        type: "string"
+      city:
+        type: "string"
+      pictureURL:
+        type: "string"
+      date:
+        type: string
+        format: date
+    example:
+      ISBN: "6"
+      shop: "La Feltrinelli"
+      address: "Galleria Vittorio Emanuele II"
+      city: "Milan"
+      pictureURL: "https://i.ibb.co/9qMgVmW/mastermind.jpg"
+      date: "2019-09-13T13:00:00.000Z"
+    required:
+      - ISBN
+      - shop
+      - address
+      - city
+      - pictureURL
+      - date

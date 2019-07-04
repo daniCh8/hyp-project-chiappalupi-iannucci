@@ -90,5 +90,5 @@ exports.getEventByISBN = function(ISBN) {
  * returns List
  **/
 exports.getEventByShop = function(shop) {
-  return sqlDb('event').where('shop', shop)
+  return sqlDb('event').whereRaw('LOWER(shop) LIKE ?', '%' + shop.toLowerCase() + '%')
 }
