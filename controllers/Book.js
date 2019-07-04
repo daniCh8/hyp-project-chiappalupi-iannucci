@@ -14,7 +14,15 @@ function isEmpty(obj) {
 
 module.exports.getFavouriteBooks = function getFavouriteBooks(req, res, next) {
     Book.getFavouriteBooks().then(function(response) {
-            utils.writeJson(res, response);
+            var responseCode = 200
+            if (response.length == 0) {
+                response = {
+                    "success": false,
+                    "errorMessage": "No favourite book found in the database"
+                }
+                responseCode = 404
+            }
+            utils.writeJson(res, response, responseCode);
         })
         .catch(function(response) {
             utils.writeJson(res, response);
@@ -54,7 +62,13 @@ module.exports.addBook = function addBook(req, res, next) {
 module.exports.getBooks = function getBooks(req, res, next) {
     Book.getBooks().then(function(response) {
             var responseCode = 200
-            if(response.length == 0) responseCode = 404
+            if (response.length == 0) {
+                response = {
+                    "success": false,
+                    "errorMessage": "No books found in the database"
+                }
+                responseCode = 404
+            }
             utils.writeJson(res, response, responseCode);
         })
         .catch(function(response) {
@@ -66,7 +80,7 @@ module.exports.findBooksBy = function findBooksBy(req, res, next) {
     var genres = req.swagger.params['genres'].value;
     var themes = req.swagger.params['themes'].value;
     var author = [req.swagger.params['author'].value]
-    var name   = [req.swagger.params['name'].value]
+    var name = [req.swagger.params['name'].value]
     Book.findBooksBy(genres, themes).then(function(firstResponse) {
             var returnJson = firstResponse;
             Book.findBooksByAuthors(author).then(function(secondResponse) {
