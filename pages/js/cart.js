@@ -214,11 +214,13 @@ function drawItems(data) {
             '    </div>\n' +
             '</div>'
         $('#itemsshelf').html(r);
-        fillTableWithBooks(data);
+        fillTableWithBooks(data, function(data){
+            fillTableWithQuantity(data);
+        } );
     }
 }
 
-function fillTableWithBooks(data){
+function fillTableWithBooks(data, callBack){
         for (var i = 0; i < data.length; i++) {
             fetchBook(data[i].ISBN, function (book) {
                 var r = r + '<tr><td><img src="' + book[0].pictureURL + ' " alt="' + book[0].ISBN + '" /> </td>\n' +
@@ -229,8 +231,7 @@ function fillTableWithBooks(data){
                 $("#tableValues").append(r);
             });
         }
-
-    fillTableWithQuantity(data);
+      callBack(data);
 }
 
 function fillTableWithQuantity(data) {
