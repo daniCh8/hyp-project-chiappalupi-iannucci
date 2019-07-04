@@ -1060,10 +1060,10 @@ definitions:
       pictureURL:
         type: "string"
     example:
-        name: "Douglas Adams"
-        birthday: "1952-03-11"
-        bio: "Douglas Noel Adams (11 March 1952 – 11 May 2001) was an English author, scriptwriter, essayist, humorist, satirist and dramatist."
-        pictureURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Douglas_adams_portrait_cropped.jpg/220px-Douglas_adams_portrait_cropped.jpg"    
+        name: "Ugo Foscolo"
+        birthday: "1778-02-06"
+        bio: "Ugo Foscolo, born Niccolò Foscolo, was an Italian writer, revolutionary and poet. He is remembered especially for his 1807 long poem Dei Sepolcri."
+        pictureURL: "https://biografieonline.it/img/bio/u/Ugo_Foscolo.jpg"    
     required:
       - name
       - birthday

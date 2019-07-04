@@ -13,6 +13,7 @@ exports.cartDbSetup = function(database) {
                 table.text("shop");
                 table.text("username");
                 table.integer("quantity");
+                table.float("cost");
             });
         }
     });
@@ -30,6 +31,7 @@ exports.orderHistoryDbSetup = function(database) {
                 table.text("ISBN");
                 table.text("shop");
                 table.date("date");
+                table.float("cost");
                 table.integer("quantity");
             });
         }
