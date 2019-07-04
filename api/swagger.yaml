@@ -371,11 +371,30 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
+      - name: "username"
+        in: "formData"
         required: true
-        schema:
-          $ref: "#/definitions/User"
+        type: "string"
+        x-example: "admin"
+      - name: "password"
+        in: "formData"
+        required: true
+        type: "string"
+        x-example: "1234"
+      - name: "email"
+        in: "formData"
+        required: true
+        type: "string"
+        x-example: "admin@admin.it"
+      - name: "firstName"
+        in: "formData"
+        required: true
+        type: "string"
+        x-example: "admin_name"
+      - name: "lastName"
+        in: "formData"
+        type: "string"
+        x-example: "admin_surname"
       responses:
         200:
           description: "Successful Operation"
@@ -572,7 +591,7 @@ paths:
               "address": "Galleria Vittorio Emanuele II",
               "city": "Milan",
               "pictureURL": "https://i.ibb.co/9qMgVmW/mastermind.jpg",
-              "date": "2019-09-13T13:00:00.000Z"
+              "date": "2019-07-21T17:32:28Z"
             }
         404:
           description: "No event found in your cart."
