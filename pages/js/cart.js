@@ -68,7 +68,7 @@ function fetchBook(prevData) {
             Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
-                var r = drawBook(data, prevData[index]);
+                var r = drawBook(data, prevData, index);
                 $('#itemsshelf').append(r);
             },
             error: () => {
@@ -79,7 +79,7 @@ function fetchBook(prevData) {
 }
 
 
-function drawBook(data, prevData) {
+function drawBook(data, prevData, index) {
     var s = '';
             s = s + '<div class = "bookcontainer1">';
         s = s + '<a class="booklink" href="book.html?name=' + data[0].name + '"> <div class="component">\n' +
@@ -134,7 +134,7 @@ function drawBook(data, prevData) {
             '        </li>\n' +
             '    </ul>\n' +
             '</a></div>';
-        s = s + '<p class = "paragraph-fav-best"> Quantity: ' + prevData.quantity + '</p>';
+        s = s + '<p class = "paragraph-fav-best"> Quantity: ' + prevData[index].quantity + '</p>';
         s = s + "</div>";
 
     return s;
