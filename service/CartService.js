@@ -122,7 +122,12 @@ exports.clearCart = function(id) {
 exports.updateQuantity = function(ISBN, quantity, id) {
     return sqlDb('session').where('id', id).then(function(response) {
         var username = response[0].username
-        return sqlDb('cart').where('username', username).andWhere('ISBN', ISBN).update('quantity', quantity)
+        return sqlDb('cart').where('username', username).andWhere('ISBN', ISBN).update('quantity', quantity).then(function(response) {
+            return sqlDb('book').where('ISBN', ISBN).then(function(response) {
+                var newCost = response[0].price * quantity
+                return sqlDb('cart').where('username', username).andWhere('ISBN', ISBN).update('cost', newCost)
+            })
+        })
     })
 }
 
@@ -136,13 +141,6 @@ exports.checkCart = function(id) {
         var username = response[0].username
         return sqlDb('cart').where('username', username)
     })
-}
-
-/**
- * Helper method to insert an order in the history
- */
-exports.addNewOrderToHistory = function(obj) {
-    return sqlDb('orderHistory').insert(obj)
 }
 
 /**
@@ -160,7 +158,7 @@ exports.checkout = function(id) {
                 var orderObj = {
                     "username": username,
                     "ISBN": response[i].ISBN,
-                    "shop": response[i].shop,
+                    "cost": response[i].cost,
                     "quantity": response[i].quantity,
                     "date": today
                 }
