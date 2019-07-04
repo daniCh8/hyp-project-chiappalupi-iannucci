@@ -24,7 +24,7 @@ module.exports.getCart = function getCart(req, res, next) {
             } else {
                 console.log("here")
                 return Cart.getCart(req).then(function(response) {
-                    console.log("1response")
+                        console.log("1response")
                         console.log(response)
                         utils.writeJson(res, response, 200);
                     })
@@ -44,9 +44,6 @@ module.exports.addOrder = function addOrder(req, res, next) {
         }
         utils.writeJson(res, json, 401)
     } else {
-        var json = {
-            "success": true
-        }
         var body = req.swagger.params['body'].value;
         var id = req.session.id
         Cart.checkSession(id).then(function(response) {
@@ -59,6 +56,9 @@ module.exports.addOrder = function addOrder(req, res, next) {
                 utils.writeJson(res, json, 401)
             } else {
                 Cart.checkISBNInCart(body.ISBN, id).then(function(check) {
+                    var json = {
+                        "success": true
+                    }
                     if (check.length > 0) {
                         var newQuantity = body.quantity + check[0].quantity
                         Cart.updateQuantity(body.ISBN, newQuantity, id).then(function(response) {
