@@ -16,6 +16,7 @@ exports.bookDbSetup = function(database) {
                 table.enum("genre", ["fantasy", "science fiction", "westerns", "romance", "thriller", "mystery", "detective story", "dystopya", "memoir", "biography", "play", "musical", "satire", "haiku", "horror", "DIY", "dictionary", "young adult fiction", "children book", "adult literature"]);
                 table.enum("status", ["available", "out of stock"]);
                 table.text("pictureURL");
+                table.float("price");
             });
         }
     });
@@ -58,7 +59,8 @@ exports.addBook = function(body) {
         "genre": body.genre,
         "status": body.status,
         "pictureURL": body.pictureURL,
-        "favourite": body.favourite
+        "favourite": body.favourite,
+        "price": body.price
     };
     return sqlDb('writtenBy').insert(authorRows).then(function(response) {
         return sqlDb('book').insert(bookObj)
