@@ -189,9 +189,7 @@ function drawItems(data) {
             '                        <th> </th>\n' +
             '                    </tr>\n' +
             '                    </thead>\n' +
-            '                    <tbody>\n' +
-            '                    <tr id="tableValues">';
-        r = r + '                    </tr>\n' +
+            '                    <tbody id="tableValues">\n' +
             '                    <tr>\n' +
             '                        <td></td>\n' +
             '                        <td></td>\n' +
@@ -224,11 +222,11 @@ function drawItems(data) {
 function fillTableWithBooks(data){
         for (var i = 0; i < data.length; i++) {
             fetchBook(data[i].ISBN, function (book) {
-                var r = r + '<td><img src="' + book[0].pictureURL + ' alt="' + book[0].ISBN + '" /> </td>\n' +
+                var r = r + '<tr><td><img src="' + book[0].pictureURL + ' alt="' + book[0].ISBN + '" /> </td>\n' +
                     '                        <td>' + book[0].name + '</td>\n' +
                     '                        <td id = "' + book[0].ISBN + '"></td>\n' +
                     '                        <td class="text-right">' + book[0].price + '</td>\n' +
-                    '                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>';
+                    '                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td></tr>';
                 $("#tableValues").append(r);
             });
         }
