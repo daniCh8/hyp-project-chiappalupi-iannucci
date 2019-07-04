@@ -49,14 +49,6 @@ module.exports.userLogin = function userLogin(req, res, next) {
     console.log("\nREQ.SESSION.ID - BEFORE:")
     console.log(req.session.id);
     console.log("\n");
-    if (req.session.loggedin) {
-        var json = {
-            "success": false,
-            "errorMessage": "You are already logged in"
-        }
-        utils.writeJson(res, json)
-        return
-    }
     var username = req.swagger.params['username'].value;
     var password = req.swagger.params['password'].value;
     User.userLogin(req, username, password)

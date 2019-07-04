@@ -1,7 +1,8 @@
 ---
 swagger: "2.0"
 info:
-  description: "This is the bookshop server for the Hypermedia Application 2019 project, made by Daniele Chiappalupi (daniele.chiappalupi@mail.polimi.it) and Elena Iannucci (elena.iannucci@mail.polimi.it)."
+  description: "This is the bookshop server for the Hypermedia Application 2019 project, made by Daniele Chiappalupi (daniele.chiappalupi@mail.polimi.it) and Elena Iannucci (elena.iannucci@mail.polimi.it).
+                Please note that this site is only accessible through http."
   version: "1.0.0"
   title: "hyp-project-chiappalupi-iannucci"
   contact:
@@ -33,7 +34,7 @@ paths:
       - "application/json"
       responses:
         200:
-          description: "successful Operation"
+          description: "Successful Operation"
           schema:
             type: "array"
             items:
@@ -76,7 +77,7 @@ paths:
           $ref: "#/definitions/BookWithAuthorsID"
       responses:
         200:
-          description: "successful operation."
+          description: "Successful operation."
           schema:
             $ref: "#/definitions/SuccessMessage"
         409:
@@ -228,7 +229,7 @@ paths:
         x-example: "love"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
             type: "array"
             items:
@@ -377,7 +378,7 @@ paths:
       parameters: []
       responses:
         default:
-          description: "successful operation"
+          description: "Successful operation"
       x-swagger-router-controller: "User"
   /author:
     get:
@@ -391,7 +392,7 @@ paths:
       - "application/json"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
             type: "array"
             items:
@@ -454,7 +455,7 @@ paths:
         x-example: 1
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
             $ref: "#/definitions/AuthorWithID"
         404:
@@ -509,7 +510,7 @@ paths:
         collectionFormat: "multi"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
             type: "array"
             items:
@@ -534,7 +535,7 @@ paths:
       - "application/json"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
       x-swagger-router-controller: "Event"
     post:
       tags:
@@ -577,7 +578,7 @@ paths:
         type: "integer"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
             $ref: "#/definitions/Event"
         400:
@@ -623,7 +624,7 @@ paths:
         type: "string"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
             type: "array"
             items:
@@ -649,7 +650,7 @@ paths:
         type: "string"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful operation"
           schema:
             type: "array"
             items:
@@ -735,7 +736,7 @@ paths:
       tags:
       - "cart"
       summary: "Deletes an order"
-      description: ""
+      description: "Delete the order corresponding to the ISBN provided. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "deleteOrder"
       produces:
       - "application/json"
@@ -745,16 +746,27 @@ paths:
         description: "ISBN of the book to remove from the cart"
         required: true
         type: "string"
+        x-example: "1"
       responses:
-        400:
-          description: "Invalid ISBN supplied"
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
+        404:
+          description: "No orders with this ISBN found in your cart."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Cart"
   /cart/updateBookQuantity:
     post:
       tags:
       - "cart"
-      summary: "updates the quantity of a book in the cart"
-      description: ""
+      summary: "Updates the quantity of a book in the cart"
+      description: "Updates the order corresponding to the ISBN provided. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "updateBookQuantity"
       produces:
       - "application/json"
@@ -764,27 +776,49 @@ paths:
         description: "ISBN of the book to update the quantity in the cart"
         required: true
         type: "string"
+        x-example: "1"
       - name: "quantity"
         in: "query"
         description: "new quantity of the book"
         required: true
         type: "integer"
+        x-example: 7
       responses:
-        400:
-          description: "Invalid ISBN supplied"
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
+        404:
+          description: "No orders with this ISBN found in your cart."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Cart"
   /cart/checkout:
     post:
       tags:
       - "cart"
       summary: "Checks out the orders in the cart"
-      description: ""
+      description: "Moves all the orders in the cart in the order history. Clears the cart."
       operationId: "checkout"
       produces:
       - "application/json"
       responses:
         200:
-          description: "Success"
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
+        404:
+          description: "No orders found in your cart."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Cart"
 definitions:
   SuccessMessage:

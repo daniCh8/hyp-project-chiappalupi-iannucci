@@ -19,7 +19,7 @@ module.exports.getCart = function getCart(req, res, next) {
                     "success": false,
                     "errorMessage": "You are not logged in."
                 }
-                req.loggedin = false
+                req.session.loggedin = false
                 utils.writeJson(res, json, 401)
             } else {
                 console.log("here")
@@ -55,7 +55,7 @@ module.exports.addOrder = function addOrder(req, res, next) {
                     "success": false,
                     "errorMessage": "You are not logged in."
                 }
-                req.loggedin = false
+                req.session.loggedin = false
                 utils.writeJson(res, json, 401)
             } else {
                 Cart.checkISBNInCart(body.ISBN, id).then(function(check) {
@@ -100,7 +100,7 @@ module.exports.deleteOrder = function deleteOrder(req, res, next) {
                     "success": false,
                     "errorMessage": "You are not logged in."
                 }
-                req.loggedin = false
+                req.session.loggedin = false
                 utils.writeJson(res, json, 401)
             } else {
                 Cart.checkISBNInCart(ISBN, id).then(function(check) {
@@ -142,7 +142,7 @@ module.exports.clearCart = function clearCart(req, res, next) {
                     "success": false,
                     "errorMessage": "You are not logged in."
                 }
-                req.loggedin = false
+                req.session.loggedin = false
                 utils.writeJson(res, json, 401)
             } else {
                 Cart.clearCart(id).then(function(response) {
@@ -176,7 +176,7 @@ module.exports.updateBookQuantity = function updateBookQuantity(req, res, next) 
                     "success": false,
                     "errorMessage": "You are not logged in."
                 }
-                req.loggedin = false
+                req.session.loggedin = false
                 utils.writeJson(res, json, 401)
             } else {
                 Cart.checkISBNInCart(ISBN, id).then(function(check) {
@@ -219,7 +219,7 @@ module.exports.checkout = function checkout(req, res, next) {
                     "success": false,
                     "errorMessage": "You are not logged in."
                 }
-                req.loggedin = false
+                req.session.loggedin = false
                 utils.writeJson(res, json, 401)
             } else {
                 Cart.checkCart(id).then(function(check) {
