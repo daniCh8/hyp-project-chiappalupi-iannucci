@@ -24,11 +24,12 @@ function isUserLoggedIn(callBack) {
         Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (result) => {
             console.log('ajax success');
-            callBack(result.success);
+            callBack(true);
             console.log(result.success);
         },
         error: (result) => {
-            callBack(result.success);
+            callBack(false);
+            notifyerror(result.errorMessage);
         }
     });
 }
