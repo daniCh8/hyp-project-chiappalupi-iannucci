@@ -78,7 +78,18 @@ module.exports.userLogin = function userLogin(req, res, next) {
 };
 
 module.exports.userRegister = function userRegister(req, res, next) {
-    var body = req.swagger.params["body"].value;
+    var username = req.swagger.params["username"].value;
+    var firstName = req.swagger.params["firstName"].value;
+    var lastName = req.swagger.params["lastName"].value;
+    var email = req.swagger.params["email"].value;
+    var password = req.swagger.params["password"].value;
+    var body = {
+        "username": username,
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "password": password
+    }
     User.checkUsernameAvailability(body.username).then(function(response) {
         if (!isEmpty(response)) {
             var json = {
