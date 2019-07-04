@@ -138,80 +138,99 @@ var ISBN = data[0].ISBN;
 
 }
 
-function drawQuantity(data){
-    var r = '<div class="container backTo">\n' +
-        '    <a class="topic-section" href="myaccount.html"> <img src="svg/mbri-arrow-prev.svg" alt="leftarrow">  My account\n' +
-        '    </a>\n' +
-        '</div>\n'+
-        '\n' +
-        '<div class="container">';
-    $('#itemsshelf').html(r);
-    for(var i = 0; i<data.length; i++){
-        var s = '<div class = "container col-12 elementContainer fadeIn">' +
-            '<div class="container col-6" id="'+ data[i].ISBN +'"></div> ' +
-            '<div class="container col-6"> <div class="bookcontainer1"> <p class="paragraph-fav-best">Quantity:'+data[i].quantity +'</p></div>'+
-        '</div>'+
+function drawQuantity(data) {
+    if (data.length < 1) {
+        var s = '<div class="container"> <p class="title-fav-best"> <em>Your cart is empty</em> </p> ' +
+            '<a class="paragraph-fav-best" href="books.html">Start shopping now!</a>' +
             '</div>';
-        $('#itemsshelf').append(s);
-    }
-    var t = '</div>';
-    $('#itemsshelf').append(t);
+        $('#itemsshelf').html(s);
+    } else {
+        var r = '<div class="container backTo">\n' +
+            '    <a class="topic-section" href="myaccount.html"> <img src="svg/mbri-arrow-prev.svg" alt="leftarrow">  My account\n' +
+            '    </a>\n' +
+            '</div>\n' +
+            '\n' +
+            '<div class="container">';
+        $('#itemsshelf').html(r);
+        for (var i = 0; i < data.length; i++) {
+            var s = '<div class = "container col-12 elementContainer fadeIn">' +
+                '<div class="container col-6" id="' + data[i].ISBN + '"></div> ' +
+                '<div class="container col-6"> <div class="bookcontainer1"> <p class="paragraph-fav-best">Quantity:' + data[i].quantity + '</p></div>' +
+                '</div>' +
+                '</div>';
+            $('#itemsshelf').append(s);
+        }
+        var t = '</div>';
+        $('#itemsshelf').append(t);
 
-    fetchBook(data);
+        fetchBook(data);
+    }
 }
 
-function drawItems(data){
-    var r = '<div class="container mb-4">\n' +
-        '    <div class="row">\n' +
-        '        <div class="col-12">\n' +
-        '            <div class="table-responsive">\n' +
-        '                <table class="table table-striped">\n' +
-        '                    <thead>\n' +
-        '                    <tr>\n' +
-        '                        <th scope="col"> </th>\n' +
-        '                        <th scope="col">Product</th>\n' +
-        '                        <th scope="col" class="text-center">Quantity</th>\n' +
-        '                        <th scope="col" class="text-right">Price</th>\n' +
-        '                        <th> </th>\n' +
-        '                    </tr>\n' +
-        '                    </thead>\n' +
-        '                    <tbody>\n' +
-        '                    <tr>';
-
-    for(var i=0; i<data.length; i++){
-        fetchBook(data[i].ISBN, function(book){
-            r = r + '<td><img src="' + book[0].pictureURL + '" /> </td>\n' +
-                '                        <td>' + book[0].name + '</td>\n' +
-                '                        <td><input class="form-control" type="text" value="' + data[i].quantity + '" /></td>\n' +
-                '                        <td class="text-right">' + book[0].price + '</td>\n' +
-                '                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>';
-        });
+function drawItems(data) {
+    if(data.length<1){
+        var s = '<div class="container"> <p class="title-fav-best"> <em>Your cart is empty</em> </p> ' +
+            '<a class="paragraph-fav-best" href="books.html">Start shopping now!</a>' +
+            '</div>';
+        $('#itemsshelf').html(s);
     }
-    r = r + '                    </tr>\n' +
-        '                    <tr>\n' +
-        '                        <td></td>\n' +
-        '                        <td></td>\n' +
-        '                        <td></td>\n' +
-        '                        <td><strong>Total</strong></td>\n' +
-        '                        <td class="text-right"><strong>346,90 €</strong></td>\n' +
-        '                    </tr>\n' +
-        '                    </tbody>\n' +
-        '                </table>\n' +
-        '            </div>\n' +
-        '        </div>\n' +
-        '        <div class="col mb-2">\n' +
-        '            <div class="row">\n' +
-        '                <div class="col-sm-12  col-md-6">\n' +
-        '                    <button class="btn btn-block " style="background-color: rgba(68,54,39, 0.1); margin: 10px;">Continue Shopping</button>\n' +
-        '                </div>\n' +
-        '                <div class="col-sm-12 col-md-6 text-right">\n' +
-        '                    <button class="btn btn-lg btn-block  text-uppercase" style="background-color: rgba(68,54,39, 0.1); margin:10px;">Checkout</button>\n' +
-        '                </div>\n' +
-        '            </div>\n' +
-        '        </div>\n' +
-        '    </div>\n' +
-        '</div>'
-    $('#itemsshelf').html(r);
+    else {
+        var r = '<div class="container mb-4">\n' +
+            '    <div class="row">\n' +
+            '        <div class="col-12">\n' +
+            '            <div class="table-responsive">\n' +
+            '                <table class="table table-striped">\n' +
+            '                    <thead>\n' +
+            '                    <tr>\n' +
+            '                        <th scope="col"> </th>\n' +
+            '                        <th scope="col">Product</th>\n' +
+            '                        <th scope="col" class="text-center">Quantity</th>\n' +
+            '                        <th scope="col" class="text-right">Price</th>\n' +
+            '                        <th> </th>\n' +
+            '                    </tr>\n' +
+            '                    </thead>\n' +
+            '                    <tbody>\n' +
+            '                    <tr>';
+
+        for (var i = 0; i < data.length; i++) {
+            fetchBook(data[i].ISBN, function (book) {
+                r = r + '<td><img src="' + book[0].pictureURL + ' alt="'+book[0].ISBN+'" /> </td>\n' +
+                    '                        <td>' + book[0].name + '</td>\n' +
+                    '                        <td id = "' + book[0].ISBN + '"></td>\n' +
+                    '                        <td class="text-right">' + book[0].price + '</td>\n' +
+                    '                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>';
+            });
+        }
+        for (var i = 0; i < data.length; i++) {
+            var t = '<input class="form-control" type="text" value="' + data[i].quantity + '" />';
+            $("#"+data[i].ISBN).html(t);
+        }
+        r = r + '                    </tr>\n' +
+            '                    <tr>\n' +
+            '                        <td></td>\n' +
+            '                        <td></td>\n' +
+            '                        <td></td>\n' +
+            '                        <td><strong>Total</strong></td>\n' +
+            '                        <td class="text-right"><strong>346,90 €</strong></td>\n' +
+            '                    </tr>\n' +
+            '                    </tbody>\n' +
+            '                </table>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <div class="col mb-2">\n' +
+            '            <div class="row">\n' +
+            '                <div class="col-sm-12  col-md-6">\n' +
+            '                    <button class="btn btn-block " style="background-color: rgba(68,54,39, 0.1); margin: 10px;">Continue Shopping</button>\n' +
+            '                </div>\n' +
+            '                <div class="col-sm-12 col-md-6 text-right">\n' +
+            '                    <button class="btn btn-lg btn-block  text-uppercase" style="background-color: rgba(68,54,39, 0.1); margin:10px;">Checkout</button>\n' +
+            '                </div>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '</div>'
+        $('#itemsshelf').html(r);
+    }
 
 }
 
