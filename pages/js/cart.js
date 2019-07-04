@@ -27,7 +27,7 @@ $(document).ready(() => {
             fetchItems();
         } else {
             //alert("L'utente NON è loggato!");
-            window.location.replace("myaccount.html?");
+            window.location.replace("myaccount.html");
         }
     });
 
