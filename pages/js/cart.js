@@ -57,9 +57,10 @@ function isUserLoggedIn(callBack) {
 
 
 function fetchBook(prevData) {
+    var quantity=0;
     for(var i = 0; i < prevData.length; i++){
         var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + prevData[i].ISBN;
-        var quantity = prevData[i].quantity;
+        quantity = prevData[i].quantity;
         // Use the filter endpoint
         jQuery.ajax({
             url: s,
