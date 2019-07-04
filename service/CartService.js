@@ -62,13 +62,14 @@ exports.addOrder = function(body, id) {
         var username = response[0].username
         return sqlDb('book').where('ISBN', body.ISBN).then(function(response) {
             var cost = body.quantity * response[0].price;
+            console.log(cost)
             var cartObj = {
-            "ISBN": body.ISBN,
-            "cost": cost,
-            "username": username,
-            "quantity": body.quantity
-        }
-        return sqlDb('cart').insert(cartObj)
+                "ISBN": body.ISBN,
+                "cost": cost,
+                "username": username,
+                "quantity": body.quantity
+            }
+            return sqlDb('cart').insert(cartObj)
         })
     })
 }
