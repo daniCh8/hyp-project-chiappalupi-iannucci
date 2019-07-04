@@ -82,7 +82,7 @@ function drawItems(data) {
             '                        </div>\n' +
                 '                        <div id="'+data[i].ISBN+'qnt">\n' +
                 '                        </div>\n' +
-            '                        <td class="text-right"><button class="btn btn-sm btn-danger"><img src="svg/mbri-trash.svg"/> </button> </td>\n' +
+            '                        <td class="text-right"><button class="btn btn-sm btn-danger"><img src="svg/mbri-update.svg"/> </button> </td>\n' +
             '                    </tr>\n';
         }
 
@@ -116,13 +116,12 @@ function drawItems(data) {
     }
 }
 
-function fillTableWithBooks(data){
-    new Promise(function (data) {
-        for (var i = 0; i < data.length; i++) {
-            fetchBook(data[i].ISBN);
-        }
-
-    }).then(function (response) {fillTableWithQuantity(data);})}
+function fillTableWithBooks(data) {
+    for (var i = 0; i < data.length; i++) {
+        fetchBook(data[i].ISBN);
+    }
+    fillTableWithQuantity(data);
+}
 
 function fillTableWithQuantity(data) {
     for (var i = 0; i < data.length; i++) {
