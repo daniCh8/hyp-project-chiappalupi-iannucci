@@ -43,7 +43,7 @@ function drawBooks(data, int) {
         }
         s = s +
             '<p style="margin-top: 10px"><i>' + data[i].theme + '</i></p>' +
-            '<p><i>' + data[i].genre + '</i></p>'+
+            '<p style="margin-bottom: 5px"><i>' + data[i].genre + '</i></p>'+
             '<p><i>' + data[i].price + '</i></p>'+
                 '                    </div></li>\n' +
                 '                    <li></li>\n' +
