@@ -21,7 +21,7 @@ tags:
 - name: "cart"
   description: "cart of the users."
 schemes:
-- "https"
+- "http"
 paths:
   /book:
     get:
