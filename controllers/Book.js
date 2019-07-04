@@ -136,7 +136,15 @@ module.exports.getBookByISBN = function getBookByISBN(req, res, next) {
     var ISBN = req.swagger.params['ISBN'].value;
     Book.getBookByISBN(ISBN)
         .then(function(response) {
-            utils.writeJson(res, response);
+            var responseCode = 200
+            if(response.length == 0) {
+                response = {
+                    "success": false,
+                    "errorMessage": "No books with this ISBN found"
+                }
+                responseCode = 404
+            }
+            utils.writeJson(res, response, responseCode);
         })
         .catch(function(response) {
             utils.writeJson(res, response);

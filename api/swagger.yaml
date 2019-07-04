@@ -160,7 +160,7 @@ paths:
       - "book"
       summary: "Finds Books from the parameters provided."
       description: "Depending on what is provided to this query, it will adapt to return the corresponding books. If no book matches the research, an empty array is provided (the last feature was an implementation choice due to front end developing).
-                    The research features the non sensitivity for both name of the book and of the author (as shown in the examples).
+                    The research features the non case sensitivity for both name of the book and of the author (as shown in the examples).
                     Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "findBooksBy"
       produces: 
@@ -206,7 +206,7 @@ paths:
           - "young adult fiction"
           - "children's book"
           - "adult literature"
-        x-example: "mistery"
+        x-example: "mystery"
       - name: "themes"
         in: "query"
         description: "Theme to filter by"
@@ -225,7 +225,7 @@ paths:
           - "prejudice"
           - "individual vs. society"
           - "war"
-          x-example: "love"
+        x-example: "love"
       responses:
         200:
           description: "successful operation"
@@ -238,11 +238,10 @@ paths:
     get:
       tags:
       - "book"
-      summary: "Find book by ISBN"
-      description: "Returns a single book"
+      summary: "Find a book by its ISBN."
+      description: "Returns a single book. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "getBookByISBN"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "ISBN"
@@ -250,15 +249,32 @@ paths:
         description: "ISBN of the book to return"
         required: true
         type: "string"
+        x-example: "1"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful Operation"
           schema:
-            $ref: "#/definitions/Book"
-        400:
-          description: "Invalid ISBN supplied"
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+          examples:
+            application/json:  {
+              "ISBN": "1",
+              "favourite": true,
+              "name": "Comici Spaventati Guerrieri",
+              "theme": "love",
+              "genre": "mystery",
+              "status": "available",
+              "pictureURL": "https://images-eu.ssl-images-amazon.com/images/I/51PVDjr0qnL.jpg",
+              "plot": "Comici Spaventati Guerrieri is a metropolitan \"recherche\", narrated as a blues that rythms movements and placements, separations and meetings, walks and runs, kung-fu fights and shots, sudden loves and sudden friendships, dialogues and monologues, visions and dreams. It remarks the infinite distance between center and outskirt. This is a novel that underlines the cynicism, the golden corruption and the lack of intelligence that rules nowadays.",
+              "authors": [
+                "Stefano Benni"
+              ]
+            }
         404:
-          description: "Book not found"
+          description: "No Books found in the database"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Book"
     delete:
       tags:
