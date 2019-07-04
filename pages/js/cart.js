@@ -215,7 +215,6 @@ function drawItems(data) {
             '</div>'
         $('#itemsshelf').html(r);
         fillTableWithBooks(data);
-        fillTableWithQuantity(data);
     }
 }
 
@@ -230,6 +229,8 @@ function fillTableWithBooks(data){
                 $("#tableValues").append(r);
             });
         }
+
+    fillTableWithQuantity(data);
 }
 
 function fillTableWithQuantity(data) {
