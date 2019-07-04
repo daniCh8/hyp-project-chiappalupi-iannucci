@@ -58,7 +58,7 @@ function isUserLoggedIn(callBack) {
 
 function fetchBook(prevData) {
     for(var i = 0; i < prevData.length; i++){
-        var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + data[i].ISBN;
+        var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + prevData[i].ISBN;
         // Use the filter endpoint
         jQuery.ajax({
             url: s,
