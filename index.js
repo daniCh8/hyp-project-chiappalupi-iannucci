@@ -47,7 +47,7 @@ var options = {
 };
 
 app.use(function(req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/");
+    res.setHeader("Access-Control-Allow-Origin", "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/*");
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
