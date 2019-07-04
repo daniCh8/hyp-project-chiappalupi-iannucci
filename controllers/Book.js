@@ -32,7 +32,7 @@ module.exports.getFavouriteBooks = function getFavouriteBooks(req, res, next) {
 module.exports.getBestsellers = function getBestsellers(req, res, next) {
     Book.getBestsellers().then(function(response) {
             var responseCode = 200
-            if(response.length == 0) {
+            if (response.length == 0) {
                 response = {
                     "success": "false",
                     "errorMessage": "No sold book found in the database"
@@ -123,13 +123,23 @@ module.exports.findBooksBy = function findBooksBy(req, res, next) {
 
 module.exports.deleteBook = function deleteBook(req, res, next) {
     var ISBN = req.swagger.params['ISBN'].value;
-    Book.deleteBook(ISBN)
-        .then(function(response) {
-            utils.writeJson(res, response);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, response);
-        });
+    Book.getBookByISBN(ISBN).then(function(response) {
+        var json
+        if (response.length == 0) json = {
+            "success": false,
+            "errorMessage": "No books found with the ISBN provided."
+        }
+        utils.writeJson(res, response, 404);
+        else {
+            Book.deleteBook(ISBN)
+                .then(function(response) {
+                    utils.writeJson(res, response);
+                })
+                .catch(function(response) {
+                    utils.writeJson(res, response);
+                });
+        }
+    })
 };
 
 module.exports.getBookByISBN = function getBookByISBN(req, res, next) {
@@ -137,7 +147,7 @@ module.exports.getBookByISBN = function getBookByISBN(req, res, next) {
     Book.getBookByISBN(ISBN)
         .then(function(response) {
             var responseCode = 200
-            if(response.length == 0) {
+            if (response.length == 0) {
                 response = {
                     "success": false,
                     "errorMessage": "No books with this ISBN found"

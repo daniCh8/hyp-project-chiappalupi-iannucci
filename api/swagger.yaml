@@ -279,23 +279,27 @@ paths:
     delete:
       tags:
       - "book"
-      summary: "Deletes a book"
-      description: ""
+      summary: "Deletes a book that has the ISBN provided."
+      description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "deleteBook"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "ISBN"
         in: "path"
-        description: "Book ISBN to delete"
+        description: "ISBN of the book to delete"
         required: true
         type: "string"
+        x-example: 17
       responses:
-        400:
-          description: "Invalid ISBN supplied"
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
         404:
-          description: "Book not found"
+          description: "No Books with this ISBN found in the database"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Book"
   /user:
     get:
