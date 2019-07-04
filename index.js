@@ -4,6 +4,8 @@ var fs = require('fs'),
     path = require('path'),
     http = require('http');
 
+let sqlDb;
+
 let { setupDataLayer } = require("./service/DataLayer");
 
 var app = require('connect')();
@@ -39,7 +41,6 @@ app.use(function(req, res, next) {
     }
 
     req.session.save()
-    next();
 })
 
 app.use(serveStatic("./pages"))

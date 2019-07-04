@@ -76,7 +76,7 @@ paths:
           $ref: "#/definitions/BookWithAuthorsID"
       responses:
         200:
-          description: "Successful operation."
+          description: "successful operation."
           schema:
             $ref: "#/definitions/SuccessMessage"
         409:
@@ -688,8 +688,8 @@ paths:
     post:
       tags:
       - "cart"
-      summary: "Add a new order to the cart"
-      description: ""
+      summary: "Adds a new order to the cart"
+      description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "addOrder"
       consumes:
       - "application/json"
@@ -701,24 +701,34 @@ paths:
         description: "Order object that needs to be added to the cart"
         required: true
         schema:
-          $ref: "#/definitions/Order"
+          $ref: "#/definitions/OrderObject"
       responses:
         200:
-          description: "successful operation"
-        404:
-          description: "unauthorized"
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
       x-swagger-router-controller: "Cart"
     delete:
       tags:
       - "cart"
       summary: "Clears the cart"
-      description: ""
+      description: "Removes all the orders in the cart"
       operationId: "clearCart"
       produces:
       - "application/json"
       responses:
         200:
-          description: "Success"
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
       x-swagger-router-controller: "Cart"
   /cart/{ISBN}:
     delete:
@@ -849,6 +859,19 @@ definitions:
       password: "barbagianni"
       email: "daniele.chiappalupi@mail.polimi.it"
       username: "daniCh"
+  OrderObject:
+    type: "object"
+    properties:
+      ISBN:
+        type: "string"
+      quantity:
+        type: "integer"
+    example:
+      ISBN: "1"
+      quantity: 8
+    required:
+      - ISBN
+      - quantity
   Order:
     type: "object"
     properties:
