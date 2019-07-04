@@ -89,9 +89,6 @@ module.exports.deleteOrder = function deleteOrder(req, res, next) {
         }
         utils.writeJson(res, json, 401)
     } else {
-        var json = {
-            "success": true
-        }
         var ISBN = req.swagger.params['ISBN'].value;
         var id = req.session.id
         Cart.checkSession(req.session.id).then(function(response) {
@@ -113,6 +110,9 @@ module.exports.deleteOrder = function deleteOrder(req, res, next) {
                         return;
                     }
                     Cart.deleteOrder(ISBN, id).then(function(response) {
+                            var json = {
+                                "success": true
+                            }
                             utils.writeJson(res, json, 200);
                         })
                         .catch(function(response) {
@@ -132,9 +132,6 @@ module.exports.clearCart = function clearCart(req, res, next) {
         }
         utils.writeJson(res, json, 401)
     } else {
-        var json = {
-            "success": true
-        }
         var id = req.session.id
         Cart.checkSession(id).then(function(response) {
             if (response.length == 0) {
@@ -146,6 +143,9 @@ module.exports.clearCart = function clearCart(req, res, next) {
                 utils.writeJson(res, json, 401)
             } else {
                 Cart.clearCart(id).then(function(response) {
+                        var json = {
+                            "success": true
+                        }
                         utils.writeJson(res, json, 200);
                     })
                     .catch(function(response) {
@@ -164,9 +164,6 @@ module.exports.updateBookQuantity = function updateBookQuantity(req, res, next) 
         }
         utils.writeJson(res, json, 401)
     } else {
-        var json = {
-            "success": true
-        }
         var ISBN = req.swagger.params['ISBN'].value;
         var newQuantity = req.swagger.params['quantity'].value;
         var id = req.session.id
@@ -189,6 +186,9 @@ module.exports.updateBookQuantity = function updateBookQuantity(req, res, next) 
                         return;
                     }
                     Cart.updateQuantity(ISBN, newQuantity, id).then(function(response) {
+                            var json = {
+                                "success": true
+                            }
                             utils.writeJson(res, json, 200);
                         })
                         .catch(function(response) {
@@ -208,9 +208,6 @@ module.exports.checkout = function checkout(req, res, next) {
         }
         utils.writeJson(res, json, 401)
     } else {
-        var json = {
-            "success": true
-        }
         var id = req.session.id
 
         Cart.checkSession(req.session.id).then(function(response) {
@@ -232,6 +229,9 @@ module.exports.checkout = function checkout(req, res, next) {
                         return;
                     }
                     Cart.checkout(id).then(function(response) {
+                            var json = {
+                                "success": true
+                            }
                             utils.writeJson(res, json, 200);
                         })
                         .catch(function(response) {
