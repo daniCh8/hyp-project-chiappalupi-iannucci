@@ -168,7 +168,6 @@ function drawQuantity(data) {
 }
 
 function drawItems(data) {
-    new Promise(function() {
     if(data.length<1){
         var s = '<div class="container"> <p class="title-fav-best"> <em>Your cart is empty</em> </p> ' +
             '<a class="paragraph-fav-best" href="books.html">Start shopping now!</a>' +
@@ -217,15 +216,15 @@ function drawItems(data) {
             '    </div>\n' +
             '</div>'
         $('#itemsshelf').html(r);
+        fillTableWithBooks(data, function (books) {
+            $("#tableValues").html(books);
+        });
+        fillTableWithQuantity(data);
     }
-    }).then(function () {
-        fillTableWithBooks(data)
-    })
 }
 
-function fillTableWithBooks(data){
+function fillTableWithBooks(data, callBack){
     var r = '';
-    new Promise(function() {
         for (var i = 0; i < data.length; i++) {
             fetchBook(data[i].ISBN, function (book) {
                 r = r + '<td><img src="' + book[0].pictureURL + ' alt="' + book[0].ISBN + '" /> </td>\n' +
@@ -235,21 +234,17 @@ function fillTableWithBooks(data){
                     '                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>';
             });
         }
-    }).then(function() {
-        $("#tableValues").html(r);
-        for (var i = 0; i < data.length; i++) {
-            var t = '<input class="form-control" type="text" value="' + data[i].quantity + '" />';
-            $("#"+data[i].ISBN).html(t);
-        }
-    })
+        callBack(r);
+
+
 }
 
-/*function fillTableWithQuantity(data) {
+function fillTableWithQuantity(data) {
     for (var i = 0; i < data.length; i++) {
         var t = '<input class="form-control" type="text" value="' + data[i].quantity + '" />';
         $("#"+data[i].ISBN).html(t);
     }
-}*/
+}
 
 function fetchBook(ISBN, callBack) {
         var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + ISBN;
