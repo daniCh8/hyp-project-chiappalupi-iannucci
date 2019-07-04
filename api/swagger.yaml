@@ -350,6 +350,10 @@ paths:
           description: "Successful Operation"
           schema:
             $ref: "#/definitions/SuccessMessage"
+        400:
+          description: "Some parameters were left blank."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Blank"
         404:
           description: "No users found with the username and password provided."
           schema:
@@ -378,6 +382,10 @@ paths:
           schema:
             $ref: "#/definitions/SuccessMessage"
         400:
+          description: "Some parameters were left blank."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Blank"
+        409:
           description: "Username already exists."
           schema:
             $ref: "#/definitions/ErrorMessage_UsernameTaken"
@@ -875,6 +883,19 @@ definitions:
       success: true
     required:
       - success
+  ErrorMessage_Blank:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      errorMessage:
+        type: "string"
+    example:
+      success: false
+      errorMessage: "Please, compile all the parameters of the form."
+    required:
+      - success
+      - errorMessage
   ErrorMessage_Duplicate:
     type: "object"
     properties:
@@ -1246,7 +1267,7 @@ definitions:
         type: "string"
       date:
         type: string
-        format: date
+        format: date-time
     example:
       eventID: 2,
       ISBN: "6"
@@ -1278,7 +1299,7 @@ definitions:
         type: "string"
       date:
         type: string
-        format: date
+        format: date-time
     example:
       ISBN: "6"
       shop: "La Feltrinelli"

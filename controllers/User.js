@@ -46,9 +46,14 @@ module.exports.getUser = function getUser(req, res, next) {
 };
 
 module.exports.userLogin = function userLogin(req, res, next) {
-    console.log("\nREQ.SESSION.ID - BEFORE:")
-    console.log(req.session.id);
-    console.log("\n");
+    if(req.swagger.params["username"] == undefined || req.swagger.params["password"] == undefined) {
+        var json = {
+            "success": false,
+            "errorMessage": "Please, compile all the parameters of the form."
+        }
+        utils.writeJson(res, json, 400)
+        return;
+    }
     var username = req.swagger.params['username'].value;
     var password = req.swagger.params['password'].value;
     User.userLogin(req, username, password)
@@ -78,6 +83,14 @@ module.exports.userLogin = function userLogin(req, res, next) {
 };
 
 module.exports.userRegister = function userRegister(req, res, next) {
+    if(req.swagger.params["username"] == undefined || req.swagger.params["firstName"] == undefined || req.swagger.params["lastName"] == undefined || req.swagger.params["email"] == undefined || req.swagger.params["password"] == undefined) {
+        var json = {
+            "success": false,
+            "errorMessage": "Please, compile all the parameters of the form."
+        }
+        utils.writeJson(res, json, 400)
+        return;
+    }
     var username = req.swagger.params["username"].value;
     var firstName = req.swagger.params["firstName"].value;
     var lastName = req.swagger.params["lastName"].value;
@@ -96,7 +109,7 @@ module.exports.userRegister = function userRegister(req, res, next) {
                 "success": false,
                 "errorMessage": "This username already exists"
             }
-            utils.writeJson(res, json, 400);
+            utils.writeJson(res, json, 409);
         } else {
             var json = {
                 "success": true
