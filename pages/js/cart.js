@@ -223,25 +223,31 @@ function drawItems(data) {
 
 function fillTableWithBooks(data){
     var r = '';
-    for (var i = 0; i < data.length; i++) {
-        fetchBook(data[i].ISBN, function (book) {
-            r = r + '<td><img src="' + book[0].pictureURL + ' alt="'+book[0].ISBN+'" /> </td>\n' +
-                '                        <td>' + book[0].name + '</td>\n' +
-                '                        <td id = "' + book[0].ISBN + '"></td>\n' +
-                '                        <td class="text-right">' + book[0].price + '</td>\n' +
-                '                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>';
-        });
-    }
-    $("#tableValues").html(r);
-    fillTableWithQuantity(data);
+    new Promise(function() {
+        for (var i = 0; i < data.length; i++) {
+            fetchBook(data[i].ISBN, function (book) {
+                r = r + '<td><img src="' + book[0].pictureURL + ' alt="' + book[0].ISBN + '" /> </td>\n' +
+                    '                        <td>' + book[0].name + '</td>\n' +
+                    '                        <td id = "' + book[0].ISBN + '"></td>\n' +
+                    '                        <td class="text-right">' + book[0].price + '</td>\n' +
+                    '                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>';
+            });
+        }
+    }).then(function() {
+        $("#tableValues").html(r);
+        for (var i = 0; i < data.length; i++) {
+            var t = '<input class="form-control" type="text" value="' + data[i].quantity + '" />';
+            $("#"+data[i].ISBN).html(t);
+        }
+    })
 }
 
-function fillTableWithQuantity(data) {
+/*function fillTableWithQuantity(data) {
     for (var i = 0; i < data.length; i++) {
         var t = '<input class="form-control" type="text" value="' + data[i].quantity + '" />';
         $("#"+data[i].ISBN).html(t);
     }
-}
+}*/
 
 function fetchBook(ISBN, callBack) {
         var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + ISBN;
