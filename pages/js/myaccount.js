@@ -14,6 +14,25 @@ $(document).ready(() => {
 
 });
 
+
+function isUserLoggedIn(callBack) {
+    jQuery.ajax({
+        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
+        type: 'GET',
+        dataType: 'json',
+        credentials: 'same-origin',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        success: (result) => {
+            console.log('ajax success');
+            callBack(result.success);
+            console.log(result.success);
+        },
+        error: (result) => {
+            callBack(result.success);
+        }
+    });
+}
+
 function login(){
     $("#loginButton").addClass("disabled");
     var username = $('#username').val();
