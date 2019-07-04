@@ -31,7 +31,15 @@ module.exports.getFavouriteBooks = function getFavouriteBooks(req, res, next) {
 
 module.exports.getBestsellers = function getBestsellers(req, res, next) {
     Book.getBestsellers().then(function(response) {
-            utils.writeJson(res, response);
+            var responseCode = 200
+            if(response.length == 0) {
+                response = {
+                    "success": "false",
+                    "errorMessage": "No sold book found in the database"
+                }
+                responseCode = 404
+            }
+            utils.writeJson(res, response, responseCode);
         })
         .catch(function(response) {
             utils.writeJson(res, response);
@@ -50,6 +58,9 @@ module.exports.addBook = function addBook(req, res, next) {
         } else {
             Book.addBook(body)
                 .then(function(response) {
+                    response = {
+                        "success": "true"
+                    }
                     utils.writeJson(res, response, 200);
                 })
                 .catch(function(response) {
