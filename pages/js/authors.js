@@ -35,7 +35,7 @@ function drawAuthors(data) {
         $figure.addClass("effect-winston");
         $figure.addClass("figureauthors");
         var $a = $("<a/>");
-        var s = 'author.html?name=' + author.name;
+        var s = 'author.html?author=' + author.name;
         $a.attr("href", s);
         var $img = $("<img/>");
         $img.attr("src", data[i].pictureURL);

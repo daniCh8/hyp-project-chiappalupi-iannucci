@@ -108,7 +108,7 @@ function fillTableWithBooks(data){
         for (var i = 0; i < data.length; i++) {
             fetchBook(data[i].ISBN);
         }
-        
+
     }).then(function (response) {fillTableWithQuantity(data);})}
 
 function fillTableWithQuantity(data) {

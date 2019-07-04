@@ -13,7 +13,7 @@ function drawBook(data) {
             '    <div class="elementDescription">' +
             '    <p class="topic-section"> <strong>Title: </strong>' + data[i].name +'</p>';
         for(var j = 0; j <data[i].authors.length; j++) {
-            s = s + '    <p class="topic-section"> <strong>Authors: </strong> <a  href="author.html?name=' + data[i].authors[j] + '">' + data[i].authors[j] + '</a></p>';
+            s = s + '    <p class="topic-section"> <strong>Authors: </strong> <a  href="author.html?author=' + data[i].authors[j] + '">' + data[i].authors[j] + '</a></p>';
         }
             s = s + '    <p class="topic-section"> <strong>Plot: </strong>' + data[i].plot +'</p>' +
             '    <p class="topic-section"> <strong>Price: </strong>' + data[i].price +'</p>' +

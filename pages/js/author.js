@@ -92,7 +92,7 @@ function appendBooks(data, author) {
 
 function fetchBooks(st, filter, author) {
     jQuery.ajax({
-        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findByAuthor",
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findBooksBy",
         type: 'GET',
         data: filter,
         dataType: 'json',
