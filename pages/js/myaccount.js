@@ -179,16 +179,16 @@ function drawAccount(data) {
     s = s + '\n' +
         '<div class="sidenav">\n' +
         '    <div class="login-main-text">\n' +
-        '        <h2>Hi ' + data.firstName + ',</h2>\n' +
+        '        <h2>Hi ' + data[0].firstName + ',</h2>\n' +
         '        <p>Here you may find some information about your account.</p>\n' +
         '    </div>\n' +
         '\n' +
         '</div>\n' +
         '<div class="main">\n' +
         '    <div class="accountInfoContainer fadeInDown">\n' +
-        '        <p class="topic-section-big"> <strong>Name:  </strong>' + data.firstName + '' + data.lastName + '</p>\n' +
-        '        <p class="topic-section-big">    <strong>Username:  </strong>' + data.username + '</p>\n' +
-        '        <p class="topic-section-big">    <strong>E-mail:  </strong>' + data.email + '</p>\n' +
+        '        <p class="topic-section-big"> <strong>Name:  </strong>' + data[0].firstName + '' + data[0].lastName + '</p>\n' +
+        '        <p class="topic-section-big">    <strong>Username:  </strong>' + data[0].username + '</p>\n' +
+        '        <p class="topic-section-big">    <strong>E-mail:  </strong>' + data[0].email + '</p>\n' +
         ''+
         '\n' +
         '    </div>\n' +
