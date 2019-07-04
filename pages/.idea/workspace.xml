@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3eeedf3-6b2a-43b3-a4a4-c7bd24d695e1" name="Default Changelist" comment="added files">
-      <change beforePath="$PROJECT_DIR$/js/myaccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/myaccount.js" afterDir="false" />
-    </list>
+    <list default="true" id="f3eeedf3-6b2a-43b3-a4a4-c7bd24d695e1" name="Default Changelist" comment="added files" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,8 +78,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/myaccount.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="379">
-              <caret line="31" column="43" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
+            <state relative-caret-position="360">
+              <caret line="24" column="16" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -317,7 +315,7 @@
       <workItem from="1560626734362" duration="46000" />
       <workItem from="1560667409047" duration="71153000" />
       <workItem from="1561713228333" duration="96937000" />
-      <workItem from="1562229476640" duration="4115000" />
+      <workItem from="1562229476640" duration="4365000" />
     </task>
     <task id="LOCAL-00001" summary="commit test">
       <created>1560873079094</created>
@@ -344,7 +342,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="172251000" />
+    <option name="totallyTimeSpent" value="172501000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="14" y="23" width="1387" height="830" extended-state="0" />
@@ -727,8 +725,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/myaccount.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="31" column="43" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
+        <state relative-caret-position="360">
+          <caret line="24" column="16" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
         </state>
       </provider>
     </entry>
