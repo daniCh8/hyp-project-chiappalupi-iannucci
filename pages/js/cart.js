@@ -136,7 +136,7 @@ function drawBook(data) {
             '</a></div>';
         s = s + "</div>";
 var ISBN = data[0].ISBN;
-    $('#' + ISBN ).append(s);
+    $('#' + ISBN ).html(s);
 
 }
 
