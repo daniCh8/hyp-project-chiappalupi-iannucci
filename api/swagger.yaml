@@ -28,15 +28,34 @@ paths:
       tags:
       - "book"
       summary: "Get all the books in the database"
-      description: ""
       operationId: "getBooks"
-      consumes:
-      - "application/json"
       produces:
       - "application/json"
       responses:
         200:
-          description: "successful Operation"
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+          examples:
+            application/json:  {
+              "ISBN": "1",
+              "favourite": true,
+              "name": "Comici Spaventati Guerrieri",
+              "theme": "love",
+              "genre": "mystery",
+              "status": "available",
+              "pictureURL": "https://images-eu.ssl-images-amazon.com/images/I/51PVDjr0qnL.jpg",
+              "plot": "Comici Spaventati Guerrieri is a metropolitan \"recherche\", narrated as a blues that rythms movements and placements, separations and meetings, walks and runs, kung-fu fights and shots, sudden loves and sudden friendships, dialogues and monologues, visions and dreams. It remarks the infinite distance between center and outskirt. This is a novel that underlines the cynicism, the golden corruption and the lack of intelligence that rules nowadays.",
+              "authors": [
+                "Stefano Benni"
+              ]
+            }
+        404:
+          description: "No Books found in the database"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Book"
     post:
       tags:
@@ -915,16 +934,12 @@ definitions:
     properties:
       favourite: 
         type: "boolean"
-        example: "true"
       ISBN:
         type: "string"
-        example: "9780330508117"
       name:
         type: "string"
-        example: "The Hitchhiker's Guide to the Galaxy"
       theme:
         type: "string"
-        example: "love"
         enum:
         - "love"
         - "death"
@@ -938,7 +953,6 @@ definitions:
         - "war"
       genre:
         type: "string"
-        example: "science fiction"
         enum:
         - "fantasy"
         - "science fiction"
@@ -962,25 +976,35 @@ definitions:
         - "adult literature"
       authors:
         type: "array"
-        description: "array of authors IDs"
+        description: "array of authors names"
         items:
           type: "string"
-          example: "01"
+      status:
+        type: "string"
       pictureURL:
         type: "string"
       plot:
         type: "string"
-        example: "Arthur Dent is trying to prevent his house from being bulldozed when his friend Ford Prefect whisks him into outer space."
     example:
-      photoUrls:
-      - "photoUrls"
-      - "photoUrls"
-      ISBN: "9780330508117"
-      name: "The Hitchhiker's Guide to the Galaxy"
-      genre: "science fiction"
+      ISBN: "1"
+      favourite: true
+      name: "Comici Spaventati Guerrieri"
       theme: "love"
-      authors:
-      - "01"
+      genre: "mystery"
+      status: "available"
+      pictureURL: "https://images-eu.ssl-images-amazon.com/images/I/51PVDjr0qnL.jpg"
+      plot: "Comici Spaventati Guerrieri is a metropolitan \"recherche\", narrated as a blues that rythms movements and placements, separations and meetings, walks and runs, kung-fu fights and shots, sudden loves and sudden friendships, dialogues and monologues, visions and dreams. It remarks the infinite distance between center and outskirt. This is a novel that underlines the cynicism, the golden corruption and the lack of intelligence that rules nowadays."
+      authors: ["Stefano Benni"]
+    required:
+      - ISBN
+      - favourite
+      - name
+      - theme
+      - genre
+      - status
+      - pictureURL
+      - plot
+      - authors
   AuthorWithID:
     type: "object"
     properties:
