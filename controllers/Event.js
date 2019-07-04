@@ -102,13 +102,6 @@ module.exports.getEventByISBN = function getEventByISBN(req, res, next) {
     var responseCode = 200
     Event.getEventByISBN(ISBN)
         .then(function(response) {
-            if (response.length == 0) {
-                response = {
-                    "success": false,
-                    "errorMessage": "No events found for the shop provided"
-                }
-                responseCode = 404
-            }
             utils.writeJson(res, response, responseCode);
         })
         .catch(function(response) {

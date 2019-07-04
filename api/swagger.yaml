@@ -708,7 +708,7 @@ paths:
       tags:
       - "event"
       summary: "Find an event by the ISBNs of the books presented in it"
-      description: "Returns an array of events. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      description: "Returns an array of events. If no events with this ISBN are found, an empty array is returned. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "getEventByISBN"
       produces:
       - "application/json"
@@ -726,10 +726,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/EventWithID"
-        404:
-          description: "Event not found"
-          schema:
-            $ref: "#/definitions/ErrorMessage_NoObject"
       x-swagger-router-controller: "Event"
   /cart:
     get:
