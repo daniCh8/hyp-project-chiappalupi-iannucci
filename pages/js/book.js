@@ -33,10 +33,11 @@ function drawBook(data) {
 function fetchBook(filter) {
         // Use the filter endpoint
         jQuery.ajax({
-            url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findBooksBy",
+            url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findBooksBy",
             type: 'GET',
             data: filter,
             dataType: 'json',
+            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 var s = drawBook(data);
@@ -116,11 +117,11 @@ function drawEvents(data) {
 
 function fetchEvent(filter) {
     jQuery.ajax({
-        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/event/findByISBN',
+        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/event/findByISBN',
         type: 'GET',
         data: filter,
         dataType: 'json',
-
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
             var s = drawEvents(data);
