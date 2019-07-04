@@ -35,7 +35,7 @@ function drawAuthors(data) {
         $figure.addClass("effect-winston");
         $figure.addClass("figureauthors");
         var $a = $("<a/>");
-        var s = 'author.html?name=' + author.name;
+        var s = 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName?name=' + author.name;
         $a.attr("href", s)
         //$a.click(author, drawAuthorModal);
         var $img = $("<img/>");
