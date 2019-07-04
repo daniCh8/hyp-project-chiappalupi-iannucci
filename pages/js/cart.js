@@ -139,9 +139,9 @@ function fetchBook(ISBN) {
             dataType: 'json',
             Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (book) => {
-                var i = '<img src="'+book[0].pictureURL+'">';
-                var n = '<p>'+book[0].name+'></p>';
-                var p = '<p>'+book[0].price+'></p>';
+                var i = '<a href="book.html?name='+book[0].name+'"><img src="'+book[0].pictureURL+'" style="max-width: 100px"></a>';
+                var n = '<p>'+book[0].name+'</p>';
+                var p = '<p>'+book[0].price+'</p>';
                 $("#img" + book[0].ISBN ).append(i);
                 $("#name" + book[0].ISBN ).append(n);
                 $("#price" + book[0].ISBN ).append(p);
