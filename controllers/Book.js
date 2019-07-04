@@ -125,15 +125,19 @@ module.exports.deleteBook = function deleteBook(req, res, next) {
     var ISBN = req.swagger.params['ISBN'].value;
     Book.getBookByISBN(ISBN).then(function(response) {
         var json
-        if (response.length == 0) json = {
-            "success": false,
-            "errorMessage": "No books found with the ISBN provided."
-        }
-        utils.writeJson(res, response, 404);
-        else {
+        if (response.length == 0) {
+            json = {
+                "success": false,
+                "errorMessage": "No books found with the ISBN provided."
+            }
+            utils.writeJson(res, response, 404);
+        } else {
             Book.deleteBook(ISBN)
                 .then(function(response) {
-                    utils.writeJson(res, response);
+                    response = {
+                        "success": true
+                    }
+                    utils.writeJson(res, response, 200);
                 })
                 .catch(function(response) {
                     utils.writeJson(res, response);
