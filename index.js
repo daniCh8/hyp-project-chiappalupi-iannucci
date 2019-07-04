@@ -10,6 +10,7 @@ var app = require('connect')();
 var swaggerTools = require('swagger-tools');
 var jsyaml = require('js-yaml');
 var serverPort = process.env.PORT || 8080;
+var serveStatic = require ('serve-static');
 let cookieParser = require("cookie-parser");
 let cookieSession = require("cookie-session");
 let uuidv1 = require('uuid/v1');
@@ -24,26 +25,19 @@ app.use(cookieSession({
 }));
 
 app.use(function(req, res, next) {
-
-    console.log("Passo di qui? 1")
-    console.log(req.session.id)
-
-    console.log("req.session.isNew")
+    console.log("Is this a new session?")
     console.log(req.session.isNew)
 
     if (req.session.id === undefined) {
-        console.log("Entro di qui? 1")
         req.session.id = uuidv1();
         console.log(req.session.id)
     }
 
     req.session.save()
-
-    console.log("Esco di qui? 1")
-    console.log(req.session.id)
-
     next();
 })
+
+app.use(serveStatic("./pages"))
 
 // swaggerRouter configuration
 var options = {

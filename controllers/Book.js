@@ -130,7 +130,7 @@ module.exports.deleteBook = function deleteBook(req, res, next) {
                 "success": false,
                 "errorMessage": "No books found with the ISBN provided."
             }
-            utils.writeJson(res, response, 404);
+            utils.writeJson(res, json, 404);
         } else {
             Book.deleteBook(ISBN)
                 .then(function(response) {
