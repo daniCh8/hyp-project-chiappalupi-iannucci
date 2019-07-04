@@ -64,7 +64,7 @@ exports.addOrder = function(body, id) {
             var cost = body.quantity * response[0].price;
             var cartObj = {
             "ISBN": body.ISBN,
-            "cost": body.cost,
+            "cost": cost,
             "username": username,
             "quantity": body.quantity
         }

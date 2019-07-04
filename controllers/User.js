@@ -26,22 +26,23 @@ module.exports.getUser = function getUser(req, res, next) {
         return
     }
     var id = req.session.id
-    User.getUser(id).then(function(response) {
-            var responseCode = 200;
-            if (response.length == 0 || response == undefined) {
-                response = {
-                    "success": false,
-                    "errorMessage": "You are not logged in"
-                }
-                responseCode = 401
-                req.session.loggedin = false
+    User.checkUserSession(id).then(function(response) {
+        if (response.length == 0 || response == undefined) {
+            var json = {
+                "success": false,
+                "errorMessage": "You are not logged in"
             }
-            else delete response[0].password
-            utils.writeJson(res, response, responseCode);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, response);
-        });
+            req.session.loggedin = false
+            utils.writeJson(res, json, 401)
+            return;
+        } else return User.getUser(id).then(function(response) {
+                delete response[0].password
+                utils.writeJson(res, response, 200);
+            })
+            .catch(function(response) {
+                utils.writeJson(res, response);
+            });
+    })
 };
 
 module.exports.userLogin = function userLogin(req, res, next) {

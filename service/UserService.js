@@ -128,3 +128,10 @@ exports.getUserByName = function(username) {
 exports.userLogout = function(id) {
     resolve()
 }
+
+/**
+ * Checks if the session has expired
+ */
+exports.checkUserSession = function(id) {
+    return sqlDb('session').where('id', id)
+}
