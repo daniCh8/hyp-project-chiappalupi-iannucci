@@ -170,3 +170,10 @@ exports.checkout = function(id) {
         })
     })
 }
+
+/**
+ * Checks the actual session
+ */
+exports.checkSession = function(id) {
+    return sqlDb('session').where('id', id)
+}

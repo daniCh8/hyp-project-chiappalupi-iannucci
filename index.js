@@ -41,6 +41,7 @@ app.use(function(req, res, next) {
     }
 
     req.session.save()
+    next()
 })
 
 app.use(serveStatic("./pages"))
