@@ -23,10 +23,14 @@ function login(){
         "password": password,
     };
     jQuery.ajax({
-        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/login",
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/login",
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         type: 'POST',
         dataType: 'json',
         data: credential,
+        xhrFields: {
+            withCredentials: true
+        },
         success: (result) => {
             $("#loginButton").removeClass("disabled");
             console.log('ajax success');
@@ -74,11 +78,11 @@ function register(){
         "email": email
     };
     jQuery.ajax({
-        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/register",
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/register",
         type: 'POST',
         dataType: 'json',
         data: credential,
-        credentials: 'same-origin',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (result) => {
             $("#registerButton").removeClass("disabled");
             console.log('ajax success');

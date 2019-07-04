@@ -3,8 +3,12 @@
 function isUserLogged(callBack) {
     jQuery.ajax({
         url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart",
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         type: 'GET',
         dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
         success: (result) => {
             $("#loginButton").removeClass("disabled");
             console.log('ajax success');
@@ -35,10 +39,11 @@ function addToCart(isbn, qnt) {
 
 function isUserLoggedIn(callBack) {
     jQuery.ajax({
-        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
+        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
         type: 'GET',
         dataType: 'json',
         credentials: 'same-origin',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (result) => {
             console.log('ajax success');
             callBack(result.success);
