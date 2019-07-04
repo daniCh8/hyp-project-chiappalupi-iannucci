@@ -1,0 +1,1295 @@
+---
+swagger: "2.0"
+info:
+  description: "This is the bookshop server for the Hypermedia Application 2019 project, made by Daniele Chiappalupi (daniele.chiappalupi@mail.polimi.it) and Elena Iannucci (elena.iannucci@mail.polimi.it).
+                Please note that this site is only accessible through http."
+  version: "1.0.0"
+  title: "hyp-project-chiappalupi-iannucci"
+  contact:
+    email: "daniele.chiappalupi@mail.polimi.it"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+- name: "book"
+  description: "all about the books available in the bookshop."
+- name: "author"
+  description: "all about the authors of the books."
+- name: "user"
+  description: "operations on the users."
+- name: "event"
+  description: "events of presentation of the books."
+- name: "cart"
+  description: "cart of the users."
+schemes:
+- "http"
+paths:
+  /book:
+    get:
+      tags:
+      - "book"
+      summary: "Get all the books in the database"
+      operationId: "getBooks"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+          examples:
+            application/json:  {
+              "ISBN": "1",
+              "favourite": true,
+              "name": "Comici Spaventati Guerrieri",
+              "theme": "love",
+              "genre": "mystery",
+              "status": "available",
+              "pictureURL": "https://images-eu.ssl-images-amazon.com/images/I/51PVDjr0qnL.jpg",
+              "plot": "Comici Spaventati Guerrieri is a metropolitan \"recherche\", narrated as a blues that rythms movements and placements, separations and meetings, walks and runs, kung-fu fights and shots, sudden loves and sudden friendships, dialogues and monologues, visions and dreams. It remarks the infinite distance between center and outskirt. This is a novel that underlines the cynicism, the golden corruption and the lack of intelligence that rules nowadays.",
+              "authors": [
+                "Stefano Benni"
+              ]
+            }
+        404:
+          description: "No Books found in the database"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Book"
+    post:
+      tags:
+      - "book"
+      summary: "Add a new book to the bookshop"
+      description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "addBook"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Book object that needs to be added to the shop"
+        required: true
+        schema:
+          $ref: "#/definitions/BookWithAuthorsID"
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        409:
+          description: "Book can't be added: another book with the same ISBN has been found."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Duplicate"
+      x-swagger-router-controller: "Book"
+  /book/getFavouriteBooks:
+    get:
+      tags:
+      - "book"
+      summary: "Finds our favourite books"
+      description: "Returns an array containing all the books that has the mark \"favourite\" setted at true"
+      operationId: "getFavouriteBooks"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+          examples:
+            application/json:  {
+              "ISBN": "1",
+              "favourite": true,
+              "name": "Comici Spaventati Guerrieri",
+              "theme": "love",
+              "genre": "mystery",
+              "status": "available",
+              "pictureURL": "https://images-eu.ssl-images-amazon.com/images/I/51PVDjr0qnL.jpg",
+              "plot": "Comici Spaventati Guerrieri is a metropolitan \"recherche\", narrated as a blues that rythms movements and placements, separations and meetings, walks and runs, kung-fu fights and shots, sudden loves and sudden friendships, dialogues and monologues, visions and dreams. It remarks the infinite distance between center and outskirt. This is a novel that underlines the cynicism, the golden corruption and the lack of intelligence that rules nowadays.",
+              "authors": [
+                "Stefano Benni"
+              ]
+            }
+        404:
+          description: "No Books found in the database"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Book"
+  /book/getBestsellers:
+    get:
+      tags:
+      - "book"
+      summary: "Finds the bestsellers"
+      description: "Returns an array containing all the books that have sold the most, ordered from the bestseller on"
+      operationId: "getBestsellers"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+          examples:
+            application/json:  {
+              "ISBN": "1",
+              "favourite": true,
+              "name": "Comici Spaventati Guerrieri",
+              "theme": "love",
+              "genre": "mystery",
+              "status": "available",
+              "pictureURL": "https://images-eu.ssl-images-amazon.com/images/I/51PVDjr0qnL.jpg",
+              "plot": "Comici Spaventati Guerrieri is a metropolitan \"recherche\", narrated as a blues that rythms movements and placements, separations and meetings, walks and runs, kung-fu fights and shots, sudden loves and sudden friendships, dialogues and monologues, visions and dreams. It remarks the infinite distance between center and outskirt. This is a novel that underlines the cynicism, the golden corruption and the lack of intelligence that rules nowadays.",
+              "authors": [
+                "Stefano Benni"
+              ]
+            }
+        404:
+          description: "No sold book found in the database"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Book"
+  /book/findBooksBy:
+    get:
+      tags:
+      - "book"
+      summary: "Finds Books from the parameters provided."
+      description: "Depending on what is provided to this query, it will adapt to return the corresponding books. If no book matches the research, an empty array is provided (the last feature was an implementation choice due to front end developing).
+                    The research features the non case sensitivity for both name of the book and of the author (as shown in the examples). Moreover, the research looks also for part of the names.
+                    Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "findBooksBy"
+      produces: 
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "Name to filter by"
+        required: false
+        type: "string"
+        x-example: "comici sPaVeNtAtI guerrieri"
+      - name: "author"
+        in: "query"
+        description: "Author to filter by"
+        required: false
+        type: "string"
+        x-example: stefano BENNI
+      - name: "genres"
+        in: "query"
+        description: "Genre to filter by"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "fantasy"
+          - "science fiction"
+          - "westerns"
+          - "romance"
+          - "thriller"
+          - "mystery"
+          - "detective story"
+          - "dystopya"
+          - "memoir"
+          - "biography"
+          - "play"
+          - "musical"
+          - "satire"
+          - "haiku"
+          - "horror"
+          - "DIY"
+          - "dictionary"
+          - "young adult fiction"
+          - "children's book"
+          - "adult literature"
+        x-example: "mystery"
+      - name: "themes"
+        in: "query"
+        description: "Theme to filter by"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "love"
+          - "death"
+          - "good vs. evil"
+          - "coming of age"
+          - "power and corruption"
+          - "survival"
+          - "courage and heroism"
+          - "prejudice"
+          - "individual vs. society"
+          - "war"
+        x-example: "love"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+      x-swagger-router-controller: "Book"
+  /book/{ISBN}:
+    get:
+      tags:
+      - "book"
+      summary: "Find a book by its ISBN."
+      description: "Returns a single book. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "getBookByISBN"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ISBN"
+        in: "path"
+        description: "ISBN of the book to return"
+        required: true
+        type: "string"
+        x-example: "1"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Book"
+          examples:
+            application/json:  {
+              "ISBN": "1",
+              "favourite": true,
+              "name": "Comici Spaventati Guerrieri",
+              "theme": "love",
+              "genre": "mystery",
+              "status": "available",
+              "pictureURL": "https://images-eu.ssl-images-amazon.com/images/I/51PVDjr0qnL.jpg",
+              "plot": "Comici Spaventati Guerrieri is a metropolitan \"recherche\", narrated as a blues that rythms movements and placements, separations and meetings, walks and runs, kung-fu fights and shots, sudden loves and sudden friendships, dialogues and monologues, visions and dreams. It remarks the infinite distance between center and outskirt. This is a novel that underlines the cynicism, the golden corruption and the lack of intelligence that rules nowadays.",
+              "authors": [
+                "Stefano Benni"
+              ]
+            }
+        404:
+          description: "No Books found in the database"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Book"
+    delete:
+      tags:
+      - "book"
+      summary: "Deletes a book that has the ISBN provided."
+      description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "deleteBook"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ISBN"
+        in: "path"
+        description: "ISBN of the book to delete"
+        required: true
+        type: "string"
+        x-example: 17
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        404:
+          description: "No Books with this ISBN found in the database"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Book"
+  /user:
+    get:
+      tags:
+      - "user"
+      summary: "Get the logged in user."
+      description: "Return a single sized array of users."
+      operationId: "getUser"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserWithoutPassword"
+        401:
+          description: "You are not logged in."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
+    x-swagger-router-controller: "User"
+  /user/login:
+    post:
+      tags:
+      - "user"
+      summary: "Login"
+      description: "Login with an encoded form"
+      operationId: "userLogin"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "formData"
+        required: true
+        type: "string"
+        x-example: "admin"
+      - name: "password"
+        in: "formData"
+        required: true
+        type: "string"
+        x-example: "1234"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        404:
+          description: "No users found with the username and password provided."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoUsers"
+      x-swagger-router-controller: "User"
+  /user/register:
+    post:
+      tags:
+      - "user"
+      summary: "Registers a new user to the store."
+      description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "userRegister"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        400:
+          description: "Username already exists."
+          schema:
+            $ref: "#/definitions/ErrorMessage_UsernameTaken"
+      x-swagger-router-controller: "User"
+  /user/logout:
+    post:
+      tags:
+      - "user"
+      summary: "Logs out the current logged in user."
+      description: "Ends the current session."
+      operationId: "logoutUser"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not logged in."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
+      x-swagger-router-controller: "User"
+  /author:
+    get:
+      tags:
+        - "author"
+      summary: "Returns all the authors in the database"
+      operationId: "getAuthors"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AuthorWithID"
+          examples:
+            application/json: {
+              authorID: 1,
+              name: "Stefano Benni",
+              birthday: "1947-08-12T00:00:00.000Z",
+              bio: "Stefano Benni is an Italian satirical writer, poet and journalist. His books have been translated into around 20 foreign languages and scored notable commercial success. 2.5 million copies of his books have been sold in Italy.",
+              pictureURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Stefano_Benni_par_Claude_Truong-Ngoc_sept_2013.jpg/220px-Stefano_Benni_par_Claude_Truong-Ngoc_sept_2013.jpg"
+              }
+        404:
+          description: "No authors found in the database"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Author"
+    post:
+      tags:
+      - "author"
+      summary: "Add a new author to the database."
+      description: "Adds a single author. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "addAuthor"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Author object that needs to be added to the db."
+        required: true
+        schema:
+          $ref: "#/definitions/AuthorWithoutID"
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        409:
+          description: "Author can't be added: another author with the same name and date has been found."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Duplicate"
+      x-swagger-router-controller: "Author"
+  /author/{ID}:
+    get:
+      tags:
+      - "author"
+      summary: "Find author by ID"
+      description: "Returns a single author. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "getAuthorByID"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ID"
+        in: "path"
+        description: "ID of the author to return"
+        required: true
+        type: "integer"
+        x-example: 1
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/AuthorWithID"
+        404:
+          description: "Author not found: invalid ID supplied. Got whenever an ID that corresponds to no author (e.g. -1) is supplied."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Author"
+    delete:
+      tags:
+      - "author"
+      summary: "Deletes an author."
+      description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "deleteAuthor"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ID"
+        in: "path"
+        description: "ID of the author to delete."
+        required: true
+        type: "integer"
+        x-example: 2
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        404:
+          description: "Author not found: invalid ID supplied. Got whenever an ID that corresponds to no author (e.g. -1) is supplied."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Author"
+  /author/findByName:
+    get:
+      tags:
+      - "author"
+      summary: "Finds Authors by their names."
+      description: "Returns an array of authors. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest.\ 
+      If no name is provided, all the authors are returned. Multiple authors can be provided. The research is not case sensitive, and features the research by part of the name (as shown in the example)."
+      operationId: "findAuthorsByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "Author names to filter by."
+        required: false
+        type: "array"
+        items:
+          type: "string"
+        x-example:  "stefano ben"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AuthorWithID"
+        404:
+          description: "Author not found: invalid ID supplied. Got whenever a name that corresponds to no author is provided."
+          schema: 
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Author"
+  /event:
+    get:
+      tags:
+      - "event"
+      summary: "Get all the events in the database"
+      operationId: "getEvents"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "succesful operartion"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EventWithID"
+          examples:
+            application/json:  {
+              "eventID": 2,
+              "ISBN": "6",
+              "shop": "La Feltrinelli",
+              "address": "Galleria Vittorio Emanuele II",
+              "city": "Milan",
+              "pictureURL": "https://i.ibb.co/9qMgVmW/mastermind.jpg",
+              "date": "2019-09-13T13:00:00.000Z"
+            }
+        404:
+          description: "No event found in your cart."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Event"
+    post:
+      tags:
+      - "event"
+      summary: "Add a new event to the database"
+      description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest"
+      operationId: "addEvent"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Event object that needs to be added to the shop"
+        required: true
+        schema:
+          $ref: "#/definitions/EventWithoutID"
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+      x-swagger-router-controller: "Event"
+  /event/{ID}:
+    get:
+      tags:
+      - "event"
+      summary: "Find an event by its ID"
+      description: "Returns a sigle sized array of events. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "getEventByID"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ID"
+        in: "path"
+        description: "ID of the event to find"
+        required: true
+        type: "integer"
+        x-example: 4
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EventWithID"
+        404:
+          description: "Event not found"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Event"
+    delete:
+      tags:
+      - "event"
+      summary: "Deletes an event"
+      description: "Delets the selected event. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "deleteEvent"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ID"
+        in: "path"
+        description: "ID of the event to delete"
+        required: true
+        type: "string"
+        x-example: 4
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        404:
+          description: "No event with this ID found."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Event"
+  /event/findByShop:
+    get:
+      tags:
+      - "event"
+      summary: "Finds events by the name of the shop where they are"
+      description: "Returns an array of events. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "getEventByShop"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "shop"
+        in: "query"
+        description: "Name of the shop to filter by. It is not case sensitive. Also, the research features the look for just part of the input, as shown in the example."
+        required: true
+        type: "string"
+        x-example: "la fEltr"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EventWithID"
+        404:
+          description: "Event not found"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Event"    
+  /event/findByISBN:
+    get:
+      tags:
+      - "event"
+      summary: "Find an event by the ISBNs of the books presented in it"
+      description: "Returns an array of events. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "getEventByISBN"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ISBN"
+        in: "query"
+        description: "ISBN of the book presented in the events to find"
+        required: true
+        type: "string"
+        x-example: "6"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EventWithID"
+        404:
+          description: "Event not found"
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Event"
+  /cart:
+    get:
+      tags:
+      - "cart"
+      summary: "View the content of the cart."
+      description: "Returns a list of Orders."
+      operationId: "getCart"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "succesful operartion"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Order"
+          examples:
+            application/json:  {
+              "ISBN": "1",
+              "quantity": 8,
+              "username": "admin",
+              "cost": "159.92"
+            }
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
+      x-swagger-router-controller: "Cart"
+    post:
+      tags:
+      - "cart"
+      summary: "Adds a new order to the cart"
+      description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "addOrder"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Order object that needs to be added to the cart"
+        required: true
+        schema:
+          $ref: "#/definitions/OrderObject"
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
+      x-swagger-router-controller: "Cart"
+    delete:
+      tags:
+      - "cart"
+      summary: "Clears the cart"
+      description: "Removes all the orders in the cart"
+      operationId: "clearCart"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
+      x-swagger-router-controller: "Cart"
+  /cart/{ISBN}:
+    delete:
+      tags:
+      - "cart"
+      summary: "Deletes an order"
+      description: "Delete the order corresponding to the ISBN provided. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "deleteOrder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ISBN"
+        in: "path"
+        description: "ISBN of the book to remove from the cart"
+        required: true
+        type: "string"
+        x-example: "1"
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
+        404:
+          description: "No orders with this ISBN found in your cart."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Cart"
+  /cart/updateBookQuantity:
+    post:
+      tags:
+      - "cart"
+      summary: "Updates the quantity of a book in the cart"
+      description: "Updates the order corresponding to the ISBN provided. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
+      operationId: "updateBookQuantity"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "ISBN"
+        in: "query"
+        description: "ISBN of the book to update the quantity in the cart"
+        required: true
+        type: "string"
+        x-example: "1"
+      - name: "quantity"
+        in: "query"
+        description: "new quantity of the book"
+        required: true
+        type: "integer"
+        x-example: 7
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
+        404:
+          description: "No orders with this ISBN found in your cart."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Cart"
+  /cart/checkout:
+    post:
+      tags:
+      - "cart"
+      summary: "Checks out the orders in the cart"
+      description: "Moves all the orders in the cart in the order history. Clears the cart."
+      operationId: "checkout"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful operation."
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
+        404:
+          description: "No orders found in your cart."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoObject"
+      x-swagger-router-controller: "Cart"
+definitions:
+  SuccessMessage:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+    example:
+      success: true
+    required:
+      - success
+  ErrorMessage_Duplicate:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      errorMessage:
+        type: "string"
+    example:
+      success: false
+      errorMessage: "Found another object with same properties."
+    required:
+      - success
+      - errorMessage
+  ErrorMessage_NoUsers:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      errorMessage:
+        type: "string"
+    example:
+      success: false
+      errorMessage: "Wrong username or password."
+    required:
+      - success
+      - errorMessage
+  ErrorMessage_UsernameTaken:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      errorMessage:
+        type: "string"
+    example:
+      success: false
+      errorMessage: "This username is not available."
+    required:
+      - success
+      - errorMessage
+  ErrorMessage_Unauthorized:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      errorMessage:
+        type: "string"
+    example:
+      success: false
+      errorMessage: "You are not logged in."
+    required:
+      - success
+      - errorMessage
+  ErrorMessage_NoObject:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      errorMessage:
+        type: "string"
+    example:
+      success: false
+      errorMessage: "No objects of this kind found in the database."
+    required:
+      - success
+      - errorMessage
+  User:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+    example:
+      firstName: "admin_name"
+      lastName: "admin_surname"
+      password: "1234"
+      email: "admin@admin.it"
+      username: "admin"
+    required:
+      - firstName
+      - lastName
+      - email
+      - password
+      - username
+  UserWithoutPassword:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+    example:
+      firstName: "admin_name"
+      lastName: "admin_surname"
+      email: "admin@admin.it"
+      username: "admin"
+    required:
+      - firstName
+      - lastName
+      - email
+      - username
+  OrderObject:
+    type: "object"
+    properties:
+      ISBN:
+        type: "string"
+      quantity:
+        type: "integer"
+    example:
+      ISBN: "1"
+      quantity: 8
+    required:
+      - ISBN
+      - quantity
+  Order:
+    type: "object"
+    properties:
+      ISBN:
+        type: "string"
+      cost:
+        type: "number"
+        format: "float"
+      username:
+        type: "string"
+      quantity:
+        type: "integer"
+    example:
+      ISBN: "1"
+      quantity: 8
+      username: "admin"
+      cost: "159.92"
+    required:
+      - ISBN
+      - cost
+      - username
+      - quantity
+  BookWithAuthorsID:
+    type: "object"
+    properties:
+      favourite: 
+        type: "boolean"
+      ISBN:
+        type: "string"
+      name:
+        type: "string"
+      theme:
+        type: "string"
+        enum:
+        - "love"
+        - "death"
+        - "good vs. evil"
+        - "coming of age"
+        - "power and corruption"
+        - "survival"
+        - "courage and heroism"
+        - "prejudice"
+        - "individual vs. society"
+        - "war"
+      genre:
+        type: "string"
+        enum:
+        - "fantasy"
+        - "science fiction"
+        - "westerns"
+        - "romance"
+        - "thriller"
+        - "mystery"
+        - "detective story"
+        - "dystopya"
+        - "memoir"
+        - "biography"
+        - "play"
+        - "musical"
+        - "satire"
+        - "haiku"
+        - "horror"
+        - "DIY"
+        - "dictionary"
+        - "young adult fiction"
+        - "children's book"
+        - "adult literature"
+      authors:
+        type: "array"
+        description: "array of authors names"
+        items:
+          type: "string"
+      status:
+        type: "string"
+      pictureURL:
+        type: "string"
+      plot:
+        type: "string"
+      price:
+        type: "number"
+        format: "float"
+    example:
+      ISBN: "17"
+      favourite: true
+      name: "The Hitchhiker's Guide to the Galaxy"
+      theme: "individual vs. society"
+      genre: "mystery"
+      status: "available"
+      pictureURL: "https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/25/1435245979235/047c9878-9845-473c-9635-5f32545746b0-1355x2040.jpeg?width=700&quality=85&auto=format&fit=max&s=606433bda33c8c27c5ebd7ba85900473"
+      plot: "Arthur Dent (Martin Freeman) is trying to prevent his house from being bulldozed when his friend Ford Prefect (Mos Def) whisks him into outer space."
+      authors: ["24"]
+      price: 23.99
+    required:
+      - ISBN
+      - favourite
+      - name
+      - theme
+      - genre
+      - status
+      - pictureURL
+      - plot
+      - authors
+      - price
+  Book:
+    type: "object"
+    properties:
+      favourite: 
+        type: "boolean"
+      ISBN:
+        type: "string"
+      name:
+        type: "string"
+      theme:
+        type: "string"
+        enum:
+        - "love"
+        - "death"
+        - "good vs. evil"
+        - "coming of age"
+        - "power and corruption"
+        - "survival"
+        - "courage and heroism"
+        - "prejudice"
+        - "individual vs. society"
+        - "war"
+      genre:
+        type: "string"
+        enum:
+        - "fantasy"
+        - "science fiction"
+        - "westerns"
+        - "romance"
+        - "thriller"
+        - "mystery"
+        - "detective story"
+        - "dystopya"
+        - "memoir"
+        - "biography"
+        - "play"
+        - "musical"
+        - "satire"
+        - "haiku"
+        - "horror"
+        - "DIY"
+        - "dictionary"
+        - "young adult fiction"
+        - "children's book"
+        - "adult literature"
+      authors:
+        type: "array"
+        description: "array of authors names"
+        items:
+          type: "string"
+      status:
+        type: "string"
+      pictureURL:
+        type: "string"
+      plot:
+        type: "string"
+      price:
+        type: "number"
+        format: "float"
+    example:
+      ISBN: "1"
+      favourite: true
+      name: "Comici Spaventati Guerrieri"
+      theme: "love"
+      genre: "mystery"
+      status: "available"
+      pictureURL: "https://images-eu.ssl-images-amazon.com/images/I/51PVDjr0qnL.jpg"
+      plot: "Comici Spaventati Guerrieri is a metropolitan \"recherche\", narrated as a blues that rythms movements and placements, separations and meetings, walks and runs, kung-fu fights and shots, sudden loves and sudden friendships, dialogues and monologues, visions and dreams. It remarks the infinite distance between center and outskirt. This is a novel that underlines the cynicism, the golden corruption and the lack of intelligence that rules nowadays."
+      authors: ["Stefano Benni"]
+      price: 19.99
+    required:
+      - ISBN
+      - favourite
+      - name
+      - theme
+      - genre
+      - status
+      - pictureURL
+      - plot
+      - authors
+      - price
+  AuthorWithID:
+    type: "object"
+    properties:
+      authorID:
+        type: "integer"
+      name:
+        type: "string"
+      birthday:
+        type: "string"
+      bio:
+        type: "string"
+      pictureURL:
+        type: "string"
+    example:
+      authorID: 1
+      name: "Stefano Benni"
+      birthday: "1947-08-11T22:00:00.000Z"
+      bio: "Stefano Benni is an Italian satirical writer, poet and journalist. His books have been translated into around 20 foreign languages and scored notable commercial success. 2.5 million copies of his books have been sold in Italy."
+      pictureURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Stefano_Benni_par_Claude_Truong-Ngoc_sept_2013.jpg/220px-Stefano_Benni_par_Claude_Truong-Ngoc_sept_2013.jpg"
+    required:
+      - authorID
+      - name
+      - birthday
+      - bio
+      - pictureURL
+  AuthorWithoutID:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      birthday:
+        type: "string"
+      bio:
+        type: "string"
+      pictureURL:
+        type: "string"
+    example:
+      name: "Ugo Foscolo"
+      birthday: "1778-02-06"
+      bio: "Ugo Foscolo, born Niccolò Foscolo, was an Italian writer, revolutionary and poet. He is remembered especially for his 1807 long poem Dei Sepolcri."
+      pictureURL: "https://biografieonline.it/img/bio/u/Ugo_Foscolo.jpg"    
+    required:
+      - name
+      - birthday
+      - bio
+      - pictureURL
+  EventWithID:
+    type: "object"
+    properties:
+      eventID:
+        type: "integer"
+      ISBN:
+        type: "string"
+      shop:
+        type: "string"
+      address:
+        type: "string"
+      city:
+        type: "string"
+      pictureURL:
+        type: "string"
+      date:
+        type: string
+        format: date-time
+    example:
+      eventID: 2,
+      ISBN: "6"
+      shop: "La Feltrinelli"
+      address: "Galleria Vittorio Emanuele II"
+      city: "Milan"
+      pictureURL: "https://i.ibb.co/9qMgVmW/mastermind.jpg"
+      date: "2019-09-13T13:00:00.000Z"
+    required:
+      - eventID
+      - ISBN
+      - shop
+      - address
+      - city
+      - pictureURL
+      - date
+  EventWithoutID:
+    type: "object"
+    properties:
+      ISBN:
+        type: "string"
+      shop:
+        type: "string"
+      address:
+        type: "string"
+      city:
+        type: "string"
+      pictureURL:
+        type: "string"
+      date:
+        type: string
+        format: date-time
+    example:
+      ISBN: "6"
+      shop: "La Feltrinelli"
+      address: "Galleria Vittorio Emanuele II"
+      city: "Milan"
+      pictureURL: "https://i.ibb.co/9qMgVmW/mastermind.jpg"
+      date: "2019-09-13T13:00:00.000Z"
+    required:
+      - ISBN
+      - shop
+      - address
+      - city
+      - pictureURL
+      - date
