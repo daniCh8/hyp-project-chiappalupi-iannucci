@@ -2,10 +2,10 @@ $(document).ready(() => {
 
     isUserLoggedIn(function(loggato) {
         if (loggato) {
-            //alert("L'utente è loggato!");
+            alert("L'utente è loggato!");
             fetchAccount();
         } else {
-            //alert("L'utente NON è loggato!");
+            alert("L'utente NON è loggato!");
             drawLoginForm();
         }
     });
@@ -31,7 +31,6 @@ function isUserLoggedIn(callBack) {
             callBack(false);
             console.log('ajax error')
             console.log(result.errorMessage)
-            notifyerror(result.errorMessage);
         }
     });
 }
