@@ -110,10 +110,10 @@ function logout(){
 
 function register(){
     $("#registerButton").addClass("disabled");
-    var username = $('#username').val();
-    var password = $('#password').val();
-    var firstName = $('#firstnameReg').val();
-    var lastName = $('#lastnameReg').val();
+    var username = $('#usernameReg').val();
+    var password = $('#passwordReg').val();
+    var firstName = $('#firstname').val();
+    var lastName = $('#lastname').val();
     var email = $('#email').val();
     var credential = {
         "username": username,
