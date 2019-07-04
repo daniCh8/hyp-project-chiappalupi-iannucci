@@ -222,7 +222,7 @@ function drawItems(data) {
 function fillTableWithBooks(data){
         for (var i = 0; i < data.length; i++) {
             fetchBook(data[i].ISBN, function (book) {
-                var r = r + '<tr><td><img src="' + book[0].pictureURL + ' alt="' + book[0].ISBN + '" /> </td>\n' +
+                var r = r + '<tr><td><img src="' + book[0].pictureURL + ' " alt="' + book[0].ISBN + '" /> </td>\n' +
                     '                        <td>' + book[0].name + '</td>\n' +
                     '                        <td id = "' + book[0].ISBN + '"></td>\n' +
                     '                        <td class="text-right">' + book[0].price + '</td>\n' +
