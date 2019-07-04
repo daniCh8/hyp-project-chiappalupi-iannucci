@@ -1,7 +1,7 @@
 $(document).ready(() => {
 
     isUserLoggedIn(function(loggato) {
-        if (loggato==true) {
+        if (loggato) {
             //alert("L'utente è loggato!");
             fetchAccount();
         } else {
