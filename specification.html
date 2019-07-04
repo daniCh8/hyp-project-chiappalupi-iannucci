@@ -6,6 +6,7 @@
 | 1 		| member 		| Daniele	 | Chiappalupi  | 868120    | daniele.chiappalupi@mail.polimi.it |
 | 2 		| member 		| Elena 	 | Iannucci		| 871782    | elena.iannucci@mail.polimi.it 	 |
 
+
 ## Links to other deliverables
 - Deliverable D0: the web application is accessible at
 [this address](http://hyp-2019-chiappalupi-iannucci.herokuapp.com).
@@ -31,13 +32,21 @@ or presentation layer. How did you ensure that HTML is not rendered server side?
 Describe here to what extent did you follow REST principles and what are the
 reasons for which you might have decided to diverge. Note, you must not describe
 the whole API here, just the design decisions.
+We'll describe our approach to REST principles by targeting their main points, explaining if and why we followed those principles.
+- Uniform Interface: this is fundamental to the REST Api design and we did our best to follow this principle. Our interface is resource based, the client has enough information to customize or delete the resources where he has the permissions just from their r3presentation, the messages are self descriptive, and we use HATEOAS (Hypermedia as the Engine of Application State).
+- Client-Server: the client application and server application are totally able to evolve separately without any dependency on each other.
+- Stateless: we obviously could not make our application stateless, as session management was requested. However, after a user logs in, each request from the client contain all the information necessary to service the request, including authentication and authorization details: we used a light session management that is not invasive and preserve the REST Api foundamentals.
+- Layered System: the system is layered, as the server is deployed in a place other than the one where the postgres server is. Session information are stored in the server.
+- Code on demand: we are actually always sending the static representations of our resources in the form of JSON, so this point is not relevant.
 
 #### OpenAPI Resource models
 Describe here synthetically, which models you have introduced for resources.
+We kept everything simple, in order to have a more understendable model: the most part of our resources are described with key-value strings. Sometimes, boolean flags were used to give to the resources some kind of property. Even dates and urls are saved throught strings. Most of the tables in the database store a unique identifier for every row, such as the ISBN for the books or an incrementing ID for the authors.
 
 ### Data model
 Describe with an ER diagram the model used in the data layer of your web
 application. How these map to the OpenAPI data model?
+Here is the image of the mapped tables in the data model.
 
 ## Implementation
 ### Tools used
