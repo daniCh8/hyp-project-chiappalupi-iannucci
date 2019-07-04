@@ -58,8 +58,8 @@ function isUserLoggedIn(callBack) {
 
 function fetchBook(prevData) {
     for(var i = 0; i < prevData.length; i++){
-        var index = i;
         var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + prevData[i].ISBN;
+        var quantity = prevData[i].quantity;
         // Use the filter endpoint
         jQuery.ajax({
             url: s,
@@ -68,7 +68,7 @@ function fetchBook(prevData) {
             Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
-                var r = drawBook(data, prevData, index);
+                var r = drawBook(data, quantity);
                 $('#itemsshelf').append(r);
             },
             error: () => {
@@ -79,7 +79,7 @@ function fetchBook(prevData) {
 }
 
 
-function drawBook(data, prevData, index) {
+function drawBook(data, quantity) {
     var s = '';
             s = s + '<div class = "bookcontainer1">';
         s = s + '<a class="booklink" href="book.html?name=' + data[0].name + '"> <div class="component">\n' +
@@ -134,7 +134,7 @@ function drawBook(data, prevData, index) {
             '        </li>\n' +
             '    </ul>\n' +
             '</a></div>';
-        s = s + '<p class = "paragraph-fav-best"> Quantity: ' + prevData[index].quantity + '</p>';
+        s = s + '<p class = "paragraph-fav-best"> Quantity: ' + quantity + '</p>';
         s = s + "</div>";
 
     return s;
