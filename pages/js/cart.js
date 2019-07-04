@@ -69,13 +69,26 @@ function drawItems(data) {
             '                    <tr>\n' +
             '                        <th scope="col"> </th>\n' +
             '                        <th scope="col">Product</th>\n' +
-            '                        <th scope="col" class="text-center">Quantity</th>\n' +
-            '                        <th scope="col" class="text-right">Price</th>\n' +
+            '                        <th scope="col" class="text-center">Price</th>\n' +
+            '                        <th scope="col" class="text-right">Quantity</th>\n' +
             '                        <th> </th>\n' +
             '                    </tr>\n' +
             '                    </thead>\n' +
-            '                    <tbody id="tableValues">\n' +
-            '                    <tr>\n' +
+
+            '<tbody>\n';
+        for(var i=0; i<data.length; i++) {
+            s = s + '                    <tr>\n' +
+            '                        <div id="'+data[i].ISBN+'">\n' +
+            '                        </div>\n' +
+                '                        <div id="'+data[i].ISBN+'qnt">\n' +
+                '                        </div>\n' +
+            '                        <td class="text-right"><button class="btn btn-sm btn-danger"><img src="svg/mbri-trash.svg"/> </button> </td>\n' +
+            '                    </tr>\n';
+        }
+
+
+
+            s = s + '                    <tr>\n' +
             '                        <td></td>\n' +
             '                        <td></td>\n' +
             '                        <td></td>\n' +
@@ -113,8 +126,8 @@ function fillTableWithBooks(data){
 
 function fillTableWithQuantity(data) {
     for (var i = 0; i < data.length; i++) {
-        var t = '<input class="form-control" type="text" value="' + data[i].quantity + '" />';
-        $("#"+data[i].ISBN).html(t);
+        var t = '<td><input class="form-control" type="text" value="' + data[i].quantity + '" /></td>';
+        $("#"+data[i].ISBN+"qnt").html(t);
     }
 }
 
@@ -127,12 +140,10 @@ function fetchBook(ISBN) {
             dataType: 'json',
             Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (book) => {
-                var r = '<tr><td><img src="' + book[0].pictureURL + ' " alt="' + book[0].ISBN + '" /> </td>\n' +
-                    '                        <td>' + book[0].name + '</td>\n' +
-                    '                        <td id = "' + book[0].ISBN + '"></td>\n' +
-                    '                        <td class="text-right">' + book[0].price + '</td>\n' +
-                    '                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td></tr>';
-                $("#tableValues").append(r);
+                var r = '<td><img src="' + book[0].pictureURL + '" /> </td>' +
+                    '<td>'+book[0].title+'</td>' +
+                    '<td class="text-center">' + book[0].price + '" /> </td>';
+                $("#" + book[0].ISBN ).append(r);
             },
             error: () => {
                 notifyerror("qualcosa è andato storto");
