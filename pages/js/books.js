@@ -224,3 +224,7 @@ function bestsellers(){
         }
     });
 }
+
+function addToCart(ISBN, qnt) {
+
+}

@@ -77,7 +77,7 @@ function drawItems(data) {
 
             '<tbody>\n';
         for(var i=0; i<data.length; i++) {
-            s = s + '                    <tr>\n' +
+            r = r + '                    <tr>\n' +
             '                        <div id="'+data[i].ISBN+'">\n' +
             '                        </div>\n' +
                 '                        <div id="'+data[i].ISBN+'qnt">\n' +
@@ -88,7 +88,7 @@ function drawItems(data) {
 
 
 
-            s = s + '                    <tr>\n' +
+            r = r + '                    <tr>\n' +
             '                        <td></td>\n' +
             '                        <td></td>\n' +
             '                        <td></td>\n' +
