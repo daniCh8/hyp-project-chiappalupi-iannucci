@@ -10,7 +10,6 @@ exports.cartDbSetup = function(database) {
             console.log("The table CART doesn't exists: creating it.");
             return database.schema.createTable("cart", table => {
                 table.text("ISBN");
-                table.text("shop");
                 table.text("username");
                 table.integer("quantity");
                 table.float("cost");
@@ -29,7 +28,6 @@ exports.orderHistoryDbSetup = function(database) {
                 table.increments("id");
                 table.text("username");
                 table.text("ISBN");
-                table.text("shop");
                 table.date("date");
                 table.float("cost");
                 table.integer("quantity");
@@ -62,13 +60,16 @@ exports.getCart = function(req) {
 exports.addOrder = function(body, id) {
     return sqlDb('session').where('id', id).then(function(response) {
         var username = response[0].username
-        var cartObj = {
+        return sqlDb('book').where('ISBN', body.ISBN).then(function(response) {
+            var cost = body.quantity * response[0].price;
+            var cartObj = {
             "ISBN": body.ISBN,
-            "shop": body.shop,
+            "cost": body.cost,
             "username": username,
             "quantity": body.quantity
         }
         return sqlDb('cart').insert(cartObj)
+        })
     })
 }
 

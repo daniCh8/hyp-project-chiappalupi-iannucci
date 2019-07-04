@@ -25,10 +25,15 @@ app.use(cookieSession({
 }));
 
 app.use(function(req, res, next) {
+	console.log("")
+	console.log("Are you logged in?")
+	console.log(req.session.loggedin)
     console.log("Is this a new session?")
     console.log(req.session.isNew)
+    console.log("ID?")
+	console.log(req.session.id)
 
-    if (req.session.id === undefined) {
+    if (req.session.id === undefined || !req.session.loggedin) {
         req.session.id = uuidv1();
         console.log(req.session.id)
     }
