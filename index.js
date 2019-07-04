@@ -3,7 +3,6 @@
 var fs = require('fs'),
     path = require('path'),
     http = require('http');
-    https = require('https');
 
 let { setupDataLayer } = require("./service/DataLayer");
 
