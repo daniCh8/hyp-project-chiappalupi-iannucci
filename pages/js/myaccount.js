@@ -11,6 +11,7 @@ $(document).ready(() => {
     });
     $("#loginButton").click(login);
     $("#registerButton").click(register);
+    $("#logoutButton").click(logout);
 
 });
 
