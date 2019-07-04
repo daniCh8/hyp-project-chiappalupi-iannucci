@@ -3,7 +3,7 @@ $(document).ready(() => {
     isUserLoggedIn(function(loggato) {
         if (loggato) {
             //alert("L'utente è loggato!");
-            fetchAccount();
+            fetchAccount(loggato);
         } else {
             //alert("L'utente NON è loggato!");
             drawLoginForm();
@@ -24,10 +24,10 @@ function isUserLoggedIn(callBack) {
         Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (result) => {
             console.log('ajax success');
-            callBack(true);
+            callBack(result);
         },
         error: (result) => {
-            callBack(false);
+            callBack();
             console.log('ajax error')
             console.log(result.errorMessage)
             notifyerror(result.errorMessage);
