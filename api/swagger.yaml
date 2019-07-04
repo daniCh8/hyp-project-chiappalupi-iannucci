@@ -306,23 +306,29 @@ paths:
     get:
       tags:
       - "user"
-      summary: "User GET"
-      description: ""
+      summary: "Get the logged in user."
+      description: "Return a single sized array of users."
       operationId: "getUser"
       produces:
       - "application/json"
       responses:
         200:
-          description: "succesfull login"
+          description: "Successful operation."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserWithoutPassword"
         401:
-          description: "unauthorized"
+          description: "You are not logged in."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
     x-swagger-router-controller: "User"
   /user/login:
     post:
       tags:
       - "user"
       summary: "Login"
-      description: "Login with a form"
+      description: "Login with an encoded form"
       operationId: "userLogin"
       consumes:
       - "application/x-www-form-urlencoded"
@@ -333,22 +339,28 @@ paths:
         in: "formData"
         required: true
         type: "string"
+        x-example: "admin"
       - name: "password"
         in: "formData"
         required: true
         type: "string"
+        x-example: "1234"
       responses:
         200:
-          description: "succesfull login"
-        401:
-          description: "unauthorized"
+          description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        404:
+          description: "No users found with the username and password provided."
+          schema:
+            $ref: "#/definitions/ErrorMessage_NoUsers"
       x-swagger-router-controller: "User"
   /user/register:
     post:
       tags:
       - "user"
-      summary: "Register"
-      description: "Register into the store"
+      summary: "Registers a new user to the store."
+      description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "userRegister"
       consumes:
       - "application/x-www-form-urlencoded"
@@ -362,23 +374,32 @@ paths:
           $ref: "#/definitions/User"
       responses:
         200:
-          description: "succesfull registration"
-        404:
-          description: "unauthorized"
+          description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        400:
+          description: "Username already exists."
+          schema:
+            $ref: "#/definitions/ErrorMessage_UsernameTaken"
       x-swagger-router-controller: "User"
   /user/logout:
     post:
       tags:
       - "user"
-      summary: "Logs out current logged in user session"
-      description: ""
+      summary: "Logs out the current logged in user."
+      description: "Ends the current session."
       operationId: "logoutUser"
       produces:
       - "application/json"
-      parameters: []
       responses:
-        default:
-          description: "Successful operation"
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/SuccessMessage"
+        401:
+          description: "You are not logged in."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
       x-swagger-router-controller: "User"
   /author:
     get:
@@ -867,6 +888,32 @@ definitions:
     required:
       - success
       - errorMessage
+  ErrorMessage_NoUsers:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      errorMessage:
+        type: "string"
+    example:
+      success: false
+      errorMessage: "Wrong username or password."
+    required:
+      - success
+      - errorMessage
+  ErrorMessage_UsernameTaken:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      errorMessage:
+        type: "string"
+    example:
+      success: false
+      errorMessage: "This username is not available."
+    required:
+      - success
+      - errorMessage
   ErrorMessage_Unauthorized:
     type: "object"
     properties:
@@ -898,25 +945,50 @@ definitions:
     properties:
       username:
         type: "string"
-        example: "daniCh"
       firstName:
         type: "string"
-        example: "Daniele"
       lastName:
         type: "string"
-        example: "Chiappalupi"
       email:
         type: "string"
-        example: "daniele.chiappalupi@mail.polimi.it"
       password:
         type: "string"
-        example: "barbagianni"
     example:
-      firstName: "Daniele"
-      lastName: "Chiappalupi"
-      password: "barbagianni"
-      email: "daniele.chiappalupi@mail.polimi.it"
-      username: "daniCh"
+      firstName: "admin_name"
+      lastName: "admin_surname"
+      password: "1234"
+      email: "admin@admin.it"
+      username: "admin"
+    required:
+      - firstName
+      - lastName
+      - email
+      - password
+      - username
+  UserWithoutPassword:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+    example:
+      firstName: "admin_name"
+      lastName: "admin_surname"
+      email: "admin@admin.it"
+      username: "admin"
+    required:
+      - firstName
+      - lastName
+      - email
+      - password
+      - username
   OrderObject:
     type: "object"
     properties:

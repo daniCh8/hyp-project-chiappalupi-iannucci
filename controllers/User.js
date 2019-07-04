@@ -53,6 +53,7 @@ module.exports.userLogin = function userLogin(req, res, next) {
     var password = req.swagger.params['password'].value;
     User.userLogin(req, username, password)
         .then(function(response) {
+            var responseCode = 200
             console.log("\nREQ.SESSION.ID - AFTER:")
             console.log(req.session.id);
             console.log("\n");
@@ -64,11 +65,14 @@ module.exports.userLogin = function userLogin(req, res, next) {
             var json = {
                 "success": true
             }
-            if (response != true) json = {
-                "success": false,
-                "errorMessage": "wrong username or password"
+            if (response != true) {
+                json = {
+                    "success": false,
+                    "errorMessage": "Wrong username or password."
+                }
+                responseCode = 404
             }
-            utils.writeJson(res, json);
+            utils.writeJson(res, json, responseCode);
         })
         .catch(function(response) {
             utils.writeJson(res, response);
@@ -83,14 +87,14 @@ module.exports.userRegister = function userRegister(req, res, next) {
                 "success": false,
                 "errorMessage": "This username already exists"
             }
-            utils.writeJson(res, json);
+            utils.writeJson(res, json, 400);
         } else {
             var json = {
                 "success": true
             }
             User.userRegister(body)
                 .then(function(response) {
-                    utils.writeJson(res, json);
+                    utils.writeJson(res, json, 200);
                 })
                 .catch(function(response) {
                     utils.writeJson(res, response);
@@ -116,8 +120,8 @@ module.exports.logoutUser = function logoutUser(req, res, next) {
             "success": false,
             "errorMessage": "You are not logged in."
         }
-        utils.writeJson(res, json);
+        utils.writeJson(res, json, 401);
         return
     }
-    utils.writeJson(res, json);
+    utils.writeJson(res, json, 200);
 };
