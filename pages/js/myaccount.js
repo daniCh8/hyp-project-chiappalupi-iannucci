@@ -9,9 +9,6 @@ $(document).ready(() => {
             drawLoginForm();
         }
     });
-    $("#loginButton").click(login);
-    $("#registerButton").click(register);
-    $("#logoutButton").click(logout);
 
 });
 
@@ -70,7 +67,7 @@ function login(){
                 });
 
                  */
-                //window.location.replace("page.html?" + credentials.username);
+                window.location.replace("myaccount.html");
             }
             else {
                 notifyerror(result.errorMessage);
@@ -211,7 +208,7 @@ function drawLoginForm() {
         '                    <input id="password" type="password" class="input" data-type="password">\n' +
         '                </div>\n' +
         '                <div class="group">\n' +
-        '                    <input type="submit" class="button" value="Sign In">\n' +
+        '                    <input type="submit" class="button" onclick="login()" id="loginButton" value="Sign In">\n' +
         '                </div>\n' +
         '                <div class="hr"></div>\n' +
         '\n' +
@@ -238,7 +235,7 @@ function drawLoginForm() {
         '                    <input id="passwordReg" type="password" class="input" data-type="password">\n' +
         '                </div>\n' +
         '                <div class="group">\n' +
-        '                    <input type="submit" class="button" value="Sign Up">\n' +
+        '                    <input type="submit" class="button" onclick="register()" id="registerButton" value="Sign Up">\n' +
         '                </div>\n' +
         '                <div class="hr"></div>\n' +
         '            </div>\n' +
