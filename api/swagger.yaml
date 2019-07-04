@@ -33,7 +33,7 @@ paths:
       - "application/json"
       responses:
         200:
-          description: "Successful Operation"
+          description: "successful Operation"
           schema:
             type: "array"
             items:
@@ -661,8 +661,8 @@ paths:
     get:
       tags:
       - "cart"
-      summary: "View the content of the cart"
-      description: "Returns a list of Orders"
+      summary: "View the content of the cart."
+      description: "Returns a list of Orders."
       operationId: "getCart"
       produces:
       - "application/json"
@@ -670,9 +670,20 @@ paths:
         200:
           description: "succesful operartion"
           schema:
-            $ref: "#/definitions/Order"
-        404:
-          description: "unauthorized"
+            type: "array"
+            items:
+              $ref: "#/definitions/Order"
+          examples:
+            application/json:  {
+              "ISBN": "1",
+              "quantity": 8,
+              "username": "admin",
+              "cost": "159.92"
+            }
+        401:
+          description: "You are not authorized."
+          schema:
+            $ref: "#/definitions/ErrorMessage_Unauthorized"
       x-swagger-router-controller: "Cart"
     post:
       tags:
@@ -788,6 +799,19 @@ definitions:
     required:
       - success
       - errorMessage
+  ErrorMessage_Unauthorized:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      errorMessage:
+        type: "string"
+    example:
+      success: false
+      errorMessage: "You are not logged in."
+    required:
+      - success
+      - errorMessage
   ErrorMessage_NoObject:
     type: "object"
     properties:
@@ -801,19 +825,6 @@ definitions:
     required:
       - success
       - errorMessage
-  Cart:
-    type: "object"
-    properties:
-      username:
-        type: "string"
-      sessionID:
-        type: "string"
-      orders:
-        type: "array"
-        items:
-          $ref: "#/definitions/Order"
-    title: "Cart"
-    description: "Order for books"
   User:
     type: "object"
     properties:
@@ -843,24 +854,23 @@ definitions:
     properties:
       ISBN:
         type: "string"
-        example: "9780330508117"
-      shop:
-        type: "string"
-        example: "La Feltrinelli"
-        description: "fisical shop name"
+      cost:
+        type: "number"
+        format: "float"
       username:
         type: "string"
-        example: "daniCh"
-        description: "user username"
       quantity:
         type: "integer"
-        example: 8
-        description: "quantity of books reserved"
     example:
-      shop: "La Feltrinelli"
+      ISBN: "1"
       quantity: 8
-      ISBN: "9780330508117"
-      username: "daniCh"
+      username: "admin"
+      cost: "159.92"
+    required:
+      - ISBN
+      - cost
+      - username
+      - quantity
   BookWithAuthorsID:
     type: "object"
     properties:
