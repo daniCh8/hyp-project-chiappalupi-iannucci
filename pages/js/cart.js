@@ -4,7 +4,7 @@
 // This function retrieves items in the cart from the server and builds the UI accordingly
 function fetchItems() {
     jQuery.ajax({
-        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart",
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart",
         type: 'GET',
         data: filter,
         dataType: 'json',
@@ -58,7 +58,7 @@ function isUserLoggedIn(callBack) {
 
 function fetchBook(prevData) {
     for(var i = 0; i < prevData.length; i++){
-        var s = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + data[i].ISBN;
+        var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + data[i].ISBN;
         // Use the filter endpoint
         jQuery.ajax({
             url: s,
