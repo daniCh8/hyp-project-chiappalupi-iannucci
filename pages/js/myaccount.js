@@ -53,7 +53,7 @@ function login(){
         },
         error: (result)=>{
             $("#loginButton").removeClass("disabled");
-            notifyerror(result);
+            notifyerror(result.errorMessage);
         }
     });
 
