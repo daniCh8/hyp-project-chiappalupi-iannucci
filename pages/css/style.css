@@ -860,6 +860,20 @@ margin-bottom: 10px;
     font-weight:lighter;
     margin: 20px;
 }
+.paragraph-fav-best-white{
+    font-size: 20px;
+    color: white;
+    text-align:center;
+    font-weight:lighter;
+    margin: 20px;
+}
+.title-fav-best-white{
+    font-size: 30px;
+    color: white;
+    text-align:center;
+    font-weight:lighter;
+    margin: 30px;
+}
 
 
 

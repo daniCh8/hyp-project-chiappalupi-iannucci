@@ -172,23 +172,14 @@ function fetchAccount() {
 
 function drawAccount(data) {
     var s = '';
-    s = s + '\n' +
-        '<div class="sidenav">\n' +
-        '    <div class="login-main-text">\n' +
-        '        <h2>Hi ' + data[0].firstName + ',</h2>\n' +
-        '        <p>Here you may find some information about your account.</p>\n' +
-        '    </div>\n' +
-        '\n' +
-        '</div>\n' +
-        '<div class="main">\n' +
-        '    <div class="accountInfoContainer fadeInDown">\n' +
-        '        <p class="topic-section-big"> <strong>Name:  </strong>' + data[0].firstName + '' + data[0].lastName + '</p>\n' +
-        '        <p class="topic-section-big">    <strong>Username:  </strong>' + data[0].username + '</p>\n' +
-        '        <p class="topic-section-big">    <strong>E-mail:  </strong>' + data[0].email + '</p>\n' +
-        ''+
-        '\n' +
-        '    </div>\n' +
-        '</div>'
+    s = s + '<div class="login-html">\n' +
+        '            <p class="title-fav-best-white" > Hi ' + data[0].firstName + ', <br>Here you may find some information about your account.</p>\n' +
+        '            <p class="paragraph-fav-best-white"> <strong>Name:  </strong>' + data[0].firstName + ' ' + data[0].lastName + '</p>\n' +
+        '            <p class="paragraph-fav-best-white">    <strong>Username:  </strong>' + data[0].username + '</p>\n' +
+        '            <p class="paragraph-fav-best-white">    <strong>E-mail:  </strong>' + data[0].email + '</p>\n' +
+        '        <button  onclick="goToCart();" style=" width:-webkit-fill-available;"> <div class="container" style="display: flex; flex-direction: column; "> <img src="svg/mbri-cart-add.svg" alt="">  <p> Take a look at your cart! </p> </div> </button>' +
+        '<button style=" width:-webkit-fill-available; "onclick="logout();"> <div class="container" style="display: flex; flex-direction: column; "> <img src="svg/mbri-logout.svg" alt="">  <p> Logout </p> </div> </button>' +
+    '</div>';
     $("#user").html(s);
 }
 
@@ -242,4 +233,8 @@ function drawLoginForm() {
         '        </div>\n' +
         '    </div>';
     $("#user").html(s);
+}
+
+function goToCart() {
+    window.location.replace("cart.html");
 }
