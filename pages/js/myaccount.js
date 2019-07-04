@@ -205,7 +205,7 @@ function drawLoginForm() {
         '    </div>\n' +
         '</div>\n' +
         '<div class="main">\n' +
-        '    <div class="col-md-6 col-sm-12">\n' +
+        '    <div class="col-6">\n' +
         '        <div class="login-form loginContainer">\n' +
         '            <p class="paragraph-fav-best">Already registered? Login now!</p>\n' +
         '            <form>\n' +
@@ -221,7 +221,7 @@ function drawLoginForm() {
         '            </form>\n' +
         '        </div>\n' +
         '    </div>\n' +
-        '    <div class="col-md-6 col-sm-12">\n' +
+        '    <div class="col-6">\n' +
         '    <div class="login-form loginContainer">\n' +
         '        <p class="paragraph-fav-best">New user? Register now!</p>\n' +
         '        <form>\n' +

@@ -10,7 +10,7 @@ function fetchItems() {
         Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
-            fetchBook(data);
+            drawQuantity(data);
         },
         error: ()=>{
             notifyerror("qualcosa è andato storto");
@@ -69,8 +69,7 @@ function fetchBook(prevData) {
             Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
-                var r = drawBook(data, quantity);
-                $('#itemsshelf').append(r);
+                drawBook(data);
             },
             error: () => {
                 notifyerror("qualcosa è andato storto");
@@ -80,7 +79,7 @@ function fetchBook(prevData) {
 }
 
 
-function drawBook(data, quantity) {
+function drawBook(data) {
     var s = '';
             s = s + '<div class = "bookcontainer1">';
         s = s + '<a class="booklink" href="book.html?name=' + data[0].name + '"> <div class="component">\n' +
@@ -135,8 +134,24 @@ function drawBook(data, quantity) {
             '        </li>\n' +
             '    </ul>\n' +
             '</a></div>';
-        s = s + '<p class = "paragraph-fav-best"> Quantity: ' + quantity + '</p>';
         s = s + "</div>";
+var ISBN = data[0].ISBN;
+    $('#' + ISBN ).append(s);
 
-    return s;
+}
+
+
+function drawQuantity(data){
+    var s = '';
+    for(var i = 0; i<data.length; i++){
+        s = s + '<div class = "container col-12">' +
+            '<div class="container col-6" id="'+ data[i].ISBN +'" ' +
+            '<div class="container col-6" <p class="paragraph-fav-best">Quantity:'+data[i].quantity +'</p>'+
+        '</div>'+
+            '</div>';
+        $('#itemsshelf').append(s);
+    }
+
+    fetchBook(data);
+
 }
