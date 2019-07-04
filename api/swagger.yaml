@@ -584,7 +584,7 @@ paths:
               "address": "Galleria Vittorio Emanuele II",
               "city": "Milan",
               "pictureURL": "https://i.ibb.co/9qMgVmW/mastermind.jpg",
-              "date": "2019-09-13T13:00:00.000Z"
+              "date": "2019-07-21T17:32:28Z"
             }
         404:
           description: "No event found in your cart."
@@ -1266,7 +1266,7 @@ definitions:
         type: "string"
       date:
         type: string
-        format: date
+        format: date-time
     example:
       eventID: 2,
       ISBN: "6"
@@ -1298,7 +1298,7 @@ definitions:
         type: "string"
       date:
         type: string
-        format: date
+        format: date-time
     example:
       ISBN: "6"
       shop: "La Feltrinelli"

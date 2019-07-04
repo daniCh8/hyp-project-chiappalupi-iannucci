@@ -23,7 +23,10 @@ module.exports.addEvent = function addEvent(req, res, next) {
     var body = req.swagger.params['body'].value;
     Event.addEvent(body)
         .then(function(response) {
-            utils.writeJson(res, response);
+          var json = {
+            "success": true
+          }
+            utils.writeJson(res, json, 200);
         })
         .catch(function(response) {
             utils.writeJson(res, response);
