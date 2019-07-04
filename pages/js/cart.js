@@ -168,6 +168,7 @@ function drawQuantity(data) {
 }
 
 function drawItems(data) {
+    new Promise(function() {
     if(data.length<1){
         var s = '<div class="container"> <p class="title-fav-best"> <em>Your cart is empty</em> </p> ' +
             '<a class="paragraph-fav-best" href="books.html">Start shopping now!</a>' +
@@ -216,9 +217,10 @@ function drawItems(data) {
             '    </div>\n' +
             '</div>'
         $('#itemsshelf').html(r);
-        fillTableWithBooks(data);
     }
-
+    }).then(function () {
+        fillTableWithBooks(data)
+    })
 }
 
 function fillTableWithBooks(data){
