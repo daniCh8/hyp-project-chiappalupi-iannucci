@@ -256,6 +256,25 @@ function isUserLoggedIn(callBack) {
     });
 }
 
-function canAddToCart() {
-    
+function canAddToCart(ISBN, qnt) {
+    jQuery.ajax({
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/cart",
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        type: 'POST',
+        dataType: 'json',
+        data: credential,
+        xhrFields: {
+            withCredentials: true
+        },
+        success: () => {
+            $("#loginButton").removeClass("disabled");
+            console.log('ajax success');
+            window.location.replace("myaccount.html");
+
+        },
+        error: (result)=>{
+            $("#loginButton").removeClass("disabled");
+            notifyerror(result.responseJSON.errorMessage);
+        }
+    });
 }

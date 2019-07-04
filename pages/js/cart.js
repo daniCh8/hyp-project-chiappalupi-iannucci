@@ -69,8 +69,8 @@ function drawItems(data) {
             '                    <tr>\n' +
             '                        <th scope="col"> </th>\n' +
             '                        <th scope="col">Product</th>\n' +
-            '                        <th scope="col" class="text-center">Price</th>\n' +
-            '                        <th scope="col" class="text-right">Quantity</th>\n' +
+            '                        <th scope="col" class="text-center">Quantity</th>\n' +
+            '                        <th scope="col" class="text-right">Price</th>\n' +
             '                        <th> </th>\n' +
             '                    </tr>\n' +
             '                    </thead>\n' +
