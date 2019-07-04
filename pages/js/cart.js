@@ -143,7 +143,7 @@ var ISBN = data[0].ISBN;
 
 function drawQuantity(data){
     for(var i = 0; i<data.length; i++){
-        var s = s + '<div class = "container col-12">' +
+        var s = '<div class = "container col-12">' +
             '<div class="container col-6" id="'+ data[i].ISBN +'"></div> ' +
             '<div class="container col-6" <p class="paragraph-fav-best">Quantity:'+data[i].quantity +'</p>'+
         '</div>'+
