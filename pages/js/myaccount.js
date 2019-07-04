@@ -167,7 +167,7 @@ function drawLoginForm() {
         '                    <label>Password</label>\n' +
         '                    <input type="password" class="form-control" id="password" placeholder="Password">\n' +
         '                </div>\n' +
-        '                <button type="button" class="btn btn-black" id="loginButton">Login</button>\n' +
+        //'                <button type="button" class="btn btn-black" id="loginButton">Login</button>\n' +
         '            </form>\n' +
         '        </div>\n' +
         '    </div>\n' +
@@ -195,7 +195,7 @@ function drawLoginForm() {
         '                <label>Password</label>\n' +
         '                <input type="password" class="form-control" id="passwordReg" placeholder="Password">\n' +
         '            </div>\n' +
-        '            <button type="button" class="btn btn-black" id="registerButton">Register</button>\n' +
+        //'            <button type="button" class="btn btn-black" id="registerButton">Register</button>\n' +
         '        </form>\n' +
         '    </div>\n' +
         '</div>\n'
