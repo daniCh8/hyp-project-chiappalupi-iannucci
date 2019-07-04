@@ -136,6 +136,13 @@ var ISBN = data[0].ISBN;
 }
 
 function drawQuantity(data){
+    var r = '<div class="container backTo">\n' +
+        '    <a class="topic-section" href="myaccount.html"> <img src="svg/mbri-arrow-prev.svg" alt="leftarrow">  My account\n' +
+        '    </a>\n' +
+        '</div>\n'+
+        '\n' +
+        '<div class="container">';
+    $('#itemsshelf').html(r);
     for(var i = 0; i<data.length; i++){
         var s = '<div class = "container col-12 elementContainer fadeIn">' +
             '<div class="container col-6" id="'+ data[i].ISBN +'"></div> ' +
@@ -144,6 +151,8 @@ function drawQuantity(data){
             '</div>';
         $('#itemsshelf').append(s);
     }
+    var t = '</div>';
+    $('#itemsshelf').append(t);
 
     fetchBook(data);
 
