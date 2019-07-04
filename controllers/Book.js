@@ -132,55 +132,9 @@ module.exports.deleteBook = function deleteBook(req, res, next) {
         });
 };
 
-module.exports.findBooksByName = function findBooksByName(req, res, next) {
-    var name = req.swagger.params['name'].value;
-    Book.findBooksByName(name)
-        .then(function(response) {
-            utils.writeJson(res, response);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, response);
-        });
-};
-
-module.exports.findBooksByAuthors = function findBooksByAuthors(req, res, next) {
-    var author = req.swagger.params['author'].value;
-    Book.findBooksByAuthors(author)
-        .then(function(response) {
-            utils.writeJson(res, response);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, response);
-        });
-};
-
-module.exports.findBooksByThemes = function findBooksByThemes(req, res, next) {
-    var theme = req.swagger.params['theme'].value;
-    Book.findBooksByThemes(theme)
-        .then(function(response) {
-            utils.writeJson(res, response);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, response);
-        });
-};
-
 module.exports.getBookByISBN = function getBookByISBN(req, res, next) {
     var ISBN = req.swagger.params['ISBN'].value;
     Book.getBookByISBN(ISBN)
-        .then(function(response) {
-            utils.writeJson(res, response);
-        })
-        .catch(function(response) {
-            utils.writeJson(res, response);
-        });
-};
-
-module.exports.uploadFile = function uploadFile(req, res, next) {
-    var iSBN = req.swagger.params['ISBN'].value;
-    var additionalMetadata = req.swagger.params['additionalMetadata'].value;
-    var file = req.swagger.params['file'].value;
-    Book.uploadFile(iSBN, additionalMetadata, file)
         .then(function(response) {
             utils.writeJson(res, response);
         })

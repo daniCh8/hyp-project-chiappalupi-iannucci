@@ -158,8 +158,10 @@ paths:
     get:
       tags:
       - "book"
-      summary: "Finds Books from the params provided"
-      description: ""
+      summary: "Finds Books from the parameters provided."
+      description: "Depending on what is provided to this query, it will adapt to return the corresponding books. If no book matches the research, an empty array is provided (the last feature was an implementation choice due to front end developing).
+                    The research features the non sensitivity for both name of the book and of the author (as shown in the examples).
+                    Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "findBooksBy"
       produces: 
       - "application/json"
@@ -169,11 +171,13 @@ paths:
         description: "Name to filter by"
         required: false
         type: "string"
+        x-example: "comici sPaVeNtAtI guerrieri"
       - name: "author"
         in: "query"
         description: "Author to filter by"
         required: false
         type: "string"
+        x-example: stefano BENNI
       - name: "genres"
         in: "query"
         description: "Genre to filter by"
@@ -202,7 +206,7 @@ paths:
           - "young adult fiction"
           - "children's book"
           - "adult literature"
-        collectionFormat: "multi"
+        x-example: "mistery"
       - name: "themes"
         in: "query"
         description: "Theme to filter by"
@@ -221,7 +225,7 @@ paths:
           - "prejudice"
           - "individual vs. society"
           - "war"
-        collectionFormat: "multi"
+          x-example: "love"
       responses:
         200:
           description: "successful operation"
@@ -229,103 +233,6 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Book"
-        400:
-          description: "Invalid values"
-      x-swagger-router-controller: "Book"
-  /book/findByName:
-    get:
-      tags:
-      - "book"
-      summary: "Finds Book by name"
-      description: ""
-      operationId: "findBooksByName"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "name"
-        in: "query"
-        description: "Name values that need to be considered for filter"
-        required: true
-        type: "array"
-        items:
-          type: "string"
-        collectionFormat: "multi"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Book"
-        400:
-          description: "Invalid name value"
-      x-swagger-router-controller: "Book"
-  /book/findByTheme:
-    get:
-      tags:
-      - "book"
-      summary: "Finds Books by themes"
-      description: ""
-      operationId: "findBooksByThemes"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "theme"
-        in: "query"
-        description: "Themes to filter by"
-        required: true
-        type: "array"
-        items:
-          type: "string"
-          enum:
-          - "love"
-          - "death"
-          - "good vs. evil"
-          - "coming of age"
-          - "power and corruption"
-          - "survival"
-          - "courage and heroism"
-          - "prejudice"
-          - "individual vs. society"
-          - "war"
-        collectionFormat: "multi"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Book"
-        400:
-          description: "Invalid theme value"
-      x-swagger-router-controller: "Book"
-  /book/findByAuthor:
-    get:
-      tags:
-      - "book"
-      summary: "Finds Books by author"
-      operationId: "findBooksByAuthors"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "author"
-        in: "query"
-        description: "Authors ID to filter by"
-        required: true
-        type: "array"
-        items:
-          type: "string"
-        collectionFormat: "multi"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Book"
-        400:
-          description: "Invalid author value"
       x-swagger-router-controller: "Book"
   /book/{ISBN}:
     get:
@@ -373,37 +280,6 @@ paths:
           description: "Invalid ISBN supplied"
         404:
           description: "Book not found"
-      x-swagger-router-controller: "Book"
-  /book/{ISBN}/uploadImage:
-    post:
-      tags:
-      - "book"
-      summary: "uploads an image"
-      description: ""
-      operationId: "uploadFile"
-      consumes:
-      - "multipart/form-data"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "ISBN"
-        in: "path"
-        description: "ISBN of book to update"
-        required: true
-        type: "string"
-      - name: "additionalMetadata"
-        in: "formData"
-        description: "Additional data to pass to server"
-        required: false
-        type: "string"
-      - name: "file"
-        in: "formData"
-        description: "file to upload"
-        required: false
-        type: "file"
-      responses:
-        200:
-          description: "successful operation"
       x-swagger-router-controller: "Book"
   /user:
     get:
