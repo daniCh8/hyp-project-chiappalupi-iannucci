@@ -152,17 +152,72 @@
     </div>
 </nav>
 
-<div class="login-wrap">
-    <div class="login-html fadeInDown">
-            <p class="title-fav-best-white" >  Hi Elena, <br> Here you may find some information about your account.</p>
-            <p class="paragraph-fav-best-white"> <strong>Name:  </strong> Elena Iannucci </p>
-            <p class="paragraph-fav-best-white">    <strong>Username:  </strong> elenaiannu </p>
-            <p class="paragraph-fav-best-white">    <strong>E-mail:  </strong>elenaiannux@gmail.com</p>
-        <button  onclick="goToCart();" style=" width:-webkit-fill-available;"> <div class="container" style="display: flex; flex-direction: column; "> <img src="svg/mbri-cart-add.svg" alt="">  <p> Take a look at your cart! </p> </div> </button>
-        <button style=" width:-webkit-fill-available; "onclick="logout();"> <div class="container" style="display: flex; flex-direction: column; "> <img src="svg/mbri-logout.svg" alt="">  <p> Logout </p> </div> </button>
-        </div>
-</div>
 
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading title-fav-best"><em>Your Cart</em></h1>
+    </div>
+</section>
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col"> </th>
+                        <th scope="col">Product</th>
+                        <th scope="col" class="text-center">Quantity</th>
+                        <th scope="col" class="text-right">Price</th>
+                        <th> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                        <td>Product Name Dada</td>
+                        <td><input class="form-control" type="text" value="1" /></td>
+                        <td class="text-right">124,90 €</td>
+                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                        <td>Product Name Toto</td>
+                        <td><input class="form-control" type="text" value="1" /></td>
+                        <td class="text-right">33,90 €</td>
+                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                        <td>Product Name Titi</td>
+                        <td><input class="form-control" type="text" value="1" /></td>
+                        <td class="text-right">70,00 €</td>
+                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Total</strong></td>
+                        <td class="text-right"><strong>346,90 €</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <button class="btn btn-block " style="background-color: rgba(68,54,39, 0.1); margin: 10px;">Continue Shopping</button>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <button class="btn btn-lg btn-block  text-uppercase" style="background-color: rgba(68,54,39, 0.1); margin:10px;">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

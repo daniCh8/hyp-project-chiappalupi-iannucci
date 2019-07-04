@@ -10,7 +10,7 @@ function fetchItems() {
         Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
-            drawQuantity(data);
+            drawItems(data);
         },
         error: ()=>{
             notifyerror("qualcosa è andato storto");
@@ -31,6 +31,9 @@ $(document).ready(() => {
 
 });
 
+function addToCart() {
+
+}
 
 function isUserLoggedIn(callBack) {
     jQuery.ajax({
@@ -51,7 +54,7 @@ function isUserLoggedIn(callBack) {
 
 
 
-function fetchBook(prevData) {
+function fetchBooks(prevData) {
     var quantity=0;
     for(var i = 0; i < prevData.length; i++){
         var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + prevData[i].ISBN;
@@ -155,5 +158,78 @@ function drawQuantity(data){
     $('#itemsshelf').append(t);
 
     fetchBook(data);
+}
+
+function drawItems(data){
+    var r = '<div class="container mb-4">\n' +
+        '    <div class="row">\n' +
+        '        <div class="col-12">\n' +
+        '            <div class="table-responsive">\n' +
+        '                <table class="table table-striped">\n' +
+        '                    <thead>\n' +
+        '                    <tr>\n' +
+        '                        <th scope="col"> </th>\n' +
+        '                        <th scope="col">Product</th>\n' +
+        '                        <th scope="col" class="text-center">Quantity</th>\n' +
+        '                        <th scope="col" class="text-right">Price</th>\n' +
+        '                        <th> </th>\n' +
+        '                    </tr>\n' +
+        '                    </thead>\n' +
+        '                    <tbody>\n' +
+        '                    <tr>';
+
+    for(var i=0; i<data.length; i++){
+        fetchBook(data[i].ISBN, function(book){
+            r = r + '<td><img src="' + book[0].pictureURL + '" /> </td>\n' +
+                '                        <td>' + book[0].name + '</td>\n' +
+                '                        <td><input class="form-control" type="text" value="' + data[i].quantity + '" /></td>\n' +
+                '                        <td class="text-right">' + book[0].price + '</td>\n' +
+                '                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>';
+        });
+    }
+    r = r + '                    </tr>\n' +
+        '                    <tr>\n' +
+        '                        <td></td>\n' +
+        '                        <td></td>\n' +
+        '                        <td></td>\n' +
+        '                        <td><strong>Total</strong></td>\n' +
+        '                        <td class="text-right"><strong>346,90 €</strong></td>\n' +
+        '                    </tr>\n' +
+        '                    </tbody>\n' +
+        '                </table>\n' +
+        '            </div>\n' +
+        '        </div>\n' +
+        '        <div class="col mb-2">\n' +
+        '            <div class="row">\n' +
+        '                <div class="col-sm-12  col-md-6">\n' +
+        '                    <button class="btn btn-block " style="background-color: rgba(68,54,39, 0.1); margin: 10px;">Continue Shopping</button>\n' +
+        '                </div>\n' +
+        '                <div class="col-sm-12 col-md-6 text-right">\n' +
+        '                    <button class="btn btn-lg btn-block  text-uppercase" style="background-color: rgba(68,54,39, 0.1); margin:10px;">Checkout</button>\n' +
+        '                </div>\n' +
+        '            </div>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '</div>'
+    $('#itemsshelf').html(r);
 
 }
+
+function fetchBook(ISBN, callBack) {
+        var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + ISBN;
+        // Use the filter endpoint
+        jQuery.ajax({
+            url: s,
+            type: 'GET',
+            dataType: 'json',
+            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+            success: (data) => {
+                callBack(data);
+            },
+            error: () => {
+                notifyerror("qualcosa è andato storto");
+            }
+        });
+}
+
+
