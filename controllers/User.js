@@ -56,6 +56,14 @@ module.exports.userLogin = function userLogin(req, res, next) {
     }
     var username = req.swagger.params['username'].value;
     var password = req.swagger.params['password'].value;
+    if(username == "" || password == "") {
+        var json = {
+            "success": false,
+            "errorMessage": "Please, compile all the parameters of the form."
+        }
+        utils.writeJson(res, json, 400)
+        return;
+    }
     User.userLogin(req, username, password)
         .then(function(response) {
             var responseCode = 200
@@ -102,6 +110,14 @@ module.exports.userRegister = function userRegister(req, res, next) {
         "lastName": lastName,
         "email": email,
         "password": password
+    }
+    if(username == "" || firstName == "" || lastName == "" || email == "" || password == "") {
+        var json = {
+            "success": false,
+            "errorMessage": "Please, compile all the parameters of the form."
+        }
+        utils.writeJson(res, json, 400)
+        return;
     }
     User.checkUsernameAvailability(body.username).then(function(response) {
         if (!isEmpty(response)) {
