@@ -32,7 +32,7 @@ function login(){
                     }
                 });
 
-                //window.location.replace("myaccount.html?" + credentials.username);
+                //window.location.replace("page.html?" + credentials.username);
             }
             else {
                 notifyerror(result.errorMessage);
