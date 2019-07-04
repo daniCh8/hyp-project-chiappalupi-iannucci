@@ -53,7 +53,7 @@ function login(){
         },
         error: (result)=>{
             $("#loginButton").removeClass("disabled");
-            notifyerror(result.errorMessage);
+            notifyerror(result.responseJSON.errorMessage);
         }
     });
 
@@ -76,7 +76,7 @@ function logout(){
         },
         error: (result)=>{
             $("#logoutButton").removeClass("disabled");
-            notifyerror(result.erroMessage);
+            notifyerror(result.responseJSON.erroMessage);
         }
     });
 
@@ -109,7 +109,7 @@ function register(){
         },
         error: (result)=>{
             $("#registerButton").removeClass("disabled");
-            notifyerror(result.errorMessage);
+            notifyerror(result.responseJSON.errorMessage);
         }
     });
 }
@@ -130,7 +130,7 @@ function fetchAccount() {
             drawAccount(data);
         },
         error: (result)=>{
-            notifyerror(result.errorMessage);
+            notifyerror(result.responseJSON.errorMessage);
         }
     });
 }
