@@ -60,8 +60,6 @@ module.exports.userLogin = function userLogin(req, res, next) {
             if (response == true) {
                 req.session.loggedin = true
             }
-            return response;
-        }).then(function(response) {
             var json = {
                 "success": true
             }
@@ -75,7 +73,7 @@ module.exports.userLogin = function userLogin(req, res, next) {
             utils.writeJson(res, json, responseCode);
         })
         .catch(function(response) {
-            utils.writeJson(res, json, responseCode);
+            utils.writeJson(res, response, responseCode);
         });
 };
 
