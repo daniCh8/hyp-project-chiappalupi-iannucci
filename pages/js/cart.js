@@ -216,27 +216,22 @@ function drawItems(data) {
             '    </div>\n' +
             '</div>'
         $('#itemsshelf').html(r);
-        fillTableWithBooks(data, function (books) {
-            $("#tableValues").html(books);
-        });
+        fillTableWithBooks(data);
         fillTableWithQuantity(data);
     }
 }
 
-function fillTableWithBooks(data, callBack){
-    var r = '';
+function fillTableWithBooks(data){
         for (var i = 0; i < data.length; i++) {
             fetchBook(data[i].ISBN, function (book) {
-                r = r + '<td><img src="' + book[0].pictureURL + ' alt="' + book[0].ISBN + '" /> </td>\n' +
+                var r = r + '<td><img src="' + book[0].pictureURL + ' alt="' + book[0].ISBN + '" /> </td>\n' +
                     '                        <td>' + book[0].name + '</td>\n' +
                     '                        <td id = "' + book[0].ISBN + '"></td>\n' +
                     '                        <td class="text-right">' + book[0].price + '</td>\n' +
                     '                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>';
+                $("#tableValues").append(r);
             });
         }
-        callBack(r);
-
-
 }
 
 function fillTableWithQuantity(data) {
