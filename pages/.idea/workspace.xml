@@ -59,8 +59,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/cart.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-134">
-              <caret line="205" column="39" selection-start-line="205" selection-start-column="39" selection-end-line="205" selection-end-column="39" />
+            <state relative-caret-position="224">
+              <caret line="235" column="32" selection-start-line="235" selection-start-column="32" selection-end-line="235" selection-end-column="32" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#div#0;n#li#0;n#ul#0;n#figure#0;n#li#0;n#ul#0;n#div#0;n#a#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#li#1;n#ul#1;n#figure#0;n#li#0;n#ul#0;n#div#0;n#a#0;n#!!top" expanded="true" />
@@ -340,7 +340,7 @@
       <workItem from="1560626734362" duration="46000" />
       <workItem from="1560667409047" duration="71153000" />
       <workItem from="1561713228333" duration="96937000" />
-      <workItem from="1562229476640" duration="23348000" />
+      <workItem from="1562229476640" duration="23873000" />
     </task>
     <task id="LOCAL-00001" summary="commit test">
       <created>1560873079094</created>
@@ -367,7 +367,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="191484000" />
+    <option name="totallyTimeSpent" value="192009000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="22" y="139" width="1387" height="830" extended-state="0" />
@@ -822,8 +822,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/cart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-134">
-          <caret line="205" column="39" selection-start-line="205" selection-start-column="39" selection-end-line="205" selection-end-column="39" />
+        <state relative-caret-position="224">
+          <caret line="235" column="32" selection-start-line="235" selection-start-column="32" selection-end-line="235" selection-end-column="32" />
           <folding>
             <element signature="n#style#0;n#img#0;n#div#0;n#li#0;n#ul#0;n#figure#0;n#li#0;n#ul#0;n#div#0;n#a#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#li#1;n#ul#1;n#figure#0;n#li#0;n#ul#0;n#div#0;n#a#0;n#!!top" expanded="true" />
