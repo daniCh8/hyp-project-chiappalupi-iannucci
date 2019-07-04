@@ -84,6 +84,29 @@ function login(){
 
 }
 
+function logout(){
+    $("#logoutButton").addClass("disabled");
+    jQuery.ajax({
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/logout",
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        type: 'POST',
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: () => {
+            $("#logoutButton").removeClass("disabled");
+            console.log('ajax success');
+            drawLoginForm();
+        },
+        error: ()=>{
+            $("#logoutButton").removeClass("disabled");
+            notifyerror("qualcosa è andato storto");
+        }
+    });
+
+}
+
 function register(){
     $("#registerButton").addClass("disabled");
     var username = $('#username').val();
@@ -162,9 +185,10 @@ function drawAccount(data) {
         '</div>\n' +
         '<div class="main">\n' +
         '    <div class="accountInfoContainer fadeInDown">\n' +
-        '        <p class="topic-section-big"> <strong>Name:  </strong>' + data.firstName + data.lastName + '</p>\n' +
+        '        <p class="topic-section-big"> <strong>Name:  </strong>' + data.firstName + '' + data.lastName + '</p>\n' +
         '        <p class="topic-section-big">    <strong>Username:  </strong>' + data.username + '</p>\n' +
         '        <p class="topic-section-big">    <strong>E-mail:  </strong>' + data.email + '</p>\n' +
+        ''+
         '\n' +
         '    </div>\n' +
         '</div>'
