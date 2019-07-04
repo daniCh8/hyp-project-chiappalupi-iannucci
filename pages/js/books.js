@@ -227,4 +227,35 @@ function bestsellers(){
 
 function addToCart(ISBN, qnt) {
 
+    isUserLoggedIn(function(loggato) {
+        if (loggato) {
+            canAddToCart(ISBN, qnt);
+        } else {
+            window.location.replace("myaccount.html");
+        }
+    });
+}
+
+
+
+
+function isUserLoggedIn(callBack) {
+    jQuery.ajax({
+        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
+        type: 'GET',
+        dataType: 'json',
+        credentials: 'same-origin',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        success: () => {
+            console.log('ajax success');
+            callBack(true);
+        },
+        error: () => {
+            callBack(false);
+        }
+    });
+}
+
+function canAddToCart() {
+    
 }

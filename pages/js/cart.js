@@ -77,13 +77,13 @@ function drawItems(data) {
 
             '<tbody>\n';
         for(var i=0; i<data.length; i++) {
-            r = r + '                    <tr>\n' +
-            '                        <div id="'+data[i].ISBN+'">\n' +
-            '                        </div>\n' +
-                '                        <div id="'+data[i].ISBN+'qnt">\n' +
-                '                        </div>\n' +
-            '                        <td class="text-right"><button class="btn btn-sm btn-danger"><img src="svg/mbri-update.svg"/> </button> </td>\n' +
-            '                    </tr>\n';
+            r = r + '<tr>\n' +
+                '                        <td id="img'+data[i].ISBN+'"></td>\n' +
+                '                        <td id="name'+data[i].ISBN+'"></td>\n' +
+                '                        <td id="quantity'+data[i].ISBN+'"></td>\n' +
+                '                        <td class="text-right" id="price'+data[i].ISBN+'"></td>\n' +
+                '                        <td class="text-right"><button ><img src="svg/mbri-update.svg"></img> </button> </td>\n' +
+                '                    </tr>';
         }
 
 
@@ -125,8 +125,8 @@ function fillTableWithBooks(data) {
 
 function fillTableWithQuantity(data) {
     for (var i = 0; i < data.length; i++) {
-        var t = '<td><input class="form-control" type="text" value="' + data[i].quantity + '" /></td>';
-        $("#"+data[i].ISBN+"qnt").html(t);
+        var t = '<input class="form-control" type="text" value="' + data[i].quantity + '" />';
+        $("#quantity"+data[i].ISBN+"qnt").html(t);
     }
 }
 
@@ -139,10 +139,12 @@ function fetchBook(ISBN) {
             dataType: 'json',
             Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (book) => {
-                var r = '<td><img src="' + book[0].pictureURL + '" /> </td>' +
-                    '<td>'+book[0].title+'</td>' +
-                    '<td class="text-center">' + book[0].price + '" /> </td>';
-                $("#" + book[0].ISBN ).append(r);
+                var i = '<img src="'+book[0].pictureURL+'">';
+                var n = '<p>'+book[0].name+'></p>';
+                var p = '<p>'+book[0].price+'></p>';
+                $("#img" + book[0].ISBN ).append(i);
+                $("#name" + book[0].ISBN ).append(n);
+                $("#price" + book[0].ISBN ).append(p);
             },
             error: () => {
                 notifyerror("qualcosa è andato storto");
