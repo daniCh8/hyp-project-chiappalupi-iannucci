@@ -25,10 +25,11 @@ function isUserLoggedIn(callBack) {
         success: (result) => {
             console.log('ajax success');
             callBack(true);
-            console.log(result.success);
         },
         error: (result) => {
             callBack(false);
+            console.log('ajax error')
+            console.log(result.errorMessage)
             notifyerror(result.errorMessage);
         }
     });
