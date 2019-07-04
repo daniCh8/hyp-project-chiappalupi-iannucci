@@ -45,7 +45,7 @@ function login(){
                 });
 
                  */
-                //window.location.replace("myaccount.html?" + credentials.username);
+                //window.location.replace("page.html?" + credentials.username);
             }
             else {
                 notifyerror(result.errorMessage);
@@ -95,7 +95,7 @@ function register(){
                     }
                 });*/
 
-                //window.location.replace("myaccount.html?" + credentials.username);
+                //window.location.replace("page.html?" + credentials.username);
             }
             else {
                 notifyerror(result.errorMessage);
@@ -167,7 +167,7 @@ function drawLoginForm() {
         '                    <label>Password</label>\n' +
         '                    <input type="password" class="form-control" id="password" placeholder="Password">\n' +
         '                </div>\n' +
-        '                <button  class="btn btn-black" id="loginButton">Login</button>\n' +
+        '                <button type="button" class="btn btn-black" id="loginButton">Login</button>\n' +
         '            </form>\n' +
         '        </div>\n' +
         '    </div>\n' +
@@ -195,7 +195,7 @@ function drawLoginForm() {
         '                <label>Password</label>\n' +
         '                <input type="password" class="form-control" id="passwordReg" placeholder="Password">\n' +
         '            </div>\n' +
-        '            <button  class="btn btn-black" id="registerButton">Register</button>\n' +
+        '            <button type="button" class="btn btn-black" id="registerButton">Register</button>\n' +
         '        </form>\n' +
         '    </div>\n' +
         '</div>\n'
