@@ -2,10 +2,8 @@ $(document).ready(() => {
 
     isUserLoggedIn(function(loggato) {
         if (loggato) {
-            alert("L'utente è loggato!");
             fetchAccount();
         } else {
-            alert("L'utente NON è loggato!");
             drawLoginForm();
         }
     });
@@ -20,14 +18,12 @@ function isUserLoggedIn(callBack) {
         dataType: 'json',
         credentials: 'same-origin',
         Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
-        success: (result) => {
+        success: () => {
             console.log('ajax success');
             callBack(true);
         },
-        error: (result) => {
+        error: () => {
             callBack(false);
-            console.log('ajax error')
-            console.log(result.errorMessage)
         }
     });
 }
@@ -49,33 +45,15 @@ function login(){
         xhrFields: {
             withCredentials: true
         },
-        success: (result) => {
+        success: () => {
             $("#loginButton").removeClass("disabled");
             console.log('ajax success');
-
-            if(result.success){
-                alert("L'utente è loggato!");
-
-                /*
-
-                isUserLoggedIn(function(loggato) {
-                    if (loggato==true) {
-                        alert("L'utente è loggato!");
-                    } else {
-                        alert("L'utente NON è loggato!");
-                    }
-                });
-
-                 */
                 window.location.replace("myaccount.html");
-            }
-            else {
-                notifyerror(result.errorMessage);
-            }
+
         },
-        error: ()=>{
+        error: (result)=>{
             $("#loginButton").removeClass("disabled");
-            notifyerror("qualcosa è andato storto");
+            notifyerror(result);
         }
     });
 
@@ -96,9 +74,9 @@ function logout(){
             console.log('ajax success');
             drawLoginForm();
         },
-        error: ()=>{
+        error: (result)=>{
             $("#logoutButton").removeClass("disabled");
-            notifyerror("qualcosa è andato storto");
+            notifyerror(result.erroMessage);
         }
     });
 
@@ -124,33 +102,20 @@ function register(){
         dataType: 'json',
         data: credential,
         Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
-        success: (result) => {
+        success: () => {
             $("#registerButton").removeClass("disabled");
             console.log('ajax success');
-
-            if(result.success){
-                alert("L'utente è registrato!");
-
-                /*
-                isUserLoggedIn(function(loggato) {
-                    if (loggato==true) {
-                        alert("L'utente è loggato!");
-                    } else {
-                        alert("L'utente NON è loggato!");
-                    }
-                });*/
-
-                //window.location.replace("page.html?" + credentials.username);
-            }
-            else {
-                notifyerror(result.errorMessage);
-            }
+                window.location.replace("myaccount.html" );
         },
-        error: ()=>{
+        error: (result)=>{
             $("#registerButton").removeClass("disabled");
-            notifyerror("qualcosa è andato storto");
+            notifyerror(result.errorMessage);
         }
     });
+}
+
+function goToCart() {
+    window.location.replace("cart.html");
 }
 
 
@@ -235,6 +200,3 @@ function drawLoginForm() {
     $("#user").html(s);
 }
 
-function goToCart() {
-    window.location.replace("cart.html");
-}
