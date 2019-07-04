@@ -12,7 +12,7 @@ function login(){
        "password": password,
    };
     jQuery.ajax({
-        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/login",
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/login",
         type: 'POST',
         dataType: 'json',
         data: credential,

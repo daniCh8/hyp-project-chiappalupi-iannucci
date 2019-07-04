@@ -31,12 +31,13 @@ function drawEvent(data) {
 
 // This function retrieves books from the server and builds the UI accordingly
 function fetchEvent(value) {
-     var s =  "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/event/" + value;
+     var s =  "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/event/" + value;
     // Use the filter endpoint
     jQuery.ajax({
         url: s,
         type: 'GET',
         dataType: 'json',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
             var s = drawEvent(data);
@@ -49,12 +50,13 @@ function fetchEvent(value) {
 }
 
 function fetchAuthor(name) {
-    var s =  "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName?name=" + name ;
+    var s =  "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName?name=" + name ;
     // Use the filter endpoint
     jQuery.ajax({
         url: s,
         type: 'GET',
         dataType: 'json',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
             drawAuthor(data);
@@ -66,13 +68,13 @@ function fetchAuthor(name) {
 }
 
 function fetchBookAuthor(ISBN) {
-        var s = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + ISBN;
+        var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + ISBN;
     var author = '';
-        // Use the filter endpoint
         jQuery.ajax({
             url: s,
             type: 'GET',
             dataType: 'json',
+            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 fetchAuthor(data[0].authors[0]);
@@ -85,13 +87,13 @@ function fetchBookAuthor(ISBN) {
 
 function fetchBook(ISBN, i) {
     if(!i) {
-        var s = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + ISBN;
+        var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + ISBN;
         var r = "Join the launch of ";
-        // Use the filter endpoint
         jQuery.ajax({
             url: s,
             type: 'GET',
             dataType: 'json',
+            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 r = r + data[0].name;
@@ -103,13 +105,13 @@ function fetchBook(ISBN, i) {
         });
     }
     if(i) {
-        var s = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + ISBN;
+        var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + ISBN;
         var r = '';
-        // Use the filter endpoint
         jQuery.ajax({
             url: s,
             type: 'GET',
             dataType: 'json',
+            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 r = r + drawBook(data,i);
@@ -131,7 +133,6 @@ $(document).ready(() => {
         var querystring = location.search;
         var value = querystring.substr(1);
     } catch{
-        //TODO:
     }
     console.log(filter);
 

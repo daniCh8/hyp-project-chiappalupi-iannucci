@@ -192,10 +192,10 @@ $(document).ready(() => {
 
 function favouriteReading(){
     jQuery.ajax({
-        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/getBestsellers',
-        //TODO: parametrize url
+        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/getBestsellers',
         type: 'GET',
         dataType: 'json',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
             var s = drawBooks(data, 2);
@@ -209,10 +209,10 @@ function favouriteReading(){
 
 function bestsellers(){
     jQuery.ajax({
-        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/getFavouriteBooks',
-        //TODO: parametrize url
+        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/getFavouriteBooks',
         type: 'GET',
         dataType: 'json',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
             var s = drawBooks(data, 3);

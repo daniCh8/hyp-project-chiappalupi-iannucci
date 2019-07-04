@@ -1,6 +1,5 @@
 "use strict";
 
-// This function takes an array of books as input and returns the HTML necessary to display them.
 function drawAuthor(data) {
     var s = '';
     for (var i = 0; i < data.length; i++) {
@@ -93,10 +92,11 @@ function appendBooks(data, author) {
 
 function fetchBooks(st, filter, author) {
     jQuery.ajax({
-        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findByAuthor",
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findByAuthor",
         type: 'GET',
         data: filter,
         dataType: 'json',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
             var s = st + appendBooks(data, author);
@@ -108,16 +108,17 @@ function fetchBooks(st, filter, author) {
     });
 }
 
-// This function retrieves books from the server and builds the UI accordingly
+
 function fetchAuthor(filter) {
     // Filter parameter is optional
     if (filter) {
         // Use the filter endpoint
         jQuery.ajax({
-            url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName",
+            url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName",
             type: 'GET',
             data: filter,
             dataType: 'json',
+            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 drawAuthor(data);
@@ -146,7 +147,6 @@ $(document).ready(() => {
             filter[key]=value;
         });
     } catch{
-        //TODO:
     }
     console.log(filter);
 

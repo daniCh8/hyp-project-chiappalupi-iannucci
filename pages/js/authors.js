@@ -17,28 +17,11 @@ $(document).ready(() => {
             filter[key]=value;
         });
     } catch{
-        //TODO:
     }
     console.log(filter);
     fetchAuthors(filter);
 });
 
-/*
-function drawAuthors(data) {
-    var s = '';
-    for (var i = 0; i < data.length; i++) {
-        s = s +
-            '        <figure class="effect-winston figureauthors">\n' +
-            '            <a href="bestsellers.html" id="genre1">\n' +
-            '            <img src="' + data[i].pictureURL + '" alt="img30"/>\n' +
-            '            <figcaption>\n' +
-            '                <h2>' + data[i].name + '</h2>\n' +
-            '            </figcaption>\n' +
-            '        </figure>\n' +
-            '        </a>\n';
-    }
-    return s;
-}*/
 
 
 
@@ -52,7 +35,7 @@ function drawAuthors(data) {
         $figure.addClass("effect-winston");
         $figure.addClass("figureauthors");
         var $a = $("<a/>");
-        var s = 'author.html?name=' + author.name;
+        var s = 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName?name=' + author.name;
         $a.attr("href", s)
         //$a.click(author, drawAuthorModal);
         var $img = $("<img/>");
@@ -77,10 +60,11 @@ function fetchAuthors(filter) {
     if (filter) {
         // Use the filter endpoint
         jQuery.ajax({
-            url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName",
+            url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName",
             type: 'GET',
             data: filter,
             dataType: 'json',
+            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 drawAuthors(data);
@@ -93,9 +77,10 @@ function fetchAuthors(filter) {
     } else {
         // If no filter was specified, let's get them all!
         jQuery.ajax({
-            url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/author',
+            url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/author',
             type: 'GET',
             dataType: 'json',
+            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 drawAuthors(data);
