@@ -99,18 +99,17 @@ function drawItems(data) {
             '    </div>\n' +
             '</div>'
         $('#itemsshelf').html(r);
-        fillTableWithBooks(data, function(data){
-            fillTableWithQuantity(data);
-        } );
+        fillTableWithBooks(data);
     }
 }
 
-function fillTableWithBooks(data, callBack){
+function fillTableWithBooks(data){
+    new Promise(function (data) {
         for (var i = 0; i < data.length; i++) {
             fetchBook(data[i].ISBN);
         }
-      callBack(data);
-}
+        
+    }).then(function (response) {fillTableWithQuantity(data);})}
 
 function fillTableWithQuantity(data) {
     for (var i = 0; i < data.length; i++) {
