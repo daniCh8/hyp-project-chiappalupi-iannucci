@@ -161,7 +161,7 @@ paths:
       - "book"
       summary: "Finds Books from the parameters provided."
       description: "Depending on what is provided to this query, it will adapt to return the corresponding books. If no book matches the research, an empty array is provided (the last feature was an implementation choice due to front end developing).
-                    The research features the non case sensitivity for both name of the book and of the author (as shown in the examples).
+                    The research features the non case sensitivity for both name of the book and of the author (as shown in the examples). Moreover, the research looks also for part of the names.
                     Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "findBooksBy"
       produces: 
@@ -367,31 +367,11 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "username"
-        in: "formData"
+      - in: "body"
+        name: "body"
         required: true
-        type: "string"
-        x-example: "admin"
-      - name: "password"
-        in: "formData"
-        required: true
-        type: "string"
-        x-example: "1234"
-      - name: "email"
-        in: "formData"
-        required: true
-        type: "string"
-        x-example: "admin@admin.it"
-      - name: "firstName"
-        in: "formData"
-        required: true
-        type: "string"
-        x-example: "admin_name"
-      - name: "lastName"
-        in: "formData"
-        required: true
-        type: "string"
-        x-example: "admin_surname"
+        schema:
+          $ref: "#/definitions/User"
       responses:
         200:
           description: "Successful Operation"
@@ -535,7 +515,7 @@ paths:
       - "author"
       summary: "Finds Authors by their names."
       description: "Returns an array of authors. Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest.\ 
-      If no name is provided, all the authors are returned. Multiple authors can be provided. The research is not case sensitive."
+      If no name is provided, all the authors are returned. Multiple authors can be provided. The research is not case sensitive, and features the research by part of the name (as shown in the example)."
       operationId: "findAuthorsByName"
       produces:
       - "application/json"
@@ -547,7 +527,7 @@ paths:
         type: "array"
         items:
           type: "string"
-        x-example:  "stefano benni"
+        x-example:  "stefano ben"
         collectionFormat: "multi"
       responses:
         200:
@@ -584,7 +564,7 @@ paths:
               "address": "Galleria Vittorio Emanuele II",
               "city": "Milan",
               "pictureURL": "https://i.ibb.co/9qMgVmW/mastermind.jpg",
-              "date": "2019-07-21T17:32:28Z"
+              "date": "2019-09-13T13:00:00.000Z"
             }
         404:
           description: "No event found in your cart."
@@ -679,10 +659,10 @@ paths:
       parameters:
       - name: "shop"
         in: "query"
-        description: "Name of the shop to filter by. It is not case sensitive."
+        description: "Name of the shop to filter by. It is not case sensitive. Also, the research features the look for just part of the input, as shown in the example."
         required: true
         type: "string"
-        x-example: "la fEltrinelli"
+        x-example: "la fEltr"
       responses:
         200:
           description: "Successful operation"
@@ -1266,7 +1246,7 @@ definitions:
         type: "string"
       date:
         type: string
-        format: date-time
+        format: date
     example:
       eventID: 2,
       ISBN: "6"
@@ -1298,7 +1278,7 @@ definitions:
         type: "string"
       date:
         type: string
-        format: date-time
+        format: date
     example:
       ISBN: "6"
       shop: "La Feltrinelli"
