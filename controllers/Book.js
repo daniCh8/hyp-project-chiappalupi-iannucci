@@ -38,11 +38,11 @@ module.exports.addBook = function addBook(req, res, next) {
                 "success": false,
                 "errorMessage": "ISBN already exists"
             }
-            utils.writeJson(res, json);
+            utils.writeJson(res, json, 409);
         } else {
             Book.addBook(body)
                 .then(function(response) {
-                    utils.writeJson(res, response);
+                    utils.writeJson(res, response, 200);
                 })
                 .catch(function(response) {
                     utils.writeJson(res, response);
@@ -53,7 +53,9 @@ module.exports.addBook = function addBook(req, res, next) {
 
 module.exports.getBooks = function getBooks(req, res, next) {
     Book.getBooks().then(function(response) {
-            utils.writeJson(res, response);
+            var responseCode = 200
+            if(response.length == 0) responseCode = 404
+            utils.writeJson(res, response, responseCode);
         })
         .catch(function(response) {
             utils.writeJson(res, response);
