@@ -6,3 +6,4 @@ function notifyerror(message) {
     $alertdiv.html(s);
     $('body').append($alertdiv);
 }
+

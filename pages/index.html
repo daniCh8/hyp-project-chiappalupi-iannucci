@@ -18,7 +18,8 @@
 
     <script src="https://kit.fontawesome.com/9c22daaf49.js"></script>
 
-    <title>Hello, world!</title>
+
+    <title>Hypermedia project</title>
 </head>
 <body>
 
@@ -32,7 +33,7 @@
         <ul class="navbar-nav mr-auto col-lg-12" style="padding-right: 0px">
             <li class="nav-item col-lg-1">
 
-                <a class="nav-link modifiedbutton" href="">
+                <a class="nav-link modifiedbutton" href="infos.html">
                     <img class="d-none d-lg-block" src="svg/mbri-info.svg" alt="">
                     <p class="hometag">INFOS</p>
                 </a>
@@ -41,7 +42,7 @@
             </li>
             <li class="nav-item col-lg-1">
 
-                <a class="nav-link modifiedbutton" href="">
+                <a class="nav-link modifiedbutton" href="whoweare.html">
                     <img class="d-none d-lg-block" src="svg/mbri-hearth.svg" alt="">
                     <p class="hometag">WHO WE ARE</p>
                 </a>
@@ -49,72 +50,92 @@
 
             <li class="nav-item">
             <li class="nav-item col-lg-1">
-                <a class="nav-link modifiedbutton" href="">
+                <a class="nav-link modifiedbutton" href="contacts.html">
                     <img class="d-none d-lg-block" src="svg/mbri-help.svg" alt="">
                     <p class="hometag">CONTACTS</p>
                 </a>
             </li>
             <li class="nav-item d-none d-lg-block col-lg-6">
 
-                    <div class="row" >
-                        <a class="nav-link hometag" href="#"> <img src="svg/mbri-home.svg" alt=""> </a>
-                    </div>
-
-                    <div class="row">
-                <a class="nav-link hometag" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    BOOKS
-                </a>
-
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Bestsellers this month</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Our favorite reading</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Books by theme</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Books by genre</a>
+                <div class="row">
+                    <a class="nav-link hometag" href="#"> <img src="svg/mbri-home.svg" alt=""> </a>
                 </div>
-                <a class="nav-link hometag" href="#">AUTHORS</a>
-                <a class="nav-link hometag" href="#">EVENTS</a>
+
+                <div class="row">
+                    <div class="dropdown">
+                        <a class="nav-link hometag" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            BOOKS
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="books.html">All books</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="bestsellers.html">Bestsellers this month</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="favourites.html">Our favorite reading</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="themes.html">Books by theme</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="genres.html">Books by genre</a>
+                        </div>
                     </div>
+                    <a class="nav-link hometag" href="authors.html">AUTHORS</a>
+                    <a class="nav-link hometag" href="events.html">EVENTS</a>
+
+                </div>
             </li>
 
 
             <li class="nav-item d-lg-none">
-                    <a class="nav-link modifiedbutton" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                       <p class="hometag"> BOOKS</p>
+                <a class="nav-link modifiedbutton" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <p class="hometag"> BOOKS</p>
                 </a>
 
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown2"> <a class="dropdown-item" href="#">Bestsellers this month</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                    <a class="dropdown-item" href="books.html">All books</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Our favorite reading</a>
+                    <a class="dropdown-item" href="bestsellers.html">Bestsellers this month</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Books by theme</a>
+                    <a class="dropdown-item" href="favourites.html">Our favorite reading</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Books by genre</a>
+                    <a class="dropdown-item" href="themes.html">Books by theme</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="genres.html">Books by genre</a>
                 </div>
             </li>
             <li class="nav-item  d-lg-none">
-                <a class="nav-link modifiedbutton" href="">
+                <a class="nav-link modifiedbutton" href="authors.html">
                     <p class="hometag">AUTHORS</p>
                 </a>
             </li>
             <li class="nav-item  d-lg-none">
-                <a class="nav-link modifiedbutton" href="">
+                <a class="nav-link modifiedbutton" href="events.html">
                     <p class="hometag">EVENTS</p>
                 </a>
             </li>
 
             <li class="nav-item col-lg-1">
-                <a class="nav-link modifiedbutton" href="#">
-                    <img class="d-none d-lg-block" src="svg/mbri-search.svg" alt="">
-                    <p class="hometag">SEARCH</p>
-                </a>
+                <div class="dropdown">
+                    <a class="nav-link modifiedbutton" href="#" id="navbarDropdownSearch" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <img class="d-none d-lg-block" src="svg/mbri-search.svg" alt="">
+                        <p class="hometag">SEARCH</p>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <input class="form-control mr-sm-2" id="booktitleNavbar" type="search" placeholder="Book's title" aria-label="Search">
+                        <div class="dropdown-divider"></div>
+                        <input class="form-control mr-sm-2" id="authornameNavbar" type="search" placeholder="Author's name" aria-label="Search">
+                        <div class="dropdown-divider"></div>
+                        <button style="width: -webkit-fill-available" id="searchbuttonNavbarSmall">
+                            Search
+                        </button>
+                    </div>
+                </div>
             </li>
             <li class="nav-item col-lg-1">
-                <a class="nav-link modifiedbutton" href="#">
+                <a class="nav-link modifiedbutton" href="login.html">
                     <img class="d-none d-lg-block" src="svg/mbri-user.svg" alt="">
                     <p class="hometag">MY ACCOUNT</p>
                 </a>
@@ -131,61 +152,15 @@
     </div>
 </nav>
 
-<div class="container">
-<nav class="navbar navbar-expand-lg navbar-light bg-image">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <ul class="navbar-nav mt-2 mt-lg-0" style="width: 100%; justify-content: center">
-            <li class="nav-item">
-            <select class="form-control" id="booktheme">
-                <option value="">choose theme</option>
-                <option value="love">love</option>
-                <option value="death">death</option>
-                <option value="good vs. evil">good vs.evil</option>
-                <option value="coming of age">coming of age</option>
-            </select>
-        </li>
-            <li class="nav-item">
-            <select class="form-control" id="bookgenre">
-                <option value="">choose genre</option>
-                <option value="mystery">mystery</option>
-                <option value="fantasy">fantasy</option>
-                <option value="romance">romance</option>
-                <option value="biography">biography</option>
-                <option value="dictionary">dictionary</option>
-            </select>
-            </li>
+<div class="container col-lg-12">
 
-            <li class="nav-item">
-                <input class="form-control mr-sm-2" id="booktitle" type="search" placeholder="Book's title" aria-label="Search">
-            </li>
-            <li class="nav-item">
-                <input class="form-control mr-sm-2" id="authorname" type="search" placeholder="Author's name" aria-label="Search">
-            </li>
-            <li class="nav-item d-none d-lg-block" >
-                <button style="background: #FDFFFC" id="searchbutton">
-                    <img src="svg/mbri-search.svg" alt="">
-                    <p >Search</p>
-                  </button>
-            </li>
-            <li class="nav-item d-lg-none" >
-                <button style="margin-top: 10px; margin-bottom: 10px; width: -webkit-fill-available" id="searchbuttonSmall">
-                    Search
-                </button>
-            </li>
-        </ul>
-    </div>
-</nav>
-</div>
+<div class="librarycontainer col-lg-12">
+    <img src="css/imgs/books.jpg" alt="books">
+</div></div>
 
 
 
-<div class="container">
-<div class="col-md-12 bookscontainer" id="bookshelf">
-</div>
-</div>
+
 
 
 
@@ -206,4 +181,4 @@
 <script src="js/books.js"></script>
 
 </body>
-</html>      
+</html>
