@@ -6,8 +6,8 @@ function fetchItems() {
     jQuery.ajax({
         url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart",
         type: 'GET',
-        data: filter,
         dataType: 'json',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
             fetchBook(data);
@@ -64,6 +64,7 @@ function fetchBook(prevData) {
             url: s,
             type: 'GET',
             dataType: 'json',
+            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 var r = drawBook(data, prevData[i]);
