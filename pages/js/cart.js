@@ -126,7 +126,7 @@ function fillTableWithBooks(data) {
 function fillTableWithQuantity(data) {
     for (var i = 0; i < data.length; i++) {
         var t = '<input class="form-control" type="text" value="' + data[i].quantity + '" />';
-        $("#quantity"+data[i].ISBN+"qnt").html(t);
+        $("#quantity"+data[i].ISBN).html(t);
     }
 }
 
