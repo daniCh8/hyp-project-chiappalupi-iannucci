@@ -766,12 +766,18 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Order object that needs to be added to the cart"
+      - name: "ISBN"
+        in: "query"
+        description: "Book to add to the cart' ISBN"
+        type: "string"
         required: true
-        schema:
-          $ref: "#/definitions/OrderObject"
+        x-example: "1"
+      - name: "quantity"
+        in: "query"
+        description: "quantity of the book to add"
+        type: "integer"
+        required: true
+        x-example: 6
       responses:
         200:
           description: "Successful operation."
@@ -1023,19 +1029,6 @@ definitions:
       - lastName
       - email
       - username
-  OrderObject:
-    type: "object"
-    properties:
-      ISBN:
-        type: "string"
-      quantity:
-        type: "integer"
-    example:
-      ISBN: "1"
-      quantity: 8
-    required:
-      - ISBN
-      - quantity
   Order:
     type: "object"
     properties:
