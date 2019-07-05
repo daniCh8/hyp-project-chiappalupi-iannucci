@@ -31,10 +31,6 @@ $(document).ready(() => {
 
 });
 
-function addToCart() {
-
-}
-
 function isUserLoggedIn(callBack) {
     jQuery.ajax({
         url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
@@ -129,7 +125,7 @@ function fillTableWithQuantity(data) {
     for (var i = 0; i < data.length; i++) {
         var t = '<input class="form-control" id="qntform'+ data[i].ISBN+'" type="text" value="' + data[i].quantity + '" />';
         $("#quantity"+data[i].ISBN).html(t);
-        var b = '<button onclick="updateQuantity('+data[i].ISBN+','+ $("#qntform"+data[i].ISBN).val()+');"><img src="svg/mbri-update.svg"></img> </button>';
+        var b = '<button onclick="updateQuantity('+data[i].ISBN+');"><img src="svg/mbri-update.svg"></img> </button>';
         $("#button"+data[i].ISBN).html(b);
     }
 }
@@ -160,7 +156,8 @@ function goToAllBooks() {
     window.location.replace("books.html");
 }
 
-function updateQuantity(ISBN, quantity) {
+function updateQuantity(ISBN) {
+    var quantity = $("qntform"+ISBN).val();
     var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart/updateBookQuantity?ISBN="+ISBN+"&quantity="+quantity;
     jQuery.ajax({
         url: s,
