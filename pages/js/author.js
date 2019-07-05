@@ -191,7 +191,7 @@ function canAddToCart(ISBN, qnt) {
     var s = '';
     s = s + ISBN;
     var item = {
-        "ISBN": ISBN,
+        "ISBN": s,
         "quantity": qnt
     };
     jQuery.ajax({
