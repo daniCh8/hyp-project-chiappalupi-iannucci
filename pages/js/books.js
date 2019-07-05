@@ -262,7 +262,7 @@ function canAddToCart(ISBN, qnt) {
         "quantity": qnt
     };
     jQuery.ajax({
-        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/cart",
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart",
         Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         type: 'POST',
         dataType: 'json',
