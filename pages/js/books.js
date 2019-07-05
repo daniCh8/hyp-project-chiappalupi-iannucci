@@ -68,13 +68,13 @@ function drawBooks(data, int) {
                 '</a></div>';
 
         if(int==1) {
-            s = s + '<button onclick="addToCart(data[i].ISBN , 1);" style="background-color: rgba(68,54,39,0.1);"> <div class="container" style="display: flex; flex-direction: column;"> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>'
+            s = s + '<button onclick="'+addToCart(data[i].ISBN , 1)+';" style="background-color: rgba(68,54,39,0.1);"> <div class="container" style="display: flex; flex-direction: column;"> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>'
         }
         if(int==2){
-            s = s + '<button onclick="addToCart( data[i].ISBN , 1);" style="background-color: rgba(179,166,187,0.4);"> <div class="container" style="display: flex; flex-direction: column;"> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>'
+            s = s + '<button onclick="'+addToCart(data[i].ISBN , 1)+';" style="background-color: rgba(179,166,187,0.4);"> <div class="container" style="display: flex; flex-direction: column;"> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>'
         }
         if(int==3){
-            s = s + '<button onclick="addToCart(data[i].ISBN , 1);" style="background-color: rgba(115,130,144,0.4);"> <div class="container" style="display: flex; flex-direction: column;"> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>'
+            s = s + '<button onclick="'+addToCart(data[i].ISBN , 1)+';" style="background-color: rgba(115,130,144,0.4);"> <div class="container" style="display: flex; flex-direction: column;"> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>'
         }
         s = s + "</div>";
     }
