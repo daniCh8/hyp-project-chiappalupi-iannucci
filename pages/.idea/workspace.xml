@@ -293,6 +293,7 @@
   </component>
   <component name="PhpDebugGeneral" listening_started="true" />
   <component name="ProjectFrameBounds">
+    <option name="x" value="145" />
     <option name="y" value="23" />
     <option name="width" value="1387" />
     <option name="height" value="830" />
