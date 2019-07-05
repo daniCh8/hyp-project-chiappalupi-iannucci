@@ -107,7 +107,7 @@ function drawItems(data) {
             '                    <button onclick="goToAllBooks();" class="btn btn-block " style="background-color: rgba(68,54,39, 0.1); margin: 10px;">Continue Shopping</button>\n' +
             '                </div>\n' +
             '                <div class="col-sm-12 col-md-6 text-right">\n' +
-            '                    <button class="btn btn-lg btn-block  text-uppercase" style="background-color: rgba(68,54,39, 0.1); margin:10px;">Checkout</button>\n' +
+            '                    <button onclick="updateQuantity(data[i].ISBN, $("#qntform"+data[i].ISBN).val());" class="btn btn-lg btn-block  text-uppercase" style="background-color: rgba(68,54,39, 0.1); margin:10px;">Checkout</button>\n' +
             '                </div>\n' +
             '            </div>\n' +
             '        </div>\n' +
@@ -127,7 +127,7 @@ function fillTableWithBooks(data) {
 
 function fillTableWithQuantity(data) {
     for (var i = 0; i < data.length; i++) {
-        var t = '<input class="form-control" type="text" value="' + data[i].quantity + '" />';
+        var t = '<input class="form-control" id="qntform'+ data[i].ISBN+'" type="text" value="' + data[i].quantity + '" />';
         $("#quantity"+data[i].ISBN).html(t);
     }
 }
@@ -156,4 +156,24 @@ function fetchBook(ISBN) {
 
 function goToAllBooks() {
     window.location.replace("books.html");
+}
+
+function updateQuantity(ISBN, quantity) {
+    var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart/updateBookQuantity?ISBN="+ISBN+"&quantity="+quantity;
+    jQuery.ajax({
+        url: s,
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        type: 'POST',
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: () => {
+            console.log('ajax success');
+
+        },
+        error: (result)=>{
+            notifyerror(result.responseJSON.errorMessage);
+        }
+    });
 }
