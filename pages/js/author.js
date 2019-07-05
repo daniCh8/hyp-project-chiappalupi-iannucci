@@ -82,7 +82,7 @@ function appendBooks(data, author) {
             '        </li>\n' +
             '    </ul>\n' +
             '</a></div>';
-        s = s + '<button style="background-color: rgba(68,54,39,0.1);"> <div class="container" style="display: flex; flex-direction: column;"> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>'+
+        s = s + '<button onclick="addToCart('+data[i].ISBN +', 1);" style="background-color: rgba(68,54,39,0.1);"> <div class="container" style="display: flex; flex-direction: column;"> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>'+
             '</div>';
     }
     s = s +'</div>';
@@ -92,7 +92,7 @@ function appendBooks(data, author) {
 
 function fetchBooks(st, filter, author) {
     jQuery.ajax({
-        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findByAuthor",
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findBooksBy",
         type: 'GET',
         data: filter,
         dataType: 'json',
@@ -155,3 +155,67 @@ $(document).ready(() => {
 
 
 
+
+function addToCart(ISBN, qnt) {
+
+    isUserLoggedIn(function(loggato) {
+        if (loggato) {
+            canAddToCart(ISBN, qnt);
+        } else {
+            window.location.replace("myaccount.html");
+        }
+    });
+}
+
+
+
+
+function isUserLoggedIn(callBack) {
+    jQuery.ajax({
+        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
+        type: 'GET',
+        dataType: 'json',
+        credentials: 'same-origin',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        success: () => {
+            console.log('ajax success');
+            callBack(true);
+        },
+        error: () => {
+            callBack(false);
+        }
+    });
+}
+
+function canAddToCart(ISBN, qnt) {
+    var s = '';
+    s = s + ISBN;
+    var item = {
+        "ISBN": s,
+        "quantity": qnt,
+    };
+
+    console.log(item);
+    jQuery.ajax({
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart",
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        type: 'POST',
+        dataType: 'json',
+        data: item,
+
+        credentials: 'same-origin',
+
+        xhrFields: {
+            withCredentials: true
+        },
+        success: () => {
+
+            console.log('ajax success');
+
+        },
+        error: ()=>{
+
+            console.log(item);
+        }
+    });
+}

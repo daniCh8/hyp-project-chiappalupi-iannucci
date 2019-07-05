@@ -31,10 +31,6 @@ $(document).ready(() => {
 
 });
 
-function addToCart() {
-
-}
-
 function isUserLoggedIn(callBack) {
     jQuery.ajax({
         url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
@@ -74,13 +70,29 @@ function drawItems(data) {
             '                        <th> </th>\n' +
             '                    </tr>\n' +
             '                    </thead>\n' +
-            '                    <tbody id="tableValues">\n' +
-            '                    <tr>\n' +
+
+            '<tbody>\n';
+        for(var i=0; i<data.length; i++) {
+            r = r + '<tr>\n' +
+                '                        <td id="img'+data[i].ISBN+'"></td>\n' +
+                '                        <td id="name'+data[i].ISBN+'"></td>\n' +
+                '                        <td id="quantity'+data[i].ISBN+'"></td>\n' +
+                '                        <td class="text-right" id="price'+data[i].ISBN+'"></td>\n' +
+                '                        <td class="text-right" id="button' + data[i].ISBN + '"></td>\n' +
+                '                    </tr>';
+        }
+        var subtotal = 0;
+        for(var j=0; j<data.length;j++){
+            subtotal = subtotal+data[j].cost;
+        }
+        var total = subtotal.toFixed(2);
+
+            r = r + '                    <tr>\n' +
             '                        <td></td>\n' +
             '                        <td></td>\n' +
             '                        <td></td>\n' +
             '                        <td><strong>Total</strong></td>\n' +
-            '                        <td class="text-right"><strong>346,90 €</strong></td>\n' +
+            '                        <td class="text-right"><strong>'+total+'</strong></td>\n' +
             '                    </tr>\n' +
             '                    </tbody>\n' +
             '                </table>\n' +
@@ -89,10 +101,10 @@ function drawItems(data) {
             '        <div class="col mb-2">\n' +
             '            <div class="row">\n' +
             '                <div class="col-sm-12  col-md-6">\n' +
-            '                    <button class="btn btn-block " style="background-color: rgba(68,54,39, 0.1); margin: 10px;">Continue Shopping</button>\n' +
+            '                    <button onclick="goToAllBooks();" class="btn btn-block " style="background-color: rgba(68,54,39, 0.1); margin: 10px;">Continue Shopping</button>\n' +
             '                </div>\n' +
             '                <div class="col-sm-12 col-md-6 text-right">\n' +
-            '                    <button class="btn btn-lg btn-block  text-uppercase" style="background-color: rgba(68,54,39, 0.1); margin:10px;">Checkout</button>\n' +
+            '                    <button  class="btn btn-lg btn-block  text-uppercase" style="background-color: rgba(68,54,39, 0.1); margin:10px;">Checkout</button>\n' +
             '                </div>\n' +
             '            </div>\n' +
             '        </div>\n' +
@@ -103,18 +115,19 @@ function drawItems(data) {
     }
 }
 
-function fillTableWithBooks(data){
-    new Promise(function (data) {
-        for (var i = 0; i < data.length; i++) {
-            fetchBook(data[i].ISBN);
-        }
-        
-    }).then(function (response) {fillTableWithQuantity(data);})}
+function fillTableWithBooks(data) {
+    for (var i = 0; i < data.length; i++) {
+        fetchBook(data[i].ISBN);
+    }
+    fillTableWithQuantity(data);
+}
 
 function fillTableWithQuantity(data) {
     for (var i = 0; i < data.length; i++) {
-        var t = '<input class="form-control" type="text" value="' + data[i].quantity + '" />';
-        $("#"+data[i].ISBN).html(t);
+        var t = '<input class="form-control" id="qntform'+ data[i].ISBN+'" type="text" value="' + data[i].quantity + '" />';
+        $("#quantity"+data[i].ISBN).html(t);
+        var b = '<button onclick="updateQuantity('+data[i].ISBN+');"><img src="svg/mbri-update.svg"></img> </button>';
+        $("#button"+data[i].ISBN).html(b);
     }
 }
 
@@ -127,12 +140,12 @@ function fetchBook(ISBN) {
             dataType: 'json',
             Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (book) => {
-                var r = '<tr><td><img src="' + book[0].pictureURL + ' " alt="' + book[0].ISBN + '" /> </td>\n' +
-                    '                        <td>' + book[0].name + '</td>\n' +
-                    '                        <td id = "' + book[0].ISBN + '"></td>\n' +
-                    '                        <td class="text-right">' + book[0].price + '</td>\n' +
-                    '                        <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td></tr>';
-                $("#tableValues").append(r);
+                var i = '<a href="book.html?name='+book[0].name+'"><img src="'+book[0].pictureURL+'" style="max-width: 100px"></a>';
+                var n = '<p>'+book[0].name+'</p>';
+                var p = '<p>'+book[0].price+'</p>';
+                $("#img" + book[0].ISBN ).append(i);
+                $("#name" + book[0].ISBN ).append(n);
+                $("#price" + book[0].ISBN ).append(p);
             },
             error: () => {
                 notifyerror("qualcosa è andato storto");
@@ -140,4 +153,28 @@ function fetchBook(ISBN) {
         });
 }
 
+function goToAllBooks() {
+    window.location.replace("books.html");
+}
 
+function updateQuantity(ISBN) {
+    var quantity = $("#qntform"+ISBN).val();
+    var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart/updateBookQuantity?ISBN="+ISBN+"&quantity="+quantity;
+    jQuery.ajax({
+        url: s,
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        type: 'POST',
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: () => {
+            console.log('ajax success');
+
+        },
+        error: (result)=>{
+            notifyerror(result.responseJSON.errorMessage);
+        }
+    });
+    window.location.replace("cart.html");
+}

@@ -3,7 +3,7 @@
 // This function takes an array of books as input and returns the HTML necessary to display them.
 function drawBooks(data, int) {
     var s = '';
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < 3; i++) {
         if(int==1){
             s = s + '<div class = "bookcontainer1">';
         }
@@ -81,110 +81,11 @@ function drawBooks(data, int) {
     return s;
 }
 
-// This function retrieves books from the server and builds the UI accordingly
-function fetchBooks(filter) {
-    // Filter parameter is optional
-    if (filter){
-        // Use the filter endpoint
-        jQuery.ajax({
-            url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findBooksBy",
-            type: 'GET',
-            data: filter,
-            dataType: 'json',
-            success: (data) => {
-                console.log('ajax success');
-                var s = drawBooks(data, 1);
-                $('#bookshelf').html(s);
-            },
-            error: ()=>{
-                notifyerror("qualcosa è andato storto");
-            }
-        });
-
-    } else {
-        // If no filter was specified, let's get them all!
-        jQuery.ajax({
-            url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book',
-            //TODO: parametrize url
-            type: 'GET',
-            dataType: 'json',
-            success: (data) => {
-                console.log('ajax success');
-                var s = drawBooks(data, 1);
-                $('#bookshelf').html(s);
-            },
-            error: ()=>{
-                notifyerror("qualcosa è andato storto");
-            }
-        });
-    }
-}
-
-function searchClick(){
-    var filter = {};
-    var genres = $("#bookgenre").val();
-    if (genres !== "") {
-        filter.genres=genres;
-    }
-    var themes = $("#booktheme").val();
-    if (themes !== "") {
-        filter.themes=themes;
-    }
-    var name = $("#booktitle").val();
-    if (name !== "") {
-        filter.name=name;
-    }
-    var author = $("#authorname").val();
-    if (author !== "") {
-        filter.author=author;
-    }
 
 
-    fetchBooks(filter);
-}
-
-function searchClickNavbar(){
-    var filter = {};
-
-    var name = $("#booktitleNavbar").val();
-    if (name !== "") {
-        filter.name=name;
-    }
-    var author = $("#authornameNavbar").val();
-    if (author !== "") {
-        filter.author=author;
-    }
-
-
-    fetchBooks(filter);
-}
 
 $(document).ready(() => {
 
-    var filter = {};
-
-    //Checking if the client has specified any filter parameter
-    try {
-        var querystring = location.search;
-        var subquerystring = querystring.substr(1);
-        var keyvalyepairs = subquerystring.split('&');
-        $.each(keyvalyepairs, function(i, kv){
-            var key = kv.split('=')[0];
-            var value = kv.split('=')[1];
-            value = value.replace(/%20/g, ' ');
-            console.log(value);
-            filter[key]=value;
-        });
-    } catch{
-        //TODO:
-    }
-    console.log(filter);
-    $("#searchbutton").click(searchClick);
-    $("#searchbuttonSmall").click(searchClick);
-    $("#searchbuttonNavbarSmall").click(searchClickNavbar);
-
-    // As soon as the page loads, load all the books
-    fetchBooks(filter);
     favouriteReading();
     bestsellers();
 

@@ -1,5 +1,62 @@
 "use strict";
 
+
+function addToCart(ISBN, qnt) {
+
+    isUserLoggedIn(function(loggato) {
+        if (loggato) {
+            canAddToCart(ISBN, qnt);
+        } else {
+            window.location.replace("myaccount.html");
+        }
+    });
+}
+
+
+
+
+function isUserLoggedIn(callBack) {
+    jQuery.ajax({
+        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
+        type: 'GET',
+        dataType: 'json',
+        credentials: 'same-origin',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        success: () => {
+            console.log('ajax success');
+            callBack(true);
+        },
+        error: () => {
+            callBack(false);
+        }
+    });
+}
+
+function canAddToCart(ISBN, qnt) {
+    var item = {
+        "ISBN": ISBN,
+        "quantity": qnt
+    };
+    jQuery.ajax({
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart",
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        type: 'POST',
+        dataType: 'json',
+        data: item,
+        xhrFields: {
+            withCredentials: true
+        },
+        success: () => {
+
+            console.log('ajax success');
+
+        },
+        error: (result)=>{
+            notifyerror(result.responseJSON.errorMessage);
+        }
+    });
+}
+
 // This function takes an array of books as input and returns the HTML necessary to display them.
 function drawBook(data) {
     var s = '';
@@ -17,7 +74,7 @@ function drawBook(data) {
         }
             s = s + '    <p class="topic-section"> <strong>Plot: </strong>' + data[i].plot +'</p>' +
             '    <p class="topic-section"> <strong>Price: </strong>' + data[i].price +'</p>' +
-                '<button onclick="addToCart("' + data[i].ISBN + ', 1");" style="background-color: rgba(68,54,39,0.1); width:-webkit-fill-available;"> <div class="container" style="display: flex; flex-direction: column; "> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>' +
+                '<button onclick="addToCart('+data[i].ISBN +', 1);" style="background-color: rgba(68,54,39,0.1); width:-webkit-fill-available;"> <div class="container" style="display: flex; flex-direction: column; "> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>' +
             '</div></div>';
         s = s + '<div class = container" id="eventsshelf"> </div>';
 
