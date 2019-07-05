@@ -188,6 +188,8 @@ function isUserLoggedIn(callBack) {
 }
 
 function canAddToCart(ISBN, qnt) {
+    var s = '';
+    s = s + ISBN;
     var item = {
         "ISBN": ISBN,
         "quantity": qnt
