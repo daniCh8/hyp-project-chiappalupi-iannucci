@@ -87,7 +87,7 @@ function drawItems(data) {
         }
         var total = 0;
         for(var j=0; j<data.length;j++){
-            total = total+data[i].cost;
+            total = total+data[j].cost;
         }
 
             r = r + '                    <tr>\n' +
