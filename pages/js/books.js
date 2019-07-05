@@ -257,16 +257,19 @@ function isUserLoggedIn(callBack) {
 }
 
 function canAddToCart(ISBN, qnt) {
-    var item = {
-        "ISBN": ISBN,
-        "quantity": qnt
-    };
+
+    var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart?ISBN="+ISBN+"&quantity="+qnt;
+
+    console.log(item);
     jQuery.ajax({
-        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart",
+        url: s,
         Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         type: 'POST',
         dataType: 'json',
         data: item,
+
+        credentials: 'same-origin',
+
         xhrFields: {
             withCredentials: true
         },
@@ -275,8 +278,9 @@ function canAddToCart(ISBN, qnt) {
             console.log('ajax success');
 
         },
-        error: (result)=>{
-            notifyerror(result.responseJSON.errorMessage);
+        error: ()=>{
+
+            console.log(item);
         }
     });
 }
