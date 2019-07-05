@@ -157,7 +157,7 @@ function goToAllBooks() {
 }
 
 function updateQuantity(ISBN) {
-    var quantity = $("qntform"+ISBN).val();
+    var quantity = $("#qntform"+ISBN).val();
     var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart/updateBookQuantity?ISBN="+ISBN+"&quantity="+quantity;
     jQuery.ajax({
         url: s,
