@@ -192,14 +192,19 @@ function canAddToCart(ISBN, qnt) {
     s = s + ISBN;
     var item = {
         "ISBN": s,
-        "quantity": qnt
+        "quantity": qnt,
     };
+
+    console.log(item);
     jQuery.ajax({
         url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart",
         Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         type: 'POST',
         dataType: 'json',
         data: item,
+
+        credentials: 'same-origin',
+
         xhrFields: {
             withCredentials: true
         },
@@ -208,8 +213,9 @@ function canAddToCart(ISBN, qnt) {
             console.log('ajax success');
 
         },
-        error: (result)=>{
-            notifyerror(result.responseJSON.errorMessage);
+        error: ()=>{
+
+            console.log(item);
         }
     });
 }
