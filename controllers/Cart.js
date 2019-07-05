@@ -44,7 +44,12 @@ module.exports.addOrder = function addOrder(req, res, next) {
         }
         utils.writeJson(res, json, 401)
     } else {
-        var body = req.swagger.params['body'].value;
+        var ISBN = req.swagger.params['ISBN'].value;
+        var quantity = req.swagger.params['quantity'].value;
+        var body = {
+            "ISBN": ISBN,
+            "quantity": quantity
+        }
         var id = req.session.id
         Cart.checkSession(id).then(function(response) {
             if (response.length == 0) {
