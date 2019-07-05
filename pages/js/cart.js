@@ -175,4 +175,5 @@ function updateQuantity(ISBN) {
             notifyerror(result.responseJSON.errorMessage);
         }
     });
+    window.location.replace("cart.html");
 }
