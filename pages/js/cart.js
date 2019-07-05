@@ -107,7 +107,7 @@ function drawItems(data) {
             '                    <button onclick="goToAllBooks();" class="btn btn-block " style="background-color: rgba(68,54,39, 0.1); margin: 10px;">Continue Shopping</button>\n' +
             '                </div>\n' +
             '                <div class="col-sm-12 col-md-6 text-right">\n' +
-            '                    <button onclick="updateQuantity(data[i].ISBN, $("#qntform"+data[i].ISBN).val());" class="btn btn-lg btn-block  text-uppercase" style="background-color: rgba(68,54,39, 0.1); margin:10px;">Checkout</button>\n' +
+            '                    <button onclick="updateQuantity('+data[i].ISBN+','+ $("#qntform"+data[i].ISBN).val()+');" class="btn btn-lg btn-block  text-uppercase" style="background-color: rgba(68,54,39, 0.1); margin:10px;">Checkout</button>\n' +
             '                </div>\n' +
             '            </div>\n' +
             '        </div>\n' +

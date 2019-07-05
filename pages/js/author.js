@@ -82,7 +82,7 @@ function appendBooks(data, author) {
             '        </li>\n' +
             '    </ul>\n' +
             '</a></div>';
-        s = s + '<button style="background-color: rgba(68,54,39,0.1);"> <div class="container" style="display: flex; flex-direction: column;"> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>'+
+        s = s + '<button onclick="addToCart('+data[i].ISBN +', 1);" style="background-color: rgba(68,54,39,0.1);"> <div class="container" style="display: flex; flex-direction: column;"> <img src="svg/mbri-cart-add.svg" alt="">  <p> Add to cart </p> </div> </button>'+
             '</div>';
     }
     s = s +'</div>';
@@ -155,3 +155,59 @@ $(document).ready(() => {
 
 
 
+
+function addToCart(ISBN, qnt) {
+
+    isUserLoggedIn(function(loggato) {
+        if (loggato) {
+            canAddToCart(ISBN, qnt);
+        } else {
+            window.location.replace("myaccount.html");
+        }
+    });
+}
+
+
+
+
+function isUserLoggedIn(callBack) {
+    jQuery.ajax({
+        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
+        type: 'GET',
+        dataType: 'json',
+        credentials: 'same-origin',
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        success: () => {
+            console.log('ajax success');
+            callBack(true);
+        },
+        error: () => {
+            callBack(false);
+        }
+    });
+}
+
+function canAddToCart(ISBN, qnt) {
+    var item = {
+        "ISBN": ISBN,
+        "quantity": qnt
+    };
+    jQuery.ajax({
+        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/cart",
+        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        type: 'POST',
+        dataType: 'json',
+        data: item,
+        xhrFields: {
+            withCredentials: true
+        },
+        success: () => {
+
+            console.log('ajax success');
+
+        },
+        error: (result)=>{
+            notifyerror(result.responseJSON.errorMessage);
+        }
+    });
+}
