@@ -82,7 +82,7 @@ function drawItems(data) {
                 '                        <td id="name'+data[i].ISBN+'"></td>\n' +
                 '                        <td id="quantity'+data[i].ISBN+'"></td>\n' +
                 '                        <td class="text-right" id="price'+data[i].ISBN+'"></td>\n' +
-                '                        <td onclick="updateQuantity('+data[i].ISBN+','+ $("#qntform"+data[i].ISBN).val()+');" class="text-right"><button ><img src="svg/mbri-update.svg"></img> </button> </td>\n' +
+                '                        <td class="text-right" id="button' + data[i].ISBN + '"></td>\n' +
                 '                    </tr>';
         }
         var total = 0;
@@ -129,6 +129,8 @@ function fillTableWithQuantity(data) {
     for (var i = 0; i < data.length; i++) {
         var t = '<input class="form-control" id="qntform'+ data[i].ISBN+'" type="text" value="' + data[i].quantity + '" />';
         $("#quantity"+data[i].ISBN).html(t);
+        var b = '<button onclick="updateQuantity('+data[i].ISBN+','+ $("#qntform"+data[i].ISBN).val()+');"><img src="svg/mbri-update.svg"></img> </button>';
+        $("#button"+data[i].ISBN).html(b);
     }
 }
 
