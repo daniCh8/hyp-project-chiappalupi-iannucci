@@ -81,10 +81,11 @@ function drawItems(data) {
                 '                        <td class="text-right" id="button' + data[i].ISBN + '"></td>\n' +
                 '                    </tr>';
         }
-        var total = 0;
+        var subtotal = 0;
         for(var j=0; j<data.length;j++){
-            total = total+data[j].cost;
+            subtotal = subtotal+data[j].cost;
         }
+        var total = subtotal.toFixed(2);
 
             r = r + '                    <tr>\n' +
             '                        <td></td>\n' +
