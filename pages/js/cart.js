@@ -85,15 +85,17 @@ function drawItems(data) {
                 '                        <td class="text-right"><button ><img src="svg/mbri-update.svg"></img> </button> </td>\n' +
                 '                    </tr>';
         }
-
-
+        var total = 0;
+        for(var j=0; j<data.length;j++){
+            total = total+data[i].cost;
+        }
 
             r = r + '                    <tr>\n' +
             '                        <td></td>\n' +
             '                        <td></td>\n' +
             '                        <td></td>\n' +
             '                        <td><strong>Total</strong></td>\n' +
-            '                        <td class="text-right"><strong>346,90 €</strong></td>\n' +
+            '                        <td class="text-right"><strong>'+total+'</strong></td>\n' +
             '                    </tr>\n' +
             '                    </tbody>\n' +
             '                </table>\n' +
@@ -102,7 +104,7 @@ function drawItems(data) {
             '        <div class="col mb-2">\n' +
             '            <div class="row">\n' +
             '                <div class="col-sm-12  col-md-6">\n' +
-            '                    <button class="btn btn-block " style="background-color: rgba(68,54,39, 0.1); margin: 10px;">Continue Shopping</button>\n' +
+            '                    <button onclick="goToAllBooks();" class="btn btn-block " style="background-color: rgba(68,54,39, 0.1); margin: 10px;">Continue Shopping</button>\n' +
             '                </div>\n' +
             '                <div class="col-sm-12 col-md-6 text-right">\n' +
             '                    <button class="btn btn-lg btn-block  text-uppercase" style="background-color: rgba(68,54,39, 0.1); margin:10px;">Checkout</button>\n' +
@@ -152,4 +154,6 @@ function fetchBook(ISBN) {
         });
 }
 
-
+function goToAllBooks() {
+    window.location.replace("books.html");
+}
