@@ -24,7 +24,7 @@ function drawBooks(data, int) {
             '                    <li>\n' +
             '                        <div class="coverDesign">\n' +
             '                            \n' +
-            '<img src="' + data[i].pictureURL + '" style="width:160px ;height:220px;">' +
+            '<img src="' + data[i].pictureURL + '" style="height:220px;">' +
             '                        </div>\n' +
             '                    </li>\n' +
             '                    <li></li>\n' +
