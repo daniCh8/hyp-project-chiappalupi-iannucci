@@ -35,10 +35,10 @@ function drawEvents(data) {
 
 function fetchEvents() {
     jQuery.ajax({
-        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/event',
+        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/event',
         type: 'GET',
         dataType: 'json',
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
             var s = drawEvents(data);

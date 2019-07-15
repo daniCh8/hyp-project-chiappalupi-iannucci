@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "This is the bookshop server for the Hypermedia Application 2019 project, made by Daniele Chiappalupi (daniele.chiappalupi@mail.polimi.it) and Elena Iannucci (elena.iannucci@mail.polimi.it).
-                Please note that this site is only accessible through http."
+                Please note that while the site should all be used through https (session management don't work in http, for logical security reasons), this page is only accessible through http."
   version: "1.0.0"
   title: "hyp-project-chiappalupi-iannucci"
   contact:
@@ -22,7 +22,8 @@ tags:
 - name: "cart"
   description: "cart of the users."
 schemes:
-- "http"
+- http
+- https
 paths:
   /book:
     get:
@@ -761,8 +762,6 @@ paths:
       summary: "Adds a new order to the cart"
       description: "Please note that the possible responses also include the default error ones defined by Swagger, such as 400 Bad Reqest."
       operationId: "addOrder"
-      consumes:
-      - "application/json"
       produces:
       - "application/json"
       parameters:

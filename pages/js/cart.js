@@ -4,10 +4,10 @@
 // This function retrieves items in the cart from the server and builds the UI accordingly
 function fetchItems() {
     jQuery.ajax({
-        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart",
+        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart",
         type: 'GET',
         dataType: 'json',
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
             drawItems(data);
@@ -33,11 +33,11 @@ $(document).ready(() => {
 
 function isUserLoggedIn(callBack) {
     jQuery.ajax({
-        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
+        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
         type: 'GET',
         dataType: 'json',
         credentials: 'same-origin',
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: () => {
             console.log('ajax success');
             callBack(true);
@@ -132,13 +132,13 @@ function fillTableWithQuantity(data) {
 }
 
 function fetchBook(ISBN) {
-        var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + ISBN;
+        var s = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/" + ISBN;
         // Use the filter endpoint
         jQuery.ajax({
             url: s,
             type: 'GET',
             dataType: 'json',
-            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+            Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (book) => {
                 var i = '<a href="book.html?name='+book[0].name+'"><img src="'+book[0].pictureURL+'" style="max-width: 100px"></a>';
                 var n = '<p>'+book[0].name+'</p>';
@@ -159,10 +159,10 @@ function goToAllBooks() {
 
 function updateQuantity(ISBN) {
     var quantity = $("#qntform"+ISBN).val();
-    var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart/updateBookQuantity?ISBN="+ISBN+"&quantity="+quantity;
+    var s = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart/updateBookQuantity?ISBN="+ISBN+"&quantity="+quantity;
     jQuery.ajax({
         url: s,
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         type: 'POST',
         dataType: 'json',
         xhrFields: {
@@ -170,11 +170,11 @@ function updateQuantity(ISBN) {
         },
         success: () => {
             console.log('ajax success');
+            notifyinfo("Quantity updated! Refresh the page to check out the total price");
 
         },
         error: (result)=>{
             notifyerror(result.responseJSON.errorMessage);
         }
     });
-    window.location.replace("cart.html");
 }

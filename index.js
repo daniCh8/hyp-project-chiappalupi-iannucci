@@ -12,7 +12,7 @@ var app = require('connect')();
 var swaggerTools = require('swagger-tools');
 var jsyaml = require('js-yaml');
 var serverPort = process.env.PORT || 8080;
-var serveStatic = require ('serve-static');
+var serveStatic = require('serve-static');
 let cookieParser = require("cookie-parser");
 let cookieSession = require("cookie-session");
 let uuidv1 = require('uuid/v1');
@@ -27,13 +27,13 @@ app.use(cookieSession({
 }));
 
 app.use(function(req, res, next) {
-	console.log("")
-	console.log("Are you logged in?")
-	console.log(req.session.loggedin)
+    console.log("")
+    console.log("Are you logged in?")
+    console.log(req.session.loggedin)
     console.log("Is this a new session?")
     console.log(req.session.isNew)
     console.log("ID?")
-	console.log(req.session.id)
+    console.log(req.session.id)
 
     if (req.session.id === undefined || !req.session.loggedin) {
         req.session.id = uuidv1();
@@ -54,7 +54,7 @@ var options = {
 };
 
 app.use(function(req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "http://hyp-2019-chiappalupi-iannucci.herokuapp.com");
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });

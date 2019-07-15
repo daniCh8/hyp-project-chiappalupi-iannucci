@@ -41,7 +41,7 @@ function appendBooks(data, author) {
             '                    <li>\n' +
             '                        <div class="coverDesign">\n' +
             '                            \n' +
-            '<img src="' + data[i].pictureURL + '" style="width:160px ;height:220px;">' +
+            '<img src="' + data[i].pictureURL + '" style="height:220px;">' +
             '                        </div>\n' +
             '                    </li>\n' +
             '                    <li></li>\n' +
@@ -92,11 +92,11 @@ function appendBooks(data, author) {
 
 function fetchBooks(st, filter, author) {
     jQuery.ajax({
-        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findBooksBy",
+        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findBooksBy",
         type: 'GET',
         data: filter,
         dataType: 'json',
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
             var s = st + appendBooks(data, author);
@@ -114,11 +114,11 @@ function fetchAuthor(filter) {
     if (filter) {
         // Use the filter endpoint
         jQuery.ajax({
-            url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName",
+            url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName",
             type: 'GET',
             data: filter,
             dataType: 'json',
-            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+            Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 drawAuthor(data);
@@ -156,59 +156,3 @@ $(document).ready(() => {
 
 
 
-function addToCart(ISBN, qnt) {
-
-    isUserLoggedIn(function(loggato) {
-        if (loggato) {
-            canAddToCart(ISBN, qnt);
-        } else {
-            window.location.replace("myaccount.html");
-        }
-    });
-}
-
-
-
-
-function isUserLoggedIn(callBack) {
-    jQuery.ajax({
-        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
-        type: 'GET',
-        dataType: 'json',
-        credentials: 'same-origin',
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
-        success: () => {
-            console.log('ajax success');
-            callBack(true);
-        },
-        error: () => {
-            callBack(false);
-        }
-    });
-}
-
-function canAddToCart(ISBN, qnt) {
-
-    var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart?ISBN="+ISBN+"&quantity="+qnt;
-
-    jQuery.ajax({
-        url: s,
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
-        type: 'POST',
-        dataType: 'json',
-
-        credentials: 'same-origin',
-
-        xhrFields: {
-            withCredentials: true
-        },
-        success: () => {
-
-            console.log('ajax success');
-
-        },
-        error: ()=>{
-
-        }
-    });
-}

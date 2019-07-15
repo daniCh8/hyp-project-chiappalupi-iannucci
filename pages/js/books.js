@@ -88,11 +88,12 @@ function fetchBooks(filter) {
     if (filter){
         // Use the filter endpoint
         jQuery.ajax({
-            url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findBooksBy",
+            url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findBooksBy",
             type: 'GET',
             data: filter,
             dataType: 'json',
-            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+            origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        crossDomain: true,
             success: (data) => {
                 console.log('ajax success');
                 var s = drawBooks(data, 1);
@@ -106,10 +107,11 @@ function fetchBooks(filter) {
     } else {
         // If no filter was specified, let's get them all!
         jQuery.ajax({
-            url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book',
+            url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book',
             type: 'GET',
             dataType: 'json',
-            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+            origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        crossDomain: true,
             success: (data) => {
                 console.log('ajax success');
                 var s = drawBooks(data, 1);
@@ -193,10 +195,11 @@ $(document).ready(() => {
 
 function favouriteReading(){
     jQuery.ajax({
-        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/getBestsellers',
+        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/getBestsellers',
         type: 'GET',
         dataType: 'json',
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        crossDomain: true,
         success: (data) => {
             console.log('ajax success');
             var s = drawBooks(data, 2);
@@ -210,10 +213,11 @@ function favouriteReading(){
 
 function bestsellers(){
     jQuery.ajax({
-        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/getFavouriteBooks',
+        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/getFavouriteBooks',
         type: 'GET',
         dataType: 'json',
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        crossDomain: true,
         success: (data) => {
             console.log('ajax success');
             var s = drawBooks(data, 3);
@@ -225,59 +229,3 @@ function bestsellers(){
     });
 }
 
-function addToCart(ISBN, qnt) {
-
-    isUserLoggedIn(function(loggato) {
-        if (loggato) {
-            canAddToCart(ISBN, qnt);
-        } else {
-            window.location.replace("myaccount.html");
-        }
-    });
-}
-
-
-
-
-function isUserLoggedIn(callBack) {
-    jQuery.ajax({
-        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
-        type: 'GET',
-        dataType: 'json',
-        credentials: 'same-origin',
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
-        success: () => {
-            console.log('ajax success');
-            callBack(true);
-        },
-        error: () => {
-            callBack(false);
-        }
-    });
-}
-
-function canAddToCart(ISBN, qnt) {
-
-    var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart?ISBN="+ISBN+"&quantity="+qnt;
-
-    jQuery.ajax({
-        url: s,
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
-        type: 'POST',
-        dataType: 'json',
-
-        credentials: 'same-origin',
-
-        xhrFields: {
-            withCredentials: true
-        },
-        success: () => {
-
-            console.log('ajax success');
-
-        },
-        error: ()=>{
-
-        }
-    });
-}

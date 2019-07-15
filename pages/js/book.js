@@ -1,62 +1,7 @@
 "use strict";
 
 
-function addToCart(ISBN, qnt) {
 
-    isUserLoggedIn(function(loggato) {
-        if (loggato) {
-            canAddToCart(ISBN, qnt);
-        } else {
-            window.location.replace("myaccount.html");
-        }
-    });
-}
-
-
-
-
-function isUserLoggedIn(callBack) {
-    jQuery.ajax({
-        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
-        type: 'GET',
-        dataType: 'json',
-        credentials: 'same-origin',
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
-        success: () => {
-            console.log('ajax success');
-            callBack(true);
-        },
-        error: () => {
-            callBack(false);
-        }
-    });
-}
-
-function canAddToCart(ISBN, qnt) {
-
-    var s = "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/cart?ISBN="+ISBN+"&quantity="+qnt;
-
-    jQuery.ajax({
-        url: s,
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
-        type: 'POST',
-        dataType: 'json',
-
-        credentials: 'same-origin',
-
-        xhrFields: {
-            withCredentials: true
-        },
-        success: () => {
-
-            console.log('ajax success');
-
-        },
-        error: ()=>{
-
-        }
-    });
-}
 
 // This function takes an array of books as input and returns the HTML necessary to display them.
 function drawBook(data) {
@@ -91,11 +36,11 @@ function drawBook(data) {
 function fetchBook(filter) {
         // Use the filter endpoint
         jQuery.ajax({
-            url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findBooksBy",
+            url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/book/findBooksBy",
             type: 'GET',
             data: filter,
             dataType: 'json',
-            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+            Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 var s = drawBook(data);
@@ -175,11 +120,11 @@ function drawEvents(data) {
 
 function fetchEvent(filter) {
     jQuery.ajax({
-        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/event/findByISBN',
+        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/event/findByISBN',
         type: 'GET',
         data: filter,
         dataType: 'json',
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: (data) => {
             console.log('ajax success');
             var s = drawEvents(data);

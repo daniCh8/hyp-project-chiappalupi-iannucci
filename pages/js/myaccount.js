@@ -13,11 +13,11 @@ $(document).ready(() => {
 
 function isUserLoggedIn(callBack) {
     jQuery.ajax({
-        url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
+        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
         type: 'GET',
         dataType: 'json',
         credentials: 'same-origin',
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: () => {
             console.log('ajax success');
             callBack(true);
@@ -37,8 +37,8 @@ function login(){
         "password": password,
     };
     jQuery.ajax({
-        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/login",
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/login",
+        Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         type: 'POST',
         dataType: 'json',
         data: credential,
@@ -62,8 +62,8 @@ function login(){
 function logout(){
     $("#logoutButton").addClass("disabled");
     jQuery.ajax({
-        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/logout",
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/logout",
+        Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         type: 'POST',
         dataType: 'json',
         xhrFields: {
@@ -97,11 +97,11 @@ function register(){
         "email": email
     };
     jQuery.ajax({
-        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/register",
+        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/register",
         type: 'POST',
         dataType: 'json',
         data: credential,
-        Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+        Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         success: () => {
             $("#registerButton").removeClass("disabled");
             console.log('ajax success');
@@ -121,7 +121,7 @@ function goToCart() {
 
 function fetchAccount() {
     jQuery.ajax({
-        url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/user",
+        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user",
         type: 'GET',
         dataType: 'json',
         credentials: 'same-origin',

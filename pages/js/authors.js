@@ -59,11 +59,11 @@ function fetchAuthors(filter) {
     if (filter) {
         // Use the filter endpoint
         jQuery.ajax({
-            url: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName",
+            url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/author/findByName",
             type: 'GET',
             data: filter,
             dataType: 'json',
-            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+            Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 drawAuthors(data);
@@ -76,10 +76,10 @@ function fetchAuthors(filter) {
     } else {
         // If no filter was specified, let's get them all!
         jQuery.ajax({
-            url: 'http://hyp-2019-chiappalupi-iannucci.herokuapp.com/author',
+            url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/author',
             type: 'GET',
             dataType: 'json',
-            Origin: "http://hyp-2019-chiappalupi-iannucci.herokuapp.com",
+            Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
             success: (data) => {
                 console.log('ajax success');
                 drawAuthors(data);

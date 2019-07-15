@@ -1,0 +1,154 @@
+<html>
+<head><meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+span.cls_002{font-family:Times,serif;font-size:16.0px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+div.cls_002{font-family:Times,serif;font-size:16.0px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+span.cls_003{font-family:Times,serif;font-size:14.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+div.cls_003{font-family:Times,serif;font-size:14.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+span.cls_004{font-family:Times,serif;font-size:11.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+div.cls_004{font-family:Times,serif;font-size:11.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+span.cls_005{font-family:Times,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+div.cls_005{font-family:Times,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+-->
+</style>
+<script type="text/javascript" src="main/wz_jsgraphics.js"></script>
+</head>
+<body>
+<div style="position:absolute;left:50%;margin-left:-297px;top:0px;width:595px;height:841px;border-style:outset;overflow:hidden">
+<div style="position:absolute;left:0px;top:0px">
+<img src="main/background1.jpg" width=595 height=841></div>
+<div style="position:absolute;left:56.64px;top:54.76px" class="cls_002"><span class="cls_002">Documentation of the Backend part</span></div>
+<div style="position:absolute;left:56.64px;top:72.64px" class="cls_003"><span class="cls_003">Deliverable D1</span></div>
+<div style="position:absolute;left:56.64px;top:99.76px" class="cls_003"><span class="cls_003">General group information</span></div>
+<div style="position:absolute;left:56.64px;top:208.48px" class="cls_003"><span class="cls_003">Links to other deliverables</span></div>
+<div style="position:absolute;left:56.64px;top:233.92px" class="cls_004"><span class="cls_004">- Deliverable D0: the web application is accessible at:</span></div>
+<div style="position:absolute;left:56.64px;top:247.36px" class="cls_004"><span class="cls_004">[</span><A HREF="https://hyp-2019-chiappalupi-iannucci.herokuapp.com/">https://hyp-2019-chiappalupi-iannucci.herokuapp.com</A>]</div>
+<div style="position:absolute;left:56.64px;top:268.96px" class="cls_004"><span class="cls_004">- Deliverable D2: the YAML or JSON file containing the specification of the app:</span></div>
+<div style="position:absolute;left:56.64px;top:282.40px" class="cls_004"><span class="cls_004">API can be found at [</span><A HREF="https://hyp-2019-chiappalupi-iannucci.herokuapp.com/spec.yaml">https://hyp-2019-chiappalupi-iannucci.herokuapp.com/spec.yaml</A>]</div>
+<div style="position:absolute;left:56.64px;top:304.00px" class="cls_004"><span class="cls_004">- Deliverable D3: the SwaggerUI page of the same API is available at:</span></div>
+<div style="position:absolute;left:56.64px;top:317.44px" class="cls_004"><span class="cls_004">[</span><A HREF="http://hyp-2019-chiappalupi-iannucci.herokuapp.com/docs/">http://hyp-2019-chiappalupi-iannucci.herokuapp.com/docs</A>]</div>
+<div style="position:absolute;left:56.64px;top:339.16px" class="cls_004"><span class="cls_004">- Deliverable D4: the source code of D0 is available as a zip file at:</span></div>
+<div style="position:absolute;left:56.64px;top:352.48px" class="cls_004"><span class="cls_004">[</span><A HREF="https://hyp-2019-chiappalupi-iannucci.herokuapp.com/app.zip">https://hyp-2019-chiappalupi-iannucci.herokuapp.com/app.zip</A>]</div>
+<div style="position:absolute;left:56.64px;top:374.20px" class="cls_004"><span class="cls_004">- Deliverable D5: the address of the online source control repository is available at:</span></div>
+<div style="position:absolute;left:56.64px;top:387.64px" class="cls_004"><span class="cls_004">[</span><A HREF="https://github.com/danich8/hyp-project-chiappalupi-iannucci">https://github.com/daniCh8/hyp-project-chiappalupi-iannucci</A>]</div>
+<div style="position:absolute;left:56.64px;top:401.20px" class="cls_004"><span class="cls_004">We hereby declare that this is a private repository and, upon request, we will give access to the</span></div>
+<div style="position:absolute;left:56.64px;top:414.76px" class="cls_004"><span class="cls_004">instructors.</span></div>
+<div style="position:absolute;left:56.64px;top:449.56px" class="cls_003"><span class="cls_003">Specification</span></div>
+<div style="position:absolute;left:56.64px;top:474.88px" class="cls_005"><span class="cls_005">Web Architecture</span></div>
+<div style="position:absolute;left:56.64px;top:497.56px" class="cls_004"><span class="cls_004">Describe here, with a diagram, the components of your web application and how they interact. Highlight which</span></div>
+<div style="position:absolute;left:56.64px;top:511.00px" class="cls_004"><span class="cls_004">parts belong to the application layer, data layer or presentation layer. How did you ensure that HTML is not</span></div>
+<div style="position:absolute;left:56.64px;top:524.56px" class="cls_004"><span class="cls_004">rendered server side?</span></div>
+<div style="position:absolute;left:56.64px;top:757.12px" class="cls_004"><span class="cls_004">I took this slide directly from the Professor Zaccaria slides, as it is exactly the way we deployed our</span></div>
+<div style="position:absolute;left:56.64px;top:770.68px" class="cls_004"><span class="cls_004">application. The database is, obviously, the data layer, while the Application server serves as application</span></div>
+</div>
+<div style="position:absolute;left:50%;margin-left:-297px;top:851px;width:595px;height:841px;border-style:outset;overflow:hidden">
+<div style="position:absolute;left:0px;top:0px">
+<img src="main/background2.jpg" width=595 height=841></div>
+<div style="position:absolute;left:56.64px;top:55.12px" class="cls_004"><span class="cls_004">layer. The database is the one managed through Heroku, while the Application Server is the one</span></div>
+<div style="position:absolute;left:56.64px;top:68.56px" class="cls_004"><span class="cls_004">generated from the swaggerUI. In a basic representation:</span></div>
+<div style="position:absolute;left:56.64px;top:288.16px" class="cls_004"><span class="cls_004">Which means that the level are:</span></div>
+<div style="position:absolute;left:56.64px;top:516.40px" class="cls_005"><span class="cls_005">API: REST compliance</span></div>
+<div style="position:absolute;left:56.64px;top:541.12px" class="cls_004"><span class="cls_004">Describe here to what extent did you follow REST principles and what are the reasons for which you might have</span></div>
+<div style="position:absolute;left:56.64px;top:554.68px" class="cls_004"><span class="cls_004">decided to diverge. Note, you must not describe the whole API here, just the design decisions.</span></div>
+<div style="position:absolute;left:56.64px;top:576.28px" class="cls_004"><span class="cls_004">We'll describe our approach to REST principles by targeting their main points, explaining if and why we</span></div>
+<div style="position:absolute;left:56.64px;top:589.60px" class="cls_004"><span class="cls_004">followed those principles.</span></div>
+<div style="position:absolute;left:56.64px;top:611.32px" class="cls_004"><span class="cls_004">- Uniform Interface: this is fundamental to the REST Api design and we did our best to follow this</span></div>
+<div style="position:absolute;left:56.64px;top:624.76px" class="cls_004"><span class="cls_004">principle. Our interface is resource based, the client has enough information to customize or delete the</span></div>
+<div style="position:absolute;left:56.64px;top:638.32px" class="cls_004"><span class="cls_004">resources where he has the permissions just from their r3presentation, the messages are self descriptive,</span></div>
+<div style="position:absolute;left:56.64px;top:651.76px" class="cls_004"><span class="cls_004">and we use HATEOAS (Hypermedia as the Engine of Application State).</span></div>
+<div style="position:absolute;left:56.64px;top:673.36px" class="cls_004"><span class="cls_004">- Client-Server: the client application and server application are totally able to evolve separately without</span></div>
+<div style="position:absolute;left:56.64px;top:686.80px" class="cls_004"><span class="cls_004">any dependency on each other.</span></div>
+<div style="position:absolute;left:56.64px;top:708.40px" class="cls_004"><span class="cls_004">- Stateless: we obviously could not make our application stateless, as session management was</span></div>
+<div style="position:absolute;left:56.64px;top:721.96px" class="cls_004"><span class="cls_004">requested. However, after a user logs in, each request from the client contain all the information</span></div>
+<div style="position:absolute;left:56.64px;top:735.40px" class="cls_004"><span class="cls_004">necessary to service the request, including authentication and authorization details: we used a light</span></div>
+<div style="position:absolute;left:56.64px;top:748.84px" class="cls_004"><span class="cls_004">session management that is not invasive and preserve the REST Api foundamentals.</span></div>
+</div>
+<div style="position:absolute;left:50%;margin-left:-297px;top:1702px;width:595px;height:841px;border-style:outset;overflow:hidden">
+<div style="position:absolute;left:0px;top:0px">
+<img src="main/background3.jpg" width=595 height=841></div>
+<div style="position:absolute;left:56.64px;top:55.12px" class="cls_004"><span class="cls_004">- Layered System: the system is layered, as the server is deployed in a place other than the one where the</span></div>
+<div style="position:absolute;left:56.64px;top:68.56px" class="cls_004"><span class="cls_004">postgres server is. Session information are stored in the server.</span></div>
+<div style="position:absolute;left:56.64px;top:90.28px" class="cls_004"><span class="cls_004">- Code on demand: we are actually always sending the static representations of our resources in the form</span></div>
+<div style="position:absolute;left:56.64px;top:103.72px" class="cls_004"><span class="cls_004">of JSON, so this point is not relevant.</span></div>
+<div style="position:absolute;left:56.64px;top:138.64px" class="cls_005"><span class="cls_005">OpenAPI Resource models</span></div>
+<div style="position:absolute;left:56.64px;top:161.44px" class="cls_004"><span class="cls_004">Describe here synthetically, which models you have introduced for resources.</span></div>
+<div style="position:absolute;left:56.64px;top:183.04px" class="cls_004"><span class="cls_004">We kept everything simple, in order to have a more understendable model: the most part of our resources</span></div>
+<div style="position:absolute;left:56.64px;top:196.48px" class="cls_004"><span class="cls_004">are described with key-value strings. Sometimes, boolean flags were used to give to the resources some</span></div>
+<div style="position:absolute;left:56.64px;top:210.04px" class="cls_004"><span class="cls_004">kind of property. Even dates and urls are saved throught strings. Most of the tables in the database store a</span></div>
+<div style="position:absolute;left:56.64px;top:223.48px" class="cls_004"><span class="cls_004">unique identifier for every row, such as the ISBN for the books or an incrementing ID for the authors.</span></div>
+<div style="position:absolute;left:56.64px;top:244.96px" class="cls_005"><span class="cls_005">Data model</span></div>
+<div style="position:absolute;left:56.64px;top:267.76px" class="cls_004"><span class="cls_004">Describe with an ER diagram the model used in the data layer of your web application. How these maps connects</span></div>
+<div style="position:absolute;left:56.64px;top:281.20px" class="cls_004"><span class="cls_004">to the OpenAPI data model?</span></div>
+<div style="position:absolute;left:56.64px;top:302.68px" class="cls_004"><span class="cls_004">Here is the ER diagram of the model:</span></div>
+<div style="position:absolute;left:56.64px;top:571.24px" class="cls_004"><span class="cls_004">And here is the image of the mapped tables in the data model:</span></div>
+</div>
+<div style="position:absolute;left:50%;margin-left:-297px;top:2553px;width:595px;height:841px;border-style:outset;overflow:hidden">
+<div style="position:absolute;left:0px;top:0px">
+<img src="main/background4.jpg" width=595 height=841></div>
+<div style="position:absolute;left:56.64px;top:54.88px" class="cls_003"><span class="cls_003">Implementation</span></div>
+<div style="position:absolute;left:56.64px;top:80.32px" class="cls_005"><span class="cls_005">Tools used</span></div>
+<div style="position:absolute;left:56.64px;top:103.00px" class="cls_004"><span class="cls_004">Describe here which tools, languages and frameworks did you use for the backend of the application.</span></div>
+<div style="position:absolute;left:56.64px;top:124.48px" class="cls_004"><span class="cls_004">To develop the back end application, we used:</span></div>
+<div style="position:absolute;left:56.64px;top:145.96px" class="cls_004"><span class="cls_004">- nodejs and connectjs;</span></div>
+<div style="position:absolute;left:56.64px;top:167.56px" class="cls_004"><span class="cls_004">- postgreSQL to manage the database;</span></div>
+<div style="position:absolute;left:56.64px;top:189.16px" class="cls_004"><span class="cls_004">- Swagger (OpenAPI) to generate and manage the server and the specification;</span></div>
+<div style="position:absolute;left:56.64px;top:223.84px" class="cls_002"><span class="cls_002">Discussion</span></div>
+<div style="position:absolute;left:56.64px;top:251.80px" class="cls_004"><span class="cls_004">How did you make sure your web application adheres to the provided OpenAPI specification?</span></div>
+<div style="position:absolute;left:56.64px;top:273.40px" class="cls_004"><span class="cls_004">We actually started from the OpenAPI specification to build the project, and during the process of</span></div>
+<div style="position:absolute;left:56.64px;top:286.84px" class="cls_004"><span class="cls_004">building the web application, we changed and manipulated the specification in order to keep it updated</span></div>
+<div style="position:absolute;left:56.64px;top:300.40px" class="cls_004"><span class="cls_004">and coherent with the state of our project. Almost every API operation is used from the front end side,</span></div>
+<div style="position:absolute;left:56.64px;top:313.96px" class="cls_004"><span class="cls_004">and if not, either the operation can be used to add data to the database or to supply data to other</span></div>
+<div style="position:absolute;left:56.64px;top:327.40px" class="cls_004"><span class="cls_004">operations. Moreover, those few operations that aren't used from the front-end side could be used to</span></div>
+<div style="position:absolute;left:56.64px;top:340.84px" class="cls_004"><span class="cls_004">expand the application anytime.</span></div>
+<div style="position:absolute;left:56.64px;top:362.32px" class="cls_004"><span class="cls_004">Why do you think your web application adheres to common practices to partition the web application (static</span></div>
+<div style="position:absolute;left:56.64px;top:375.88px" class="cls_004"><span class="cls_004">assets vs. application data)?</span></div>
+<div style="position:absolute;left:56.64px;top:397.48px" class="cls_004"><span class="cls_004">We think that our web application adheres to common practices to partition the web application because</span></div>
+<div style="position:absolute;left:56.64px;top:410.92px" class="cls_004"><span class="cls_004">we effectively separated the static resources, such as html, css and js files putting them on the server,</span></div>
+<div style="position:absolute;left:56.64px;top:424.48px" class="cls_004"><span class="cls_004">from the data, that are stored in a remote database and that are reached through specific calls. As we</span></div>
+<div style="position:absolute;left:56.64px;top:438.04px" class="cls_004"><span class="cls_004">learnt, to find the right balance between Static Content and Dynamic Content is a constant debate, but we</span></div>
+<div style="position:absolute;left:56.64px;top:451.36px" class="cls_004"><span class="cls_004">are confident that our solution is reliable, stable and scalable.</span></div>
+<div style="position:absolute;left:56.64px;top:472.96px" class="cls_004"><span class="cls_004">Describe synthetically why and how did you manage session state, what are the state change triggering actions</span></div>
+<div style="position:absolute;left:56.64px;top:486.40px" class="cls_004"><span class="cls_004">(e.g., POST to login etc..).</span></div>
+<div style="position:absolute;left:56.64px;top:508.00px" class="cls_004"><span class="cls_004">For the session state, we only used cookie-session and cookie-parser, as recommended during the</span></div>
+<div style="position:absolute;left:56.64px;top:521.56px" class="cls_004"><span class="cls_004">lectures. Basically, everytime that a new agent connects to the site, a new session and session ID is</span></div>
+<div style="position:absolute;left:56.64px;top:535.00px" class="cls_004"><span class="cls_004">generated for him. As soon as the client registers (through /user/register POST) or logins (/user/login</span></div>
+<div style="position:absolute;left:56.64px;top:548.56px" class="cls_004"><span class="cls_004">POST) successfully, session.loggedin is setted to true and a couple session.id-username is created in the</span></div>
+<div style="position:absolute;left:56.64px;top:562.12px" class="cls_004"><span class="cls_004">database (or updated, if another one was already there). Later on, every time that an action that needs</span></div>
+<div style="position:absolute;left:56.64px;top:575.56px" class="cls_004"><span class="cls_004">the authentication is performed from the client, the server checks if the session.loggedin is true. If so, he</span></div>
+<div style="position:absolute;left:56.64px;top:589.12px" class="cls_004"><span class="cls_004">looks in the database for the username corresponding to the session id, and perform any action related to</span></div>
+<div style="position:absolute;left:56.64px;top:602.56px" class="cls_004"><span class="cls_004">him.</span></div>
+<div style="position:absolute;left:56.64px;top:624.04px" class="cls_004"><span class="cls_004">Which technology did you use (relational or a no-SQL database) for managing the data model?</span></div>
+<div style="position:absolute;left:56.64px;top:645.52px" class="cls_004"><span class="cls_004">We used PostgreSQL for managing the data model, which refers to a relational technology.</span></div>
+<div style="position:absolute;left:56.64px;top:680.44px" class="cls_003"><span class="cls_003">Task assignment</span></div>
+<div style="position:absolute;left:56.64px;top:705.76px" class="cls_004"><span class="cls_004">The work has been fairly subdivided between us:</span></div>
+<div style="position:absolute;left:56.64px;top:727.24px" class="cls_004"><span class="cls_004">- Daniele Chiappalupi worked on front end (25% of the time) and on the back end (75% of the time).</span></div>
+<div style="position:absolute;left:56.64px;top:748.84px" class="cls_004"><span class="cls_004">- Elena Iannucci worked on front end (75% of the time) and on the back end (25% of the time).</span></div>
+</div>
+<div style="position:absolute;left:50%;margin-left:-297px;top:3404px;width:595px;height:841px;border-style:outset;overflow:hidden">
+<div style="position:absolute;left:0px;top:0px">
+<img src="main/background5.jpg" width=595 height=841></div>
+<div style="position:absolute;left:56.64px;top:55.12px" class="cls_004"><span class="cls_004">Also the documentation of both the parts has been written equally.</span></div>
+<div style="position:absolute;left:56.64px;top:90.04px" class="cls_003"><span class="cls_003">Analysis of existing API</span></div>
+<div style="position:absolute;left:56.64px;top:115.36px" class="cls_004"><span class="cls_004">Describe here if you have found relevant APIs that have inspired the OpenAPI specification and why (at least</span></div>
+<div style="position:absolute;left:56.64px;top:128.80px" class="cls_004"><span class="cls_004">two).</span></div>
+<div style="position:absolute;left:56.64px;top:150.40px" class="cls_004"><span class="cls_004">As this was the first API specification that we have ever wrote, we have attended a lot of different</span></div>
+<div style="position:absolute;left:56.64px;top:163.84px" class="cls_004"><span class="cls_004">sources. However, the ones that were most useful were the PetStore API sample of Swagger (which we</span></div>
+<div style="position:absolute;left:56.64px;top:177.40px" class="cls_004"><span class="cls_004">used as a sort of skeleton) and the one generated in the class from Professor Zaccaria. As those have</span></div>
+<div style="position:absolute;left:56.64px;top:190.96px" class="cls_004"><span class="cls_004">been both useful, we also took inspiration from several code snippet and online question/answers to</span></div>
+<div style="position:absolute;left:56.64px;top:204.52px" class="cls_004"><span class="cls_004">develop our application. Sites such as StackOverflow have been extremely useful.</span></div>
+<div style="position:absolute;left:56.64px;top:239.20px" class="cls_003"><span class="cls_003">Learning outcome</span></div>
+<div style="position:absolute;left:56.64px;top:264.52px" class="cls_004"><span class="cls_004">What was the most important thing all the members have learned while developing this part of the project, what</span></div>
+<div style="position:absolute;left:56.64px;top:277.96px" class="cls_004"><span class="cls_004">questions remained unanswered, how you will use what you've learned in your everyday life?</span></div>
+<div style="position:absolute;left:56.64px;top:299.56px" class="cls_004"><span class="cls_004">- Daniele Chiappalupi has become highly confident with javascript: he never had experienced it before</span></div>
+<div style="position:absolute;left:56.64px;top:313.12px" class="cls_004"><span class="cls_004">and he is satisfied to have broaden his skills. Moreover, he learnt to write in HTML and CSS, and has</span></div>
+<div style="position:absolute;left:56.64px;top:326.68px" class="cls_004"><span class="cls_004">improved his version commit system knowledge. Overall, he is happy for what he has learned: developing</span></div>
+<div style="position:absolute;left:56.64px;top:340.00px" class="cls_004"><span class="cls_004">and managing a web database is a skill that will help him in his future.</span></div>
+<div style="position:absolute;left:56.64px;top:361.72px" class="cls_004"><span class="cls_004">- Elena Iannucci has mastered the skills of front end developing and learned the basic functioning of</span></div>
+<div style="position:absolute;left:56.64px;top:375.16px" class="cls_004"><span class="cls_004">database management from js. She is truly happy about what she has learnt: design, web and front end</span></div>
+<div style="position:absolute;left:56.64px;top:388.72px" class="cls_004"><span class="cls_004">developing has always been a passion of her, and she is utterly satisfied that she had the possibility to</span></div>
+<div style="position:absolute;left:56.64px;top:402.16px" class="cls_004"><span class="cls_004">learn them in a University course.</span></div>
+</div>
+
+</body>
+</html>

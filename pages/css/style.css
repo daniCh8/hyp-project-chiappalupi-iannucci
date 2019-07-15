@@ -20,7 +20,6 @@ p{
     margin: 0px;
 }
 
-
 .bookicon{
     max-width: 30px!important;
     max-height: 50px!important;
@@ -32,9 +31,7 @@ p{
 
 
 ::before,
-::after {
-    content: "";
-}
+::after
 
 
 
@@ -59,7 +56,7 @@ a {
 
 
 
-/* basic grid, only for this demo */
+/* basic grid */
 
 .align {
     clear: both;
@@ -568,6 +565,7 @@ figure{
     width: 300px;
     margin: 20px;
     padding: 10px;
+    z-index: -1;
 }
 
 .bookcontainer2{
@@ -582,6 +580,7 @@ figure{
     width: 300px;
     margin: 20px;
     padding: 10px;
+    z-index: -1;
 }
 
 .bookcontainer3{
@@ -596,6 +595,7 @@ figure{
     width: 300px;
     margin: 20px;
     padding: 10px;
+    z-index: -1;
 }
 
 
@@ -1470,10 +1470,18 @@ figure.effect-winston:hover figcaption::before {
 
 
 
+.a-text{
+    display: flex;
+
+}
 
 
 
-
+.message {
+    position: fixed!important;
+    top: 45%!important;
+    width: -webkit-fill-available
+}
 
 
 
