@@ -59,6 +59,10 @@ exports.userLogin = function(req, username, password) {
         if (response[0].username != username) return false;
         var check1 = CryptoJS.AES.decrypt(password, "Secret Passphrase");
         var check2 = CryptoJS.AES.decrypt(response[0].password, "Secret Passphrase");
+        console.log(check1.toString());
+        console.log(check2.toString());
+        console.log(check1.toString(CryptoJS.enc.Utf8));
+        console.log(check2.toString(CryptoJS.enc.Utf8));
         if (check1.toString() != check2.toString()) return false;
         var sessionObj = {
             "username": username,
