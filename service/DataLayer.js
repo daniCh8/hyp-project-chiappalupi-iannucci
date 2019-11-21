@@ -10,7 +10,7 @@ let { orderHistoryDbSetup } = require("./CartService");
 
 let sqlDb = sqlDbFactory({
   client: 'pg',
-  connection: process.env.DATABASE_URL || 'postgres://bqhchwqizhttah:3f305ede33477f67e825e9333d32580d8678ac9f55e67c7efde91104f25a3e93@ec2-79-125-4-72.eu-west-1.compute.amazonaws.com:5432/d6cfugvechp74j?ssl=true',  
+  connection: process.env.DATABASE_URL || 'postgres://wydrsortvwnkgf:1d6381fc83ba0187540eb1b41a57b3935e5489380b7609a062ac63a91ad95007@ec2-54-246-98-119.eu-west-1.compute.amazonaws.com:5432/d9nd5vbtop8gsl?ssl=true',  
   ssl: true,
 });
 
