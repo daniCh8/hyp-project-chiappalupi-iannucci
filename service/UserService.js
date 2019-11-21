@@ -1,6 +1,8 @@
 "use strict";
 
 let sqlDb;
+var CryptoJS = require("crypto-js");
+var AES = require("crypto-js/aes");
 
 exports.userDbSetup = function(database) {
     sqlDb = database;
@@ -55,7 +57,9 @@ exports.userLogin = function(req, username, password) {
     return sqlDb('user').where('username', username).then(function(response) {
         if (response.length == 0) return false;
         if (response[0].username != username) return false;
-        if (response[0].password != password) return false;
+        var check1 = CryptoJS.AES.decrypt(password, "Secret Passphrase");
+        var check2 = CryptoJS.AES.decrypt(response[0].password, "Secret Passphrase");
+        if (check1.toString() != check2.toString()) return false;
         var sessionObj = {
             "username": username,
             "id": req.session.id
