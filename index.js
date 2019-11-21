@@ -16,6 +16,8 @@ var serveStatic = require('serve-static');
 let cookieParser = require("cookie-parser");
 let cookieSession = require("cookie-session");
 let uuidv1 = require('uuid/v1');
+var CryptoJS = require("crypto-js");
+var AES = require("crypto-js/aes");
 
 app.use(cookieParser());
 app.use(cookieSession({
@@ -83,6 +85,11 @@ swaggerTools.initializeMiddleware(swaggerDoc, function(middleware) {
         http.createServer(app).listen(serverPort, function() {
             console.log('Your server is listening on port %d (http://localhost:%d)', serverPort, serverPort);
             console.log('Swagger-ui is available on http://localhost:%d/docs', serverPort);
+            var encrypted = CryptoJS.AES.encrypt("Message", "Secret Passphrase");
+            var decrypted = CryptoJS.AES.decrypt(encrypted, "Secret Passphrase");
+            console.log(encrypted.toString());
+            console.log(decrypted.toString());
+            console.log(decrypted.toString(CryptoJS.enc.Utf8));
         });
     });
 

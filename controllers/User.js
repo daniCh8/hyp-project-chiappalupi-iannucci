@@ -3,6 +3,8 @@
 var utils = require('../utils/writer.js');
 var User = require('../service/UserService');
 let uuidv1 = require('uuid/v1');
+var CryptoJS = require("crypto-js");
+var AES = require("crypto-js/aes");
 
 function isEmpty(obj) {
     for (var prop in obj) {
@@ -52,7 +54,8 @@ module.exports.userLogin = function userLogin(req, res, next) {
         return;
     }
     var username = req.swagger.params['username'].value;
-    var password = req.swagger.params['password'].value;
+    var tmp = req.swagger.params['password'].value;
+    var password = CryptoJS.AES.encrypt(tmp, "Secret Passphrase").toString();
     if (username == "" || password == "") {
         var json = {
             "success": false,
@@ -97,7 +100,8 @@ module.exports.userRegister = function userRegister(req, res, next) {
     var firstName = req.swagger.params["firstName"].value;
     var lastName = req.swagger.params["lastName"].value;
     var email = req.swagger.params["email"].value;
-    var password = req.swagger.params["password"].value;
+    var tmp = req.swagger.params["password"].value;
+    var password = CryptoJS.AES.encrypt(tmp, "Secret Passphrase").toString();
     var body = {
         "username": username,
         "firstName": firstName,
