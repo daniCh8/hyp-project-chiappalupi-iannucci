@@ -32,7 +32,6 @@ app.use(function(req, res, next) {
 
     if (req.session.id === undefined || !req.session.loggedin) {
         req.session.id = uuidv1();
-        console.log(req.session.id)
     }
 
     req.session.save()

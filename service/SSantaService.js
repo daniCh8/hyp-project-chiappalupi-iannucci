@@ -54,7 +54,7 @@ exports.ssantaDbSetup = function(database) {
                 var toInsert = new Array();
                 for(var fromParam of ssanta_map) {
                     var encryptedFromParam = CryptoJS.AES.encrypt(fromParam[0].replace(/\s/g, ""), "Secret Passphrase").toString();
-                    var utf8FromParam = CryptoJS.AES.decrypt(encryptedFromParam).toString();
+                    var utf8FromParam = CryptoJS.AES.decrypt(encryptedFromParam, "Secret Passphrase").toString();
                     var obj = {
                         from: utf8FromParam,
                         to: CryptoJS.AES.encrypt(fromParam[1], "Secret Passphrase").toString()
@@ -71,7 +71,7 @@ exports.ssantaUserLogin = function(req, username, password) {
     return sqlDb('user').where('username', username).then(function(response) {
         if (response.length == 0) return false;
         if (response[0].username != username) return false;
-        if(!players_array.includes(response[0].firstName.concat(response[0].lastName))) return false;
+        if(!players_array.includes(response[0].firstName.concat(response[0].lastName))) return -8;
         var check1 = CryptoJS.AES.decrypt(password, "Secret Passphrase");
         var check2 = CryptoJS.AES.decrypt(response[0].password, "Secret Passphrase");
         if (check1.toString() != check2.toString()) return false;
@@ -97,10 +97,10 @@ exports.checkNameAvailability = function(paramfirstName, paramlastName) {
 
 exports.getSSantaTarget = function(name) {
     var encryptedName = CryptoJS.AES.encrypt(name, "Secret Passphrase").toString();
-    var utf8Name = CryptoJS.AES.decrypt(encryptedName).toString();
+    var utf8Name = CryptoJS.AES.decrypt(encryptedName, "Secret Passphrase").toString();
     return sqlDb('ssanta').where('from', utf8Name).then(function(response) {
         var target = response[0].to;
-        var decryptedTarget = CryptoJS.AES.decrypt(target).toString(CryptoJS.enc.Utf8);
+        var decryptedTarget = CryptoJS.AES.decrypt(target, "Secret Passphrase").toString(CryptoJS.enc.Utf8);
         return decryptedTarget;
     })
 }

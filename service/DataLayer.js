@@ -7,7 +7,7 @@ let { authorDbSetup } = require("./AuthorService");
 let { cartDbSetup } = require("./CartService");
 let { sessionDbSetup } = require("./UserService");
 let { orderHistoryDbSetup } = require("./CartService");
-let { ssantaDbSetup } = require("./SecretsantaService");
+let { ssantaDbSetup } = require("./SSantaService");
 
 let sqlDb = sqlDbFactory({
   client: 'pg',
