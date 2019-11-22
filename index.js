@@ -29,13 +29,6 @@ app.use(cookieSession({
 }));
 
 app.use(function(req, res, next) {
-    console.log("")
-    console.log("Are you logged in?")
-    console.log(req.session.loggedin)
-    console.log("Is this a new session?")
-    console.log(req.session.isNew)
-    console.log("ID?")
-    console.log(req.session.id)
 
     if (req.session.id === undefined || !req.session.loggedin) {
         req.session.id = uuidv1();
@@ -85,11 +78,6 @@ swaggerTools.initializeMiddleware(swaggerDoc, function(middleware) {
         http.createServer(app).listen(serverPort, function() {
             console.log('Your server is listening on port %d (http://localhost:%d)', serverPort, serverPort);
             console.log('Swagger-ui is available on http://localhost:%d/docs', serverPort);
-            var encrypted = CryptoJS.AES.encrypt("ciaomondo", "Secret Passphrase");
-            var decrypted = CryptoJS.AES.decrypt(encrypted, "Secret Passphrase");
-            console.log(encrypted.toString());
-            console.log(decrypted.toString());
-            console.log(decrypted.toString(CryptoJS.enc.Utf8));
         });
     });
 

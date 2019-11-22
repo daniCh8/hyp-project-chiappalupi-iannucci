@@ -1,10 +1,9 @@
 'use strict';
 
 var utils = require('../utils/writer.js');
-var User = require('../service/UserService');
-let uuidv1 = require('uuid/v1');
-var CryptoJS = require("crypto-js");
-var AES = require("crypto-js/aes");
+var User = require('../service/UserService.js');
+var SSanta = require('../service/SecretsantaService.js');
+var players_array = ["DanieleChiappalupi", "ElenaIannucci", "AndreaGerminario", "TommasoBianchi", "AndreiKolar", "JacopoMargarini", "EmanueleEsposito", "FrancescoCordiano", "EnricoToniato", "DanieleBuccheri"];
 
 function isEmpty(obj) {
     for (var prop in obj) {
@@ -15,7 +14,7 @@ function isEmpty(obj) {
     return true;
 }
 
-module.exports.getUser = function getUser(req, res, next) {
+module.exports.getSSantaUser = function getSSantaUser(req, res, next) {
     if (!req.session.loggedin) {
         var json = {
             "success": false,
@@ -36,7 +35,16 @@ module.exports.getUser = function getUser(req, res, next) {
             return;
         } else return User.getUser(id).then(function(response) {
                 delete response[0].password
-                utils.writeJson(res, response, 200);
+                var name_lastname = response[0].firstName.concat(response[0].lastName);
+                if(!players_array.includes(name_lastname)) {
+                    var json = {
+                        "success": false,
+                        "errorMessage": "You are not logged in a player's account."
+                    }
+                    req.session.loggedin = false
+                    utils.writeJson(res, json, 401)
+                    return;
+                } else utils.writeJson(res, response, 200);
             })
             .catch(function(response) {
                 utils.writeJson(res, response);
@@ -44,7 +52,7 @@ module.exports.getUser = function getUser(req, res, next) {
     })
 };
 
-module.exports.userLogin = function userLogin(req, res, next) {
+module.exports.SSantaLogin = function SSantaLogin(req, res, next) {
     if (req.swagger.params["username"] == undefined || req.swagger.params["password"] == undefined) {
         var json = {
             "success": false,
@@ -64,31 +72,35 @@ module.exports.userLogin = function userLogin(req, res, next) {
         utils.writeJson(res, json, 400)
         return;
     }
-    User.userLogin(req, username, password)
+    SSanta.ssantaUserLogin(req, username, password)
         .then(function(response) {
-            var responseCode = 200
             if (response == true) {
                 req.session.loggedin = true
+                var responseCode = 200
+                var json = {
+                    "success": true
+                }
+                utils.writeJson(res, json, responseCode);
+                return;
             }
-            var json = {
-                "success": true
-            }
-            if (response != true) {
-                json = {
+            else {
+                var json = {
                     "success": false,
                     "errorMessage": "Wrong username or password."
                 }
-                responseCode = 404
+                var responseCode = 404
+                utils.writeJson(res, json, responseCode);
+                return;
             }
-            utils.writeJson(res, json, responseCode);
         })
         .catch(function(response) {
             utils.writeJson(res, response, responseCode);
         });
 };
 
-module.exports.userRegister = function userRegister(req, res, next) {
-    if (req.swagger.params["username"] == undefined || req.swagger.params["firstName"] == undefined || req.swagger.params["lastName"] == undefined || req.swagger.params["email"] == undefined || req.swagger.params["password"] == undefined) {
+module.exports.SSantaRegister = function SSantaRegister(req, res, next) {
+    /*adds an entry in the db*/
+    if (req.swagger.params["username"] == undefined || req.swagger.params["firstName"] == undefined || req.swagger.params["lastName"] == undefined || req.swagger.params["password"] == undefined) {
         var json = {
             "success": false,
             "errorMessage": "Please, compile all the parameters of the form."
@@ -96,10 +108,19 @@ module.exports.userRegister = function userRegister(req, res, next) {
         utils.writeJson(res, json, 400)
         return;
     }
-    var username = req.swagger.params["username"].value;
     var firstName = req.swagger.params["firstName"].value;
     var lastName = req.swagger.params["lastName"].value;
-    var email = req.swagger.params["email"].value;
+    var totalName = firstName.concat(lastName);
+    if(!players_array.includes(totalName)) {
+        var json = {
+            "success": false,
+            "errorMessage": "You have to be a Secret Santa player to register. Please, check your first name and last name."
+        }
+        utils.writeJson(res, json, 400);
+        return;
+    }
+    var username = req.swagger.params["username"].value;
+    var email = "Secret Santa email";
     var tmp = req.swagger.params["password"].value;
     var password = CryptoJS.AES.encrypt(tmp, "Secret Passphrase").toString();
     var body = {
@@ -125,13 +146,13 @@ module.exports.userRegister = function userRegister(req, res, next) {
             }
             utils.writeJson(res, json, 409);
         } else {
-            User.checkNameAvailability(body.firstName, body.lastName).then(function(response) {
-                if(!isEmpty(response)) {
+            SSanta.checkNameAvailability(body.firstName, body.lastName).then(function(response) {
+                if (!isEmpty(response)) {
                     var json = {
                         "success": false,
-                        "errorMessage": "This person already exists"
+                        "errorMessage": "This secret santa player already exists!"
                     }
-                    utils.writeJson(res, json, 409)
+                    utils.writeJson(res, json, 409);
                 } else {
                     User.userRegister(body).then(function(response) {
                         User.userLogin(req, username, password).then(function(response) {
@@ -143,16 +164,59 @@ module.exports.userRegister = function userRegister(req, res, next) {
                         }).catch(function(response) {
                             utils.writeJson(res, response);
                         });
-                    })
+                })
                 }
             })
         }
     })
 };
 
-module.exports.logoutUser = function logoutUser(req, res, next) {
+module.exports.getSSantaTarget = function getSSantaTarget(req, res, next) {
+    if (!req.session.loggedin) {
+        var json = {
+            "success": false,
+            "errorMessage": "You are not logged in"
+        }
+        utils.writeJson(res, json, 401)
+        return
+    }
+    var id = req.session.id
+    User.checkUserSession(id).then(function(response) {
+        if (response.length == 0 || response == undefined) {
+            var json = {
+                "success": false,
+                "errorMessage": "You are not logged in"
+            }
+            req.session.loggedin = false
+            utils.writeJson(res, json, 401)
+            return;
+        } else return User.getUser(id).then(function(response) {
+                delete response[0].password
+                var name_lastname = response[0].firstName.concat(response[0].lastName);
+                if(!players_array.includes(name_lastname)) {
+                    var json = {
+                        "success": false,
+                        "errorMessage": "You are not logged in a player's account."
+                    }
+                    req.session.loggedin = false
+                    utils.writeJson(res, json, 401)
+                    return;
+                } else return SSanta.getSSantaTarget(name_lastname).then(function(response) {
+                    var json = {
+                        "success": true,
+                        "target": response.toString()
+                    }
+                    utils.writeJson(res, json, 200);
+                })
+            })
+            .catch(function(response) {
+                utils.writeJson(res, response);
+            });
+    })
+};
+
+module.exports.logoutSSantaUser = function logoutSSantaUser(req, res, next) {
     var json
-    var previousID = req.session.id
     if (req.session.loggedin == true) {
         req.session.loggedin = false;
         req.session.id = uuidv1()
