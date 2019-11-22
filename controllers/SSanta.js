@@ -2,7 +2,10 @@
 
 var utils = require('../utils/writer.js');
 var User = require('../service/UserService.js');
-var SSanta = require('../service/SecretsantaService.js');
+let uuidv1 = require('uuid/v1');
+var CryptoJS = require("crypto-js");
+var AES = require("crypto-js/aes");
+var SSanta = require('../service/SSantaService.js');
 var players_array = ["DanieleChiappalupi", "ElenaIannucci", "AndreaGerminario", "TommasoBianchi", "AndreiKolar", "JacopoMargarini", "EmanueleEsposito", "FrancescoCordiano", "EnricoToniato", "DanieleBuccheri"];
 
 function isEmpty(obj) {
@@ -84,9 +87,18 @@ module.exports.SSantaLogin = function SSantaLogin(req, res, next) {
                 return;
             }
             else {
-                var json = {
-                    "success": false,
-                    "errorMessage": "Wrong username or password."
+                var json;
+                if(response == -8) {
+                    json = {
+                        "success": false,
+                        "errorMessage": "This account does not participate to the game."
+                    }
+                }
+                else {
+                    var json = {
+                        "success": false,
+                        "errorMessage": "Wrong username or password."
+                    }
                 }
                 var responseCode = 404
                 utils.writeJson(res, json, responseCode);
@@ -99,7 +111,6 @@ module.exports.SSantaLogin = function SSantaLogin(req, res, next) {
 };
 
 module.exports.SSantaRegister = function SSantaRegister(req, res, next) {
-    /*adds an entry in the db*/
     if (req.swagger.params["username"] == undefined || req.swagger.params["firstName"] == undefined || req.swagger.params["lastName"] == undefined || req.swagger.params["password"] == undefined) {
         var json = {
             "success": false,
@@ -178,7 +189,7 @@ module.exports.getSSantaTarget = function getSSantaTarget(req, res, next) {
             "errorMessage": "You are not logged in"
         }
         utils.writeJson(res, json, 401)
-        return
+        return;
     }
     var id = req.session.id
     User.checkUserSession(id).then(function(response) {
