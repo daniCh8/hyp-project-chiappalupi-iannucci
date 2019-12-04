@@ -24,7 +24,7 @@ function shuffle(array) {
     return array;
   }
 
-exports.ssantaDbSetup = function(database) {
+  exports.ssantaDbSetup = function(database) {
     sqlDb = database;
     console.log("Checking if ssanta table exists");
     return database.schema.hasTable("ssanta").then(exists => {
@@ -66,6 +66,21 @@ exports.ssantaDbSetup = function(database) {
         }
     });
 };
+
+exports.ssantapicDbSetup = function(database) {
+    sqlDb = database;
+    console.log("Checking if ssantapic table exists");
+    return database.schema.hasTable("ssantapic").then(exists => {
+      if (!exists) {
+        console.log("The table SSANTAPIC doesn't exists: creating it.");
+        return database.schema.createTable("ssantapic", table => {
+          table.increments("ID");
+          table.text("person");
+          table.text("pictureURL");
+        });
+      }
+    });
+  };
 
 exports.ssantaUserLogin = function(req, username, password) {
     return sqlDb('user').where('username', username).then(function(response) {
