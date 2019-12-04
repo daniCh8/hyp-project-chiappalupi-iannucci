@@ -50,8 +50,8 @@ function fetchFriend() {
 function drawFriend(data) {
     var s = '';
     s = s + '<div class="login-html fadeInDown">\n' +
-        '            <p class="title-fav-best-white" > Hi ' + data.myself + ', <br>Here you may find some information about your account.</p>\n'  +
-        '<button style=" width:-webkit-fill-available; "onclick="logout();"> <div class="container" style="display: flex; flex-direction: column; "> <img src="svg/mbri-logout.svg" alt="">  <p> Logout </p> </div> </button>' +
+        '            <p class="title-fav-best-white" > Hi ' + data.myself + ', <br>Here is your target.</p>\n'  +
+        '<p class="title-fav-best-white" > ' + data.target + '</p>\n'   +
         '</div>';
     $("#friend").html(s);
 }
