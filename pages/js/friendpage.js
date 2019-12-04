@@ -50,10 +50,7 @@ function fetchFriend() {
 function drawFriend(data) {
     var s = '';
     s = s + '<div class="login-html fadeInDown">\n' +
-        '            <p class="title-fav-best-white" > Hi ' + data[0].firstName + ', <br>Here you may find some information about your account.</p>\n' +
-        '            <p class="paragraph-fav-best-white"> <strong>Name:  </strong>' + data[0].firstName + ' ' + data[0].lastName + '</p>\n' +
-        '            <p class="paragraph-fav-best-white">    <strong>Username:  </strong>' + data[0].username + '</p>\n' +
-        '            <p class="paragraph-fav-best-white">    <strong>E-mail:  </strong>' + data[0].email + '</p>\n' +
+        '            <p class="title-fav-best-white" > Hi ' + data.myself + ', <br>Here you may find some information about your account.</p>\n'  +
         '        <button  onclick="goToCart();" style=" width:-webkit-fill-available;"> <div class="container" style="display: flex; flex-direction: column; "> <img src="svg/mbri-cart-add.svg" alt="">  <p> Take a look at your cart! </p> </div> </button>' +
         '<button style=" width:-webkit-fill-available; "onclick="logout();"> <div class="container" style="display: flex; flex-direction: column; "> <img src="svg/mbri-logout.svg" alt="">  <p> Logout </p> </div> </button>' +
         '</div>';
