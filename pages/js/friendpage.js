@@ -51,7 +51,7 @@ function drawFriend(data) {
     var s = '';
     s = s + '<div class="login-html fadeInDown">\n' +
         '            <p class="title-fav-best-white" > Hi ' + data.myself + ', <br>Here is your target.</p>\n'  +
-        '<p class="title-fav-best-white" > ' + data.targetname + '</p>\n'   +
+        '<p class="title-fav-best-white" > ' + data.targetName + '</p>\n'   +
         '</div>';
     $("#friend").html(s);
 }
