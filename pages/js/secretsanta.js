@@ -1,3 +1,8 @@
+
+$(document).ready(() => {
+    $("#ssbutton").click(getFriend());
+});
+
 function getFriend() {
     // Controllo se l'utente è loggato
     isUserLoggedIn(function(loggato) {
@@ -27,6 +32,3 @@ function isUserLoggedIn(callBack) {
     });
 }
 
-$(document).ready(() => {
-    $("#ssbutton").click(getFriend());
-});
