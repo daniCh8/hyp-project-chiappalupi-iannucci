@@ -67,21 +67,6 @@ function shuffle(array) {
     });
 };
 
-exports.ssantapicDbSetup = function(database) {
-    sqlDb = database;
-    console.log("Checking if ssantapic table exists");
-    return database.schema.hasTable("ssantapic").then(exists => {
-      if (!exists) {
-        console.log("The table SSANTAPIC doesn't exists: creating it.");
-        return database.schema.createTable("ssantapic", table => {
-          table.increments("ID");
-          table.text("person");
-          table.text("pictureURL");
-        });
-      }
-    });
-  };
-
 exports.ssantaUserLogin = function(req, username, password) {
     return sqlDb('user').where('username', username).then(function(response) {
         if (response.length == 0) return false;
@@ -116,6 +101,43 @@ exports.getSSantaTarget = function(name) {
     return sqlDb('ssanta').where('from', utf8Name).then(function(response) {
         var target = response[0].to;
         var decryptedTarget = CryptoJS.AES.decrypt(target, "Secret Passphrase").toString(CryptoJS.enc.Utf8);
-        return decryptedTarget;
+        var pictureURL = "not set";
+        switch (decryptedTarget) {
+            case 'Francesco Cordiano':
+                pictureURL = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssantapics/689Kaq33MLGaJ6FkZLu2AeRR.png";
+                break;
+            case 'Enrico Toniato':
+                pictureURL = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssantapics/6NNZba39Y4aaaYtqYrA=.png";
+                break;
+            case 'Elena Iannucci':
+                pictureURL = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssantapics/6NFOaq+yCrObaZdodbY=.png";
+                break;
+            case 'Daniele Chiappalupi':
+                pictureURL = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssantapics/6dxFbav+JvK2b4tqZq++DP9Owg==.png";
+                break;
+            case 'Andrei Kolar':
+                pictureURL = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssantapics/7NNPdqv7Y5maa4N5.png";
+                break;
+            case 'Jacopo Margarini':
+                pictureURL = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssantapics/59xIa779Y5+UdYVqZLaxCQ==.png";
+                break;
+            case 'Emanuele Esposito':
+                pictureURL = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssantapics/6NBKarv3L7fVQpF7eay2FOU=.png";
+                break;
+            case 'Daniele Buccheri':
+                pictureURL = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssantapics/6dxFbav+JvK3coFofrqtCQ==.png";
+                break;
+            case 'Andrea Germinario':
+                pictureURL = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssantapics/7NNPdqvzY5WQdY9ieL6tCeU=.png";
+                break;
+            case 'Tommaso Bianchi':
+                pictureURL = "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssantapics/+dJGaahLPK3boNldbe2.png";
+                break;
+        }
+        var resp = {
+            "target": decryptedTarget,
+            "pictureURL": pictureURL
+        }
+        return resp;
     })
 }
