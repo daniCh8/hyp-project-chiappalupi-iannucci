@@ -10,10 +10,6 @@ function getFriend() {
 
 }
 
-$(document).ready(() => {
-    $("#searchbutton").click(getFriend());
-});
-
 function isUserLoggedIn(callBack) {
     jQuery.ajax({
         url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssanta/target',
@@ -30,3 +26,7 @@ function isUserLoggedIn(callBack) {
         }
     });
 }
+
+$(document).ready(() => {
+    $("#searchbutton").click(getFriend());
+});
