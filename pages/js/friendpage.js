@@ -52,6 +52,7 @@ function drawFriend(data) {
     s = s + '<div class="login-html fadeInDown">\n' +
         '            <p class="title-fav-best-white" > Hi ' + data.myself + ', <br>Here is your target.</p>\n'  +
         '<p class="title-fav-best-white" > ' + data.targetName + '</p>\n'   +
+        '<img src="' + data.targetPicURL + '"></img>\n'   +
         '</div>';
     $("#friend").html(s);
 }
