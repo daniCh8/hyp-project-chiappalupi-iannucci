@@ -204,6 +204,8 @@ module.exports.getSSantaTarget = function getSSantaTarget(req, res, next) {
         } else return User.getUser(id).then(function(response) {
                 delete response[0].password
                 var name_lastname = response[0].firstName.concat(response[0].lastName);
+                var myself = response[0].firstName.concat(" ");
+                myself = myself.concat(response[0].lastName);
                 if(!players_array.includes(name_lastname)) {
                     var json = {
                         "success": false,
@@ -215,7 +217,9 @@ module.exports.getSSantaTarget = function getSSantaTarget(req, res, next) {
                 } else return SSanta.getSSantaTarget(name_lastname).then(function(response) {
                     var json = {
                         "success": true,
-                        "target": response.toString()
+                        "targetName": response.target,
+                        "targetPicURL": response.pictureURL,
+                        "myself": myself,
                     }
                     utils.writeJson(res, json, 200);
                 })
