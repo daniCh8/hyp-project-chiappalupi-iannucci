@@ -8,6 +8,7 @@ let { cartDbSetup } = require("./CartService");
 let { sessionDbSetup } = require("./UserService");
 let { orderHistoryDbSetup } = require("./CartService");
 let { ssantaDbSetup } = require("./SSantaService");
+let { ssantapicDbSetup } = require("./SSantaService");
 
 let sqlDb = sqlDbFactory({
   client: 'pg',
@@ -17,7 +18,7 @@ let sqlDb = sqlDbFactory({
 
 function setupDataLayer() {
   console.log("Setting up data layer");
-  return bookDbSetup(sqlDb) && writtenByDbSetup(sqlDb) && eventDbSetup(sqlDb) && userDbSetup(sqlDb) && authorDbSetup(sqlDb) && cartDbSetup(sqlDb) && sessionDbSetup(sqlDb) && orderHistoryDbSetup(sqlDb) && ssantaDbSetup(sqlDb);
+  return bookDbSetup(sqlDb) && writtenByDbSetup(sqlDb) && eventDbSetup(sqlDb) && userDbSetup(sqlDb) && authorDbSetup(sqlDb) && cartDbSetup(sqlDb) && sessionDbSetup(sqlDb) && orderHistoryDbSetup(sqlDb) && ssantaDbSetup(sqlDb) && ssantapicDbSetup(sqlDb);
 }
 
 module.exports = { database: sqlDb, setupDataLayer };
