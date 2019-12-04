@@ -37,7 +37,7 @@ function login(){
         "password": password,
     };
     jQuery.ajax({
-        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/login",
+        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/sssanta/login",
         Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         type: 'POST',
         dataType: 'json',
@@ -74,7 +74,7 @@ function register(){
         "email": email
     };
     jQuery.ajax({
-        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/register",
+        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssanta/register",
         type: 'POST',
         dataType: 'json',
         data: credential,
