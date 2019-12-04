@@ -28,5 +28,5 @@ function isUserLoggedIn(callBack) {
 }
 
 $(document).ready(() => {
-    $("#searchbutton").click(getFriend());
+    $("#ssbutton").click(getFriend());
 });
