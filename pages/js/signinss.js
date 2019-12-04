@@ -37,7 +37,7 @@ function login(){
         "password": password,
     };
     jQuery.ajax({
-        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/login",
+        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssanta/login",
         Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         type: 'POST',
         dataType: 'json',
@@ -48,7 +48,7 @@ function login(){
         success: () => {
             $("#loginButton").removeClass("disabled");
             console.log('ajax success');
-            window.location.replace("myaccount.html");
+            window.location.replace("secretsanta.html");
 
         },
         error: (result)=>{
@@ -74,7 +74,7 @@ function register(){
         "email": email
     };
     jQuery.ajax({
-        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user/register",
+        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssanta/register",
         type: 'POST',
         dataType: 'json',
         data: credential,
@@ -82,7 +82,7 @@ function register(){
         success: () => {
             $("#registerButton").removeClass("disabled");
             console.log('ajax success');
-            window.location.replace("myaccount.html" );
+            window.location.replace("secretsanta.html" );
         },
         error: (result)=>{
             $("#registerButton").removeClass("disabled");

@@ -27,6 +27,3 @@ function isUserLoggedIn(callBack) {
     });
 }
 
-$(document).ready(() => {
-    $("#ssbutton").click(getFriend());
-});
