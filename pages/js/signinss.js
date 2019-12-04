@@ -48,7 +48,7 @@ function login(){
         success: () => {
             $("#loginButton").removeClass("disabled");
             console.log('ajax success');
-            window.location.replace("myaccount.html");
+            window.location.replace("secretsanta.html");
 
         },
         error: (result)=>{
@@ -82,7 +82,7 @@ function register(){
         success: () => {
             $("#registerButton").removeClass("disabled");
             console.log('ajax success');
-            window.location.replace("myaccount.html" );
+            window.location.replace("secretsanta.html" );
         },
         error: (result)=>{
             $("#registerButton").removeClass("disabled");
