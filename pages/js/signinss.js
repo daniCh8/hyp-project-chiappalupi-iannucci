@@ -37,7 +37,7 @@ function login(){
         "password": password,
     };
     jQuery.ajax({
-        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/sssanta/login",
+        url: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssanta/login",
         Origin: "https://hyp-2019-chiappalupi-iannucci.herokuapp.com",
         type: 'POST',
         dataType: 'json',
