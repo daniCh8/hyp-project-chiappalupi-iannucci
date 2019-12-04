@@ -13,7 +13,7 @@ $(document).ready(() => {
 
 function isUserLoggedIn(callBack) {
     jQuery.ajax({
-        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/user',
+        url: 'https://hyp-2019-chiappalupi-iannucci.herokuapp.com/ssanta/target',
         type: 'GET',
         dataType: 'json',
         credentials: 'same-origin',
