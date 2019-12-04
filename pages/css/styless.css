@@ -465,3 +465,61 @@ body{
 .text-center{
     background-color: rgba(68,54,39, 0.1);
 }
+
+
+
+
+
+
+
+.topic-section-title{
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.topic-section-title-big{
+    margin-bottom: 16px;
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.topic-section{
+    margin-bottom: 16px;
+    font-size: 16px;
+    line-height: 25px;
+}
+
+.topic-section-big{
+    margin-bottom: 16px;
+    font-size: 20px;
+    line-height: 25px;
+}
+
+.title-fav-best{
+    font-size: 30px;
+    text-align:center;
+    font-weight:lighter;
+    margin: 30px;
+}
+.paragraph-fav-best{
+    font-size: 20px;
+    text-align:center;
+    font-weight:lighter;
+    margin: 20px;
+}
+.paragraph-fav-best-white{
+    font-size: 20px;
+    color: white;
+    text-align:center;
+    font-weight:lighter;
+    margin: 20px;
+}
+.title-fav-best-white{
+    font-size: 30px;
+    color: white;
+    text-align:center;
+    font-weight:lighter;
+    margin: 30px;
+}
