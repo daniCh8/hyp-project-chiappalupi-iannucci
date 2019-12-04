@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3eeedf3-6b2a-43b3-a4a4-c7bd24d695e1" name="Default Changelist" comment="added files">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/secretsanta.html" beforeDir="false" afterPath="$PROJECT_DIR$/secretsanta.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/friendpage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/secretsanta.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/signinss.js" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,8 +49,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/secretsanta.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+            <state relative-caret-position="90">
+              <caret line="6" column="50" lean-forward="true" selection-start-line="6" selection-start-column="50" selection-end-line="6" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -151,8 +152,8 @@
   </component>
   <component name="PhpDebugGeneral" listening_started="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-16" />
-    <option name="y" value="23" />
+    <option name="x" value="78" />
+    <option name="y" value="283" />
     <option name="width" value="1387" />
     <option name="height" value="830" />
   </component>
@@ -169,6 +170,11 @@
             <path>
               <item name="pages" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="~/Desktop/new_hyp/hyp-project-chiappalupi-iannucci/pages" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="pages" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/Desktop/new_hyp/hyp-project-chiappalupi-iannucci/pages" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="js" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -231,7 +237,7 @@
       <workItem from="1561713228333" duration="96937000" />
       <workItem from="1562229476640" duration="42846000" />
       <workItem from="1575468256089" duration="139000" />
-      <workItem from="1575468477647" duration="158000" />
+      <workItem from="1575468477647" duration="381000" />
     </task>
     <task id="LOCAL-00001" summary="commit test">
       <created>1560873079094</created>
@@ -258,10 +264,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="211279000" />
+    <option name="totallyTimeSpent" value="211502000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-16" y="23" width="1387" height="830" extended-state="0" />
+    <frame x="78" y="283" width="1387" height="830" extended-state="0" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.266171" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -677,8 +683,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/secretsanta.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+        <state relative-caret-position="90">
+          <caret line="6" column="50" lean-forward="true" selection-start-line="6" selection-start-column="50" selection-end-line="6" selection-end-column="50" />
         </state>
       </provider>
     </entry>
