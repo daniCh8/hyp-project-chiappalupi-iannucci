@@ -51,7 +51,6 @@ function drawFriend(data) {
     var s = '';
     s = s + '<div class="login-html fadeInDown">\n' +
         '            <p class="title-fav-best-white" > Hi ' + data.myself + ', <br>Here you may find some information about your account.</p>\n'  +
-        '        <button  onclick="goToCart();" style=" width:-webkit-fill-available;"> <div class="container" style="display: flex; flex-direction: column; "> <img src="svg/mbri-cart-add.svg" alt="">  <p> Take a look at your cart! </p> </div> </button>' +
         '<button style=" width:-webkit-fill-available; "onclick="logout();"> <div class="container" style="display: flex; flex-direction: column; "> <img src="svg/mbri-logout.svg" alt="">  <p> Logout </p> </div> </button>' +
         '</div>';
     $("#friend").html(s);
