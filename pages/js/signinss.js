@@ -127,10 +127,6 @@ function drawLoginForm() {
         '                    <input id="usernameReg" type="text" class="input">\n' +
         '                </div>\n' +
         '                <div class="group">\n' +
-        '                    <label for="email" class="label">Email</label>\n' +
-        '                    <input id="email" type="text" class="input">\n' +
-        '                </div>\n' +
-        '                <div class="group">\n' +
         '                    <label for="passwordReg" class="label">Password</label>\n' +
         '                    <input id="passwordReg" type="password" class="input" data-type="password">\n' +
         '                </div>\n' +
