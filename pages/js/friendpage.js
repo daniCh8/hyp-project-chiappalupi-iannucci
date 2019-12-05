@@ -52,7 +52,7 @@ function drawFriend(data) {
     s = s +
         '            <p class="title-fav-best-white" > Hi ' + data.myself + ', <br>Here is your target.</p>\n'  +
         '<p class="title-fav-best-white" > ' + data.targetName + '</p>\n'   +
-        '<img src="' + data.targetPicURL + '"></img>\n'   +
+        '<img src="' + data.targetPicURL + '" style="height: 300px"></img>\n'   +
         '</div>';
     $("#friend").html(s);
 }
