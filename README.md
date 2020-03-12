@@ -28,3 +28,7 @@ Note that, the hidden secret santa queries are not documented.
 ## Task Assignment
 
 [Elena Iannucci](https://github.com/eleiannu) mainly worked on the *front end*, whereas [Daniele Chiappalupi](https://github.com/daniCh8) focused on the *back end*.
+
+## Side Note
+
+This was a course project, and it happened to be in conjunction with other two more important projects (two bachelor thesis assignments). Therefore, even though the outcome of the website has been satisfactory, many parts of code could have been cleaner, and both me and Elena acknowledge this. Maybe we will refactor it some time in the future.
