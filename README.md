@@ -11,6 +11,7 @@
 
 This was a course project of [Hypermedia Applications (Web and Multimedia)](https://www4.ceda.polimi.it/manifesti/manifesti/controller/ManifestoPublic.do?EVN_DETTAGLIO_RIGA_MANIFESTO=evento&aa=2018&k_cf=225&k_corso_la=358&k_indir=II3&codDescr=089318&lang=IT&semestre=2&idGruppo=3800&idRiga=229375). The aim of it was building a working [website of a fictional bookshop](https://hyp-2019-chiappalupi-iannucci.herokuapp.com/). 
 The functionalities that the website should have provided included the registration of an user, and the purchasing of books.
+The site is optimized for Chrome: if you are using other browsers there might be a few minor bugs.
 
 ## Hidden Backdoor
 
