@@ -18,7 +18,7 @@ The website also contains a hidden part not related to the bookshop. We added th
 
 ## Documentation
 
-A full documentation of the project is available both in [pdf](https://hyp-2019-chiappalupi-iannucci.herokuapp.com/) and in [html](https://hyp-2019-chiappalupi-iannucci.herokuapp.com/main.html). However, below is provided the full pdf documentation.
+A full documentation of the project is available both in [pdf](https://hyp-2019-chiappalupi-iannucci.herokuapp.com/) and in [html](https://hyp-2019-chiappalupi-iannucci.herokuapp.com/main.html).
 
 ## Web Documentation
 
@@ -28,11 +28,3 @@ Note that, the hidden secret santa queries are not documented.
 ## Task Assignment
 
 [Elena Iannucci](https://github.com/eleiannu) mainly worked on the *front end*, whereas [Daniele Chiappalupi](https://github.com/daniCh8) focused on the *back end*.
-
-## Documentation printout
-
-<object data="https://hyp-2019-chiappalupi-iannucci.herokuapp.com/documentation.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="https://hyp-2019-chiappalupi-iannucci.herokuapp.com/documentation.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://hyp-2019-chiappalupi-iannucci.herokuapp.com/documentation.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
