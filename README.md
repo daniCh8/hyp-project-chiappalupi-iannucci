@@ -18,7 +18,7 @@ The website also contains a hidden part not related to the bookshop. We added th
 
 ## Documentation
 
-A full documentation of the project is available both in [pdf](https://hyp-2019-chiappalupi-iannucci.herokuapp.com/) and in [html](https://hyp-2019-chiappalupi-iannucci.herokuapp.com/main.html).
+A full documentation of the project is available both in [pdf](https://hyp-2019-chiappalupi-iannucci.herokuapp.com/documentation.pdf) and in [html](https://hyp-2019-chiappalupi-iannucci.herokuapp.com/main.html).
 
 ## Web Documentation
 
