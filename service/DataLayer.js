@@ -14,7 +14,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 let sqlDb = sqlDbFactory({
   client: 'pg',
   connection: process.env.DATABASE_URL || 'postgres://wydrsortvwnkgf:1d6381fc83ba0187540eb1b41a57b3935e5489380b7609a062ac63a91ad95007@ec2-54-246-98-119.eu-west-1.compute.amazonaws.com:5432/d9nd5vbtop8gsl?ssl=true',
-  ssl: true,
+  ssl: true
 });
 
 function setupDataLayer() {
