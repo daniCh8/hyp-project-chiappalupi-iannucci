@@ -1,4 +1,6 @@
-# [Hypermedia Applications Project](https://hyp-2019-chiappalupi-iannucci.herokuapp.com/)
+# [Hypermedia Applications Project](https://www4.ceda.polimi.it/manifesti/manifesti/controller/ManifestoPublic.do?EVN_DETTAGLIO_RIGA_MANIFESTO=evento&aa=2018&k_cf=225&k_corso_la=358&k_indir=II3&codDescr=089318&lang=IT&semestre=2&idGruppo=3800&idRiga=229375)
+
+**+++ Please note that this is a project from 2019; we stopped working on it, and the website is now broken due to third-party libraries updates. +++**
 
 *Politecnico di Milano - Engineering of Computing Systems - 2019*
 
